@@ -1,2 +1,2 @@
-# vue.core.image.upload
-a vue plugin for image to crop and upload 
+## Vue-Core-Image-Upload
+a vue plugin for image upload and crop
