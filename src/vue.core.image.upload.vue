@@ -5,25 +5,25 @@
     <form class="g-core-image-upload-form" v-show="!hasImage" method="post" enctype="multipart/form-data" action="/api2/common_user/cropHeadUrl" style="display: block; cursor: pointer; position: absolute; left: 0px; top: 0px; width: 1242px; height: 61px; opacity: 0; margin: 0px; padding: 0px; overflow: hidden;">
       <input v-disbaled="uploading" id="g-core-upload-input" name="{{inputOfFile}}" type="file" accept="image/*" v-on:change="change" style="width: 100%; height: 100%;">
     </form>
-</div>
+</div>  
 
 <div class="g-core-image-corp-container" v-show="hasImage">
     <div class="image-aside">
       <div class="g-crop-image-box">
-        <div class="g-crop-image-principal" style="width: 275px; height: 275px; margin-left: 198px;"><div></div>
-          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3hpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0NzZlNTk0Ny03MGQxLTQ3NjEtYTQ2OC01YTY5ZmMzNGI3MzEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NjNBRDJGRTY2QjU3MTFFNjhBNTY5MjI3MTJBNjFCNzgiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NjNBRDJGRTU2QjU3MTFFNjhBNTY5MjI3MTJBNjFCNzgiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKE1hY2ludG9zaCkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpkN2EzNGRjNS0yYjI2LTQ2NmItYWI0NS04MWNkYjIyZDQxZDMiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NDc2ZTU5NDctNzBkMS00NzYxLWE0NjgtNWE2OWZjMzRiNzMx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" style="width: 275px; height: 275px;">
-          <div class="select-recorte ui-resizable ui-draggable ui-draggable-handle" style="width: 220px; height: 220px; left: 27.5px; top: 27.5px;">
-            <div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
-            <div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div>
-            <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div>
+        <div class="g-crop-image-principal">
+          <img v-bind:src="image.src" v-bind:style="{ width:image.width + 'px',height: image.height + 'px' }">
+          <div class="select-recorte" style="width:100px;height:100px;">
+            <div class="g-s-resize" style="z-index: 90;"></div>
+            <div class="g-e-resize" style="z-index: 90;"></div>
+            <div class="g-resize" v-on:mousedown="resize"></div>
           </div>
         </div>
       </div>
     </div>
     <div class="info-aside">
       <p class="btn-groups">
-        <button type="button" class="btn btn-upload">确定</button>
-        <button type="button" class="btn btn-cancel">取消</button>
+        <button type="button" v-on:click="doCrop()" class="btn btn-upload">确定</button>
+        <button type="button" v-on:click="cancel()" class="btn btn-cancel">取消</button>
       </p>
     </div>
 </div>
@@ -34,7 +34,7 @@
 .g-core-image-upload-btn{
     position: relative;
 }
-
+  
 .g-core-image-upload-form{
   position: absolute;
   left:0;
@@ -108,18 +108,18 @@
 }
 .g-core-image-corp-container .info-aside .config-info .image-details{
     width: 100%;
-    color:#999;
+    color:#999;    
 }
 
 .g-core-image-corp-container .info-aside .config-info .image-details td{
-    border:none;
+    border:none; 
     line-height: 24px;
 }
 .g-core-image-corp-container .info-aside .config-info .image-details tr td:first-child{
-    width:36%;
+    width:36%;  
 }
 .g-core-image-corp-container .info-aside .config-info .image-details tr td:last-child{
-    color:#555;
+    color:#555; 
 }
 .g-core-image-corp-container .btn-groups{
     text-align: right;
@@ -140,7 +140,7 @@
 }
 .g-core-image-corp-container .btn:hover{
     border:1px solid #777;
-    box-shadow: 0 1px 3px rgba(0,0,0,.05);
+    box-shadow: 0 1px 3px rgba(0,0,0,.05); 
 }
 .g-core-image-corp-container .btn:active,{
     background: #ddd;
@@ -158,20 +158,44 @@
 .g-core-image-corp-container .btn-upload:hover{
     background: #2dc26c;
     border-color:#27ae60;
-    box-shadow: 0 1px 3px rgba(0,0,0,.05);
+    box-shadow: 0 1px 3px rgba(0,0,0,.05); 
 }
 .g-core-image-corp-container .g-crop-image-box,.g-core-image-corp-container .g-crop-image-box .g-crop-image-principal{
-    position: relative;
-
+    position: relative;   
+    
 }
 .g-core-image-corp-container .g-crop-image-box .select-recorte{
     position: absolute;
     background: #fff;
     opacity: .5;
     border:2px dashed #555;
-
+    
 }
-
+.g-core-image-corp-container .g-resize{
+  z-index: 90;
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 14px;
+  height: 14px;
+  cursor: se-resize;
+}
+.g-core-image-corp-container .g-e-resize{
+  cursor: e-resize;
+  position: absolute;
+  width: 7px;
+  right: -5px;
+  top: 0;
+  height: 100%;
+}
+.g-core-image-corp-container .g-s-resize{
+  position: absolute;
+  cursor: s-resize;
+  height: 7px;
+  width: 100%;
+  bottom: -5px;
+  left: 0;
+}  
 </style>
 
 <script>
@@ -277,13 +301,54 @@
       return r;
     }
   };
-
-
+  
+  let resizeedObj = null;
+  
+  // 进行缩放
+  class Resize {
+    constructor($el,$container,e) {
+      this.coor = {
+        x: e.clientX,
+        y: e.clientY,
+        w: parseInt(window.getComputedStyle($el).width),
+        h: parseInt(window.getComputedStyle($el).height),
+      };
+      this.el = $el;
+      this.container = $container;
+      
+      this.container.addEventListener('mousemove',this.drag.bind(this),false);
+      this.container.addEventListener('mouseup',this.stopDrag.bind(this),false);
+    }
+    
+    drag(e) {
+      if(!this.el) {
+        return;
+      }
+      this.el.style.width = (this.coor.w + e.clientX - this.coor.x) + 'px';
+      this.el.style.height = (this.coor.h + e.clientY - this.coor.y) + 'px';
+    }
+    
+    stopDrag(e) {
+      this.el = null;
+      this.container = null;
+    }
+  };
+  
+  
+  class Drag() {
+    constractor($el,$container) {
+      
+    }
+  }
+  
+  
+  
   /** a vue plugin for image crop and upload
   *  Github: https://github.com/Vanthink-UED/vue.core.image.upload
   **/
-
-
+  
+  const GIF_LOADING_SRC = 'data:image/gif;base64,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';
+    
 
   export default {
     props:{
@@ -292,7 +357,7 @@
       },
       text: {
         type:String,
-        default:  'Upload Image'
+        default:  'Upload Image' 
       },
       extensions: {
         type: String,
@@ -301,19 +366,19 @@
       uploadedCallback: {
         type: Function,
         default: function() {
-
+          
         },
       },
       inputOfFile: {
         type: String,
-        default: 'file'
+        default: 'files'
       },
-
-      enableCrop: {
+      
+      crop: {
         type: Boolean,
         default: false,
       },
-      cropRadio: {
+      cropRatio: {
         type: String,
         default: '1:1'
       },
@@ -329,15 +394,27 @@
       }
     },
     data() {
+      console.log(this.crop);
       return {
         files: [],
         hasImage: false,
         options: this.props,
         uploading: false,
+        image:{
+          src: GIF_LOADING_SRC,
+          width:24,
+          height:24,
+        },
       }
     },
-
+    
     methods: {
+      
+      __dispatch(name,res) {
+        this.$dispatch && this.$dispatch(name, res);
+        this.events && this.events[name] && this.events[name](res);
+      },
+      
       change(e) {
         let fileVal = document.querySelector('#g-core-upload-input').value.replace(/C:\\fakepath\\/i, "");
         let fileExt = fileVal.substring(fileVal.lastIndexOf(".") + 1);
@@ -361,46 +438,162 @@
             this.errorHandle('FILE IS TOO LARGER MAX FILE IS ' + formatSize);
             return;
         }
-
+        
         this.files = e.target.files;
-
-        if(this.enableCrop) {
-          this.hasImage = 1;
+        console.log(this.files);
+        if(this.crop) {
+          this.__showImage();
           return;
-
+            
         }
-        this.tryAjaxUpload();
-
+      //  this.tryAjaxUpload();  
+         
       },
-
-      // use ajax upload  IE9+
-      tryAjaxUpload() {
+      
+      
+      __showImage() {
+        this.hasImage = true;  
+        this.__readFiles();
+      },
+      
+       __readFiles() {
+        let reader = new FileReader();
+        let self = this;
+        reader.onload = function(e) {
+          let src = e.target.result;
+          src = 'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/c20ef542264643.57c6da5de6402.png';
+          self.__initImage(src);
+          
+        }
+         reader.readAsDataURL(this.files[0]);
+      },
+      
+      // 对图像进行处理
+      __initImage(src) {
+        let pic = new Image();
+        let self = this;
+        pic.src = src;
+        
+        pic.onload= function() {
+          self.image.src = src;
+          self.image.width = pic.naturalWidth;
+          self.image.height = pic.naturalHeight;
+          self.__reseyLayout();
+          self.__initCropBox();
+        }
+      },
+      
+      // init crop area
+      __initCropBox (){
+        let $selectCropBox = document.querySelector('.select-recorte');
+        let $wrap = document.querySelector('.g-crop-image-principal');
+        let imageWidth = parseInt($wrap.style['width']),
+            imageHeight = parseInt($wrap.style['height']);
+        let ratioW = this.cropRatio.split(':')[0],
+            ratioH = this.cropRatio.split(':')[1];
+        let Swidth = (imageWidth / 100) * 80;
+        let Sheight = (Swidth / ratioW) * ratioH;
+        $selectCropBox.style.cssText = 'width:' + Swidth + 'px;height: ' + Sheight + 'px;left:' + (imageWidth - Swidth) / 2 + 'px;top:' + (imageHeight - Sheight) / 2 + 'px;';
+        if (Sheight > imageHeight) {
+          Sheight = (imageHeight / 100) * 80;
+          Swidth = (Sheight * ratioW) / ratioH;
+          $selectCropBox.style.cssText = 'width:' + Swidth + 'px;height:' + Sheight + 'px;left:' + (imageWidth - Swidth) / 2 + 'px;top:' + (imageHeight - Sheight) / 2 + 'px';
+        };
+        
+          
+          
+      },
+        
+      
+      
+      
+      
+      
+      
+        
+    
+      
+     
+      
+      // reset layout 
+      __reseyLayout: function() {
+        let H = window.innerHeight - 80,
+            W = window.innerWidth - 60,
+            imageWidth = this.image.width,
+            imageHeight = this.image.height;
+        // caculate the image ratio
+        let R = imageWidth / imageHeight;
+        let Rs = W / H;
+        let $container = document.querySelector('.g-crop-image-principal'); 
+        if (R > Rs) {
+          this.image.width = W;
+          this.image.height = H;
+          // I don't hope to use a state to change the container stye
+          $container.style.cssText = 'width:' + W + 'px;height:' + W / R + 'px;marginTop:' + (H - W / R) / 2 + 'px';
+          
+        } else {
+          this.image.width =  H * R,
+          this.image.height = H;
+          
+          $container.style.cssText = 'width:' + H * R + 'px;height:' + H + 'px;marginLeft:' + (W - H * R) / 2 + 'px;';
+        }
+       
+      },
+      
+      doCrop(e) {
+        let btn = e.target;
+        btn.value = btn.value + '...';
+        btn.disabled = true;
+        this.tryAjaxUpload();
+      },
+      
+      
+      cancel() {
+        this.hasImage = false;
+        this.files = '';
+        document.querySelector('#g-core-upload-input').value = '';
+      },
+      
+      // use ajax upload  IE9+ 
+      tryAjaxUpload(callback) {
         let self = this;
         let data = new FormData();
-        for(let k in this.files) {
-           data.append(self.inputOfFile, this.files.k);
+        for(let i=0;i<this.files.length;i++) { 
+          data.append(self.inputOfFile, this.files[i]);  
         }
-
-        if (typeof this.data === 'object') {
-
+        
+        if (typeof this.data === 'object') { 
+            
             for(let k in this.data) {
-              data.append(this.data['k']);
-            }
+              data.append(k,this.data['k']);
+            }      
 
         }
-
+        
         xhr('POST',this.url,{},data,function(res) {
+          if(typeof callback === 'function') {
+            callback();
+          }
           self.uploading = false;
           if(self.enableCrop) {
               self.hasImage = false;
-           }
-           self.uploadedCallback(data);
-        });
+           } 
+           self.__dispatch('imageUploaded',res);
+        });  
+      },
+      
+      // resize and drag move
+      
+      resize(e) {
+        let $el = e.target.parentElement;
+        let $container = document.querySelector('.g-crop-image-principal');
+        let resizedObj = new Resize($el,$container,e);
+        
       }
-
-
+      
+      
     },
-
+    
   };
 
 </script>
