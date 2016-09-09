@@ -12,17 +12,17 @@
       <div class="g-crop-image-box">
         <div class="g-crop-image-principal">
           <img v-bind:src="image.src" v-bind:style="{ width:image.width + 'px',height: image.height + 'px' }">
-          <div class="select-recorte" style="width:100px;height:100px;">
+          <div class="select-recorte" v-on:touchstart="drag" v-on:mousedown="drag" style="width:100px;height:100px;">
             <div class="g-s-resize" style="z-index: 90;"></div>
             <div class="g-e-resize" style="z-index: 90;"></div>
-            <div class="g-resize" v-on:mousedown="resize"></div>
+            <div class="g-resize" v-on:touchstart="resize" v-on:mousedown="resize"></div>
           </div>
         </div>
       </div>
     </div>
     <div class="info-aside">
       <p class="btn-groups">
-        <button type="button" v-on:click="doCrop()" class="btn btn-upload">确定</button>
+        <button type="button" v-on:click="doCrop" class="btn btn-upload">确定</button>
         <button type="button" v-on:click="cancel()" class="btn btn-cancel">取消</button>
       </p>
     </div>
@@ -169,6 +169,7 @@
     background: #fff;
     opacity: .5;
     border:2px dashed #555;
+    cursor: move;
     
 }
 .g-core-image-corp-container .g-resize{
@@ -302,20 +303,30 @@
     }
   };
   
-  let resizeedObj = null;
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   
-  // 进行缩放
+  /** Reszie
+  * @el  dom
+  * @container  dom
+  * @ratio  string '1:1' like this
+  * @e events
+  **/
   class Resize {
-    constructor($el,$container,e) {
+    constructor($el,$container,ratio,e) {
+      e.stopPropagation();
       this.coor = {
-        x: e.clientX,
-        y: e.clientY,
+        x: isMobile ? e.touches[0]['clientX']:e.clientX,
+        y: isMobile ? e.touches[0]['clientY']:e.clientY,
         w: parseInt(window.getComputedStyle($el).width),
         h: parseInt(window.getComputedStyle($el).height),
       };
       this.el = $el;
       this.container = $container;
-      
+      if(isMobile) {
+        this.container.addEventListener('touchmove',this.drag.bind(this),false);
+        this.container.addEventListener('touchend',this.stopDrag.bind(this),false);  
+        return;
+      }
       this.container.addEventListener('mousemove',this.drag.bind(this),false);
       this.container.addEventListener('mouseup',this.stopDrag.bind(this),false);
     }
@@ -324,8 +335,8 @@
       if(!this.el) {
         return;
       }
-      this.el.style.width = (this.coor.w + e.clientX - this.coor.x) + 'px';
-      this.el.style.height = (this.coor.h + e.clientY - this.coor.y) + 'px';
+      this.el.style.width = (this.coor.w + (isMobile ? e.changedTouches[0]['clientX']:e.clientX) - this.coor.x) + 'px';
+      this.el.style.height = (this.coor.h + (isMobile ? e.changedTouches[0]['clientY']:e.clientY) - this.coor.y) + 'px';
     }
     
     stopDrag(e) {
@@ -334,12 +345,65 @@
     }
   };
   
-  
-  class Drag() {
-    constractor($el,$container) {
+  // 拖拽
+  class Drag {
+    constructor($el,$container,e) {
       
+      this.el = $el;
+      this.container = $container;
+      this.coor = {
+        x:(isMobile ? e.touches[0]['clientX']:e.clientX) - $el.offsetLeft - $el.parentElement.offsetLeft,
+        y:(isMobile ? e.touches[0]['clientY']:e.clientY) - $el.offsetTop - $el.parentElement.offsetTop,
+        posX: isMobile ? e.touches[0]['clientX']:e.clientX,
+        posy: isMobile ? e.touches[0]['clientY']:e.clientY,
+        maxLeft: parseInt(this.container.style.width) - parseInt(this.el.style.width),
+        maxTop: parseInt(this.container.style.height) - parseInt(this.el.style.height),
+      };
+      if(isMobile) {
+        this.container.addEventListener('touchmove',this.move.bind(this),false);
+        this.container.addEventListener('touchend',this.stopMove.bind(this),false);  
+        return;
+      }
+      this.container.addEventListener('mousemove',this.move.bind(this),false);
+      this.container.addEventListener('mouseup',this.stopMove.bind(this),false);
     }
-  }
+    
+    move(e) {
+      if(!this.el) {
+        return;
+      }
+      this.coor.posX = isMobile ? e.changedTouches[0]['clientX']:e.clientX;
+      this.coor.posY = isMobile ? e.changedTouches[0]['clientY']:e.clientY;
+      let newPosX = this.coor.posX - this.coor.x;
+      let newPosY = this.coor.posY - this.coor.y;
+      if(newPosX <= 0) {
+        newPosX = 0;
+      }
+      if(newPosX >= this.coor.maxLeft) {
+        newPosX = this.coor.maxLeft;
+      }
+      if(newPosY <= 0) {
+        newPosY = 0;
+      }
+      if(newPosY >= this.coor.maxTop) {
+        newPosY = this.coor.maxTop;
+      }
+      this.el.style.left = (newPosX) + 'px';
+      this.el.style.top = (newPosY) + 'px';
+    }
+    
+    stopMove() {
+      this.el = null;
+      if(isMobile) {
+        this.container.removeEventListener('touchmove',this.move.bind(this),false);
+        this.container.removeEventListener('touchend',this.stopMove.bind(this),false);  
+        return;
+      }
+      this.container.removeEventListener('mousemove',this.move.bind(this),false);
+      this.container.removeEventListener('mouseup',this.stopMove.bind(this),false);
+    }
+    
+  };
   
   
   
@@ -394,7 +458,6 @@
       }
     },
     data() {
-      console.log(this.crop);
       return {
         files: [],
         hasImage: false,
@@ -446,7 +509,7 @@
           return;
             
         }
-      //  this.tryAjaxUpload();  
+        this.tryAjaxUpload();  
          
       },
       
@@ -461,7 +524,6 @@
         let self = this;
         reader.onload = function(e) {
           let src = e.target.result;
-          src = 'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/c20ef542264643.57c6da5de6402.png';
           self.__initImage(src);
           
         }
@@ -505,16 +567,6 @@
       },
         
       
-      
-      
-      
-      
-      
-        
-    
-      
-     
-      
       // reset layout 
       __reseyLayout: function() {
         let H = window.innerHeight - 80,
@@ -524,19 +576,21 @@
         // caculate the image ratio
         let R = imageWidth / imageHeight;
         let Rs = W / H;
+        
         let $container = document.querySelector('.g-crop-image-principal'); 
         if (R > Rs) {
           this.image.width = W;
-          this.image.height = H;
+          this.image.height = W / R;
           // I don't hope to use a state to change the container stye
-          $container.style.cssText = 'width:' + W + 'px;height:' + W / R + 'px;marginTop:' + (H - W / R) / 2 + 'px';
+          $container.style.cssText = 'width:' + W + 'px;height:' + W / R + 'px;margin-top:' + (H - W / R) / 2 + 'px';
           
         } else {
           this.image.width =  H * R,
           this.image.height = H;
           
-          $container.style.cssText = 'width:' + H * R + 'px;height:' + H + 'px;marginLeft:' + (W - H * R) / 2 + 'px;';
+          $container.style.cssText = 'width:' + H * R + 'px;height:' + H + 'px;margin-left:' + (W - H * R) / 2 + 'px;';
         }
+        this.imgChangeRatio = imageWidth / this.image.width;
        
       },
       
@@ -544,7 +598,21 @@
         let btn = e.target;
         btn.value = btn.value + '...';
         btn.disabled = true;
-        this.tryAjaxUpload();
+        if(typeof this.data !== 'object') { 
+          this.data = {};  
+        }
+        let $selectCrop = document.querySelector('.select-recorte');
+        this.data["request"] = "crop";
+        
+        this.data["toCropImgX"] = parseInt(window.getComputedStyle($selectCrop).left) * this.imgChangeRatio;
+        this.data["toCropImgY"] = parseInt(window.getComputedStyle($selectCrop).top) * this.imgChangeRatio;
+        this.data["toCropImgW"] = parseInt(window.getComputedStyle($selectCrop).width)  * this.imgChangeRatio;
+        this.data["toCropImgH"] = parseInt(window.getComputedStyle($selectCrop).height)  * this.imgChangeRatio;
+        this.tryAjaxUpload(function() {
+          btn.value = btn.value.replace('...','');
+          btn.disabled = false;  
+        });
+        
       },
       
       
@@ -565,7 +633,10 @@
         if (typeof this.data === 'object') { 
             
             for(let k in this.data) {
-              data.append(k,this.data['k']);
+              if(this.data[k] !== undefined) {
+                data.append(k,this.data[k]);
+              }
+              
             }      
 
         }
@@ -583,12 +654,17 @@
       },
       
       // resize and drag move
-      
       resize(e) {
         let $el = e.target.parentElement;
         let $container = document.querySelector('.g-crop-image-principal');
-        let resizedObj = new Resize($el,$container,e);
+        let resizedObj = new Resize($el,$container,this.ratio,e);
         
+      },
+      
+      drag(e) {
+        let $el = e.target;
+        let $container = document.querySelector('.g-crop-image-principal');
+        let dragObj = new Drag($el,$container,e);
       }
       
       
