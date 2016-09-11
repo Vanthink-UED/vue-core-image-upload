@@ -39,7 +39,7 @@ new Vue({
 <vue-core-image-upload v-bind:class="['pure-button','pure-button-primary','js-btn-crop']" v-bind:crop="false" url="./crop.php" extensions="png,gif,jpeg,jpg"></vue-core-image-upload>
 ```
 
-[Demo] ()
+[Demo] (http://events.jackpu.com/vue-core-image-upload/demo/upload.html)
 
 ### Options
 
@@ -92,5 +92,7 @@ If you crop a image , your crop will send a request to your server with some cro
 + `toCropImgH`: the height of cropbox
 + `maxWidth`: the maxium width of your target image 
 + `maxHeight`: the maxium height of your target image 
+
+If you want to change the crop window style , you should write your own css files.
 
 ### MIT Liscense 
