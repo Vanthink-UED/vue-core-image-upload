@@ -2,7 +2,7 @@
   "name": "vue-core-image-upload",
   "version": "0.9.1",
   "description": "a vue plgin for image upload and crop",
-  "main": "gulpfile.js",
+  "main": "index.js",
   "dependencies": {
     "vue": "^1.0.26"
   },
