@@ -1,13 +1,13 @@
 
 <template>
-  <div class="g-core-image-upload-btn button button-full">
+  <div class="g-core-image-upload-btn" v-bind:class="class">
       {{text}}
       <form class="g-core-image-upload-form" v-show="!hasImage" method="post" enctype="multipart/form-data" action="/api2/common_user/cropHeadUrl" style="display: block; cursor: pointer; position: absolute; left: 0px; top: 0px; width: 1242px; height: 61px; opacity: 0; margin: 0px; padding: 0px; overflow: hidden;">
-        <input v-disbaled="uploading" id="g-core-upload-input" name="{{inputOfFile}}" type="file" accept="image/*" v-on:change="change" style="width: 100%; height: 100%;">
+        <input v-bind:disbaled="uploading" id="g-core-upload-input-{{formID}}" name="{{inputOfFile}}" type="file" accept="image/*" v-on:change="change" style="width: 100%; height: 100%;">
       </form>
   </div>  
 
-  <div class="g-core-image-corp-container" v-show="hasImage">
+  <div class="g-core-image-corp-container" id="vciu-modal-{{formID}}" v-show="hasImage">
       <div class="image-aside">
         <div class="g-crop-image-box">
           <div class="g-crop-image-principal">
@@ -520,15 +520,13 @@
         type:String,
         default:  'Upload Image' 
       },
+      class: {
+        type: Array,
+        default:[]
+      },
       extensions: {
         type: String,
         default:'png.jpg,jpeg,gif,svg,webp'
-      },
-      uploadedCallback: {
-        type: Function,
-        default: function() {
-          
-        },
       },
       inputOfFile: {
         type: String,
@@ -543,16 +541,16 @@
         type: String,
         default: '1:1'
       },
-      errorHandle:{
-        type: Function,
-        default: function(error) {
-          console.error(error);
-        }
-      },
       maxFileSize:{
         type: Number,
         default: 1024 * 1024 * 100,
-      }
+      },
+      maxWidth:{
+        type: Number,
+      },
+      maxHeight:{
+        type: Number,
+      },
     },
     data() {
       return {
@@ -560,6 +558,7 @@
         hasImage: false,
         options: this.props,
         uploading: false,
+        formID: (Math.random() * 10000 + '').split('.')[0],
         image:{
           src: GIF_LOADING_SRC,
           width:24,
@@ -574,15 +573,18 @@
         this.$dispatch && this.$dispatch(name, res);
         this.events && this.events[name] && this.events[name](res);
       },
-      
+      __find(str) {
+        let dq = document.querySelector('#vciu-modal-' + this.formID);
+        return dq.querySelector(str);
+      },
       change(e) {
-        let fileVal = document.querySelector('#g-core-upload-input').value.replace(/C:\\fakepath\\/i, "");
+        let fileVal = document.querySelector('#g-core-upload-input-' + this.formID).value.replace(/C:\\fakepath\\/i, "");
         let fileExt = fileVal.substring(fileVal.lastIndexOf(".") + 1);
         const extensionsArr = this.extensions.split(',');
         if(extensionsArr.length>1) {
             var reg = new RegExp('^[' + extensionsArr.join('|') + ']+$','i');
             if (!reg.test(fileExt)) {
-                return options.extensionError();
+                return this.__dispatch('errorHandle','TYPE ERROR');
             }
         }
 
@@ -600,6 +602,7 @@
         }
         
         this.files = e.target.files;
+        
         if(this.crop) {
           this.__showImage();
           return;
@@ -643,8 +646,9 @@
       
       // init crop area
       __initCropBox (){
-        let $selectCropBox = document.querySelector('.select-recorte');
-        let $wrap = document.querySelector('.g-crop-image-principal');
+        let dq = document.querySelector('#vciu-modal-' + this.formID);
+        let $selectCropBox = dq.querySelector('.select-recorte');
+        let $wrap = dq.querySelector('.g-crop-image-principal');
         let imageWidth = parseInt($wrap.style['width']),
             imageHeight = parseInt($wrap.style['height']);
         let ratioW = this.cropRatio.split(':')[0],
@@ -672,8 +676,8 @@
         // caculate the image ratio
         let R = imageWidth / imageHeight;
         let Rs = W / H;
-        
-        let $container = document.querySelector('.g-crop-image-principal'); 
+        let dq = document.querySelector('#vciu-modal-' + this.formID);
+        let $container = dq.querySelector('.g-crop-image-principal'); 
         if (R > Rs) {
           this.image.width = W;
           this.image.height = W / R;
@@ -697,7 +701,8 @@
         if(typeof this.data !== 'object') { 
           this.data = {};  
         }
-        let $selectCrop = document.querySelector('.select-recorte');
+        
+        let $selectCrop = this.__find('.select-recorte');
         this.data["request"] = "crop";
         
         this.data["toCropImgX"] = parseInt(window.getComputedStyle($selectCrop).left) * this.imgChangeRatio;
@@ -715,7 +720,7 @@
       cancel() {
         this.hasImage = false;
         this.files = '';
-        document.querySelector('#g-core-upload-input').value = '';
+        document.querySelector('#g-core-upload-input-' + this.formID).value = '';
       },
       
       // use ajax upload  IE9+ 
@@ -742,7 +747,7 @@
             callback();
           }
           self.uploading = false;
-          if(self.enableCrop) {
+          if(self.crop) {
               self.hasImage = false;
            } 
            self.__dispatch('imageUploaded',res);
@@ -752,13 +757,13 @@
       // resize and drag move
       resize(e) {
         let $el = e.target.parentElement;
-        let $container = document.querySelector('.g-crop-image-principal');
+        let $container = this.__find('.g-crop-image-principal');
         let resizedObj = new Resize($el,$container,this.cropRatio,e);
       },
       
       drag(e) {
         let $el = e.target;
-        let $container = document.querySelector('.g-crop-image-principal');
+        let $container = this.__find('.g-crop-image-principal');
         let dragObj = new Drag($el,$container,e);
       }
       

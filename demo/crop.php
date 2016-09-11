@@ -1,9 +1,6 @@
 <?php
-    
 
-    $file = $_FILES?$_FILES['image']:null;
-
-    
+   $file = $_FILES?$_FILES['files']:null;
    header('Content-Type:"text/json"');
    if(!isset($file)) {
         echo json_encode(array(
@@ -16,9 +13,8 @@
     echo json_encode(array(
         'errcode' => 0,
         'data' => array(
-            'filename' => $file['name'],
-            'toCropImgW' => $_POST['toCropImgW'],
-            'toCropImgH' => $_POST['toCropImgH'],
+            'name' => $file['name'],
+            'post' => $_POST,
         ),
         'errmsg' => ''
     ));

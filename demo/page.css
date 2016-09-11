@@ -71,7 +71,7 @@ label {
  * I want my pure-button elements to look a little different
  */
 .pure-button {
-    background-color: #1f8dd6;
+    background-color: #3ab981;
     color: white;
     padding: 0.5em 2em;
     border-radius: 5px;
@@ -132,26 +132,25 @@ a.pure-button-primary {
  */
 
 .splash-container {
-    background: #1f8dd6;
+    background: #fff;
     z-index: 1;
     overflow: hidden;
     /* The following styles are required for the "scroll-over" effect */
     width: 100%;
-    height: 88%;
     top: 0;
     left: 0;
-    position: fixed !important;
 }
 
 .splash {
     /* absolute center .splash within .splash-container */
     width: 80%;
-    height: 50%;
     margin: auto;
-    position: absolute;
-    top: 100px; left: 0; bottom: 0; right: 0;
+    position: relative;
+    margin-top: 100px; 
+    left: 0; bottom: 0; right: 0;
     text-align: center;
     text-transform: uppercase;
+    margin-bottom: 0;
 }
 
 /* This is the main heading that appears on the blue section */
@@ -159,16 +158,13 @@ a.pure-button-primary {
     font-size: 20px;
     font-weight: bold;
     color: white;
-    border: 3px solid white;
-    padding: 1em 1.6em;
-    font-weight: 100;
     border-radius: 5px;
-    line-height: 1em;
+    margin-bottom: 0;
 }
 
 /* This is the subheading that appears on the blue section */
 .splash-subhead {
-    color: white;
+    color: #666;
     letter-spacing: 0.05em;
     opacity: 0.8;
 }
@@ -179,17 +175,28 @@ a.pure-button-primary {
  */
 .content-wrapper {
     /* These styles are required for the "scroll-over" effect */
-    position: absolute;
-    top: 87%;
+    position: relative;
     width: 100%;
     min-height: 12%;
     z-index: 2;
     background: white;
+    text-align: center;
 
 }
 .content-wrapper .content{
+    max-width: 720px;
     margin: 9 auto;
     display: block;
+}
+.content-wrapper .content .avatar{
+    width:150px;
+    height: 150px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    border:2px solid rgba(0,0,0,.05);
+}
+.content-wrapper .content pre{
+    text-align: left;
 }
 /* This is the class used for the main content headers (<h2>) */
 .content-head {
@@ -260,7 +267,6 @@ a.pure-button-primary {
     to work with */
     .splash {
         width: 50%;
-        height: 50%;
     }
 
     .splash-head {
