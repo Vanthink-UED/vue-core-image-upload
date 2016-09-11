@@ -1,7 +1,7 @@
 ## Vue-Core-Image-Upload
 a vue plugin for image upload and crop ( Support 📱 IE9+)
 
-<img width="360" src="http://img1.vued.vanthink.cn/vued0486684bfe534fd6fbec2aa18f8f83a1.png" />
+<img width="360" src="./shots/vued0486684bfe534fd6fbec2aa18f8f83a1.png" />
 
 
 ### Install
@@ -83,7 +83,7 @@ errorHandle(err) {
 If you crop a image , your crop will send a request to your server with some crop arguments;
 
                         
-<img src="http://img1.vued.vanthink.cn/vuedba0ed377b88fc84d51026310efcb255b.png" />
+<img src="./shots/vuedba0ed377b88fc84d51026310efcb255b.png" />
 
 
 + `toCropImgX`: the distance of cropbox to the image left;
