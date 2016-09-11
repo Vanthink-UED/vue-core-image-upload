@@ -1,202 +1,201 @@
 
 <template>
-<div class="g-core-image-upload-btn button button-full">
-    {{text}}
-    <form class="g-core-image-upload-form" v-show="!hasImage" method="post" enctype="multipart/form-data" action="/api2/common_user/cropHeadUrl" style="display: block; cursor: pointer; position: absolute; left: 0px; top: 0px; width: 1242px; height: 61px; opacity: 0; margin: 0px; padding: 0px; overflow: hidden;">
-      <input v-disbaled="uploading" id="g-core-upload-input" name="{{inputOfFile}}" type="file" accept="image/*" v-on:change="change" style="width: 100%; height: 100%;">
-    </form>
-</div>  
+  <div class="g-core-image-upload-btn button button-full">
+      {{text}}
+      <form class="g-core-image-upload-form" v-show="!hasImage" method="post" enctype="multipart/form-data" action="/api2/common_user/cropHeadUrl" style="display: block; cursor: pointer; position: absolute; left: 0px; top: 0px; width: 1242px; height: 61px; opacity: 0; margin: 0px; padding: 0px; overflow: hidden;">
+        <input v-disbaled="uploading" id="g-core-upload-input" name="{{inputOfFile}}" type="file" accept="image/*" v-on:change="change" style="width: 100%; height: 100%;">
+      </form>
+  </div>  
 
-<div class="g-core-image-corp-container" v-show="hasImage">
-    <div class="image-aside">
-      <div class="g-crop-image-box">
-        <div class="g-crop-image-principal">
-          <img v-bind:src="image.src" v-bind:style="{ width:image.width + 'px',height: image.height + 'px' }">
-          <div class="select-recorte" v-on:touchstart="drag" v-on:mousedown="drag" style="width:100px;height:100px;">
-            <div class="g-s-resize" style="z-index: 90;"></div>
-            <div class="g-e-resize" style="z-index: 90;"></div>
-            <div class="g-resize" v-on:touchstart="resize" v-on:mousedown="resize"></div>
+  <div class="g-core-image-corp-container" v-show="hasImage">
+      <div class="image-aside">
+        <div class="g-crop-image-box">
+          <div class="g-crop-image-principal">
+            <img v-bind:src="image.src" v-bind:style="{ width:image.width + 'px',height: image.height + 'px' }">
+            <div class="select-recorte" v-on:touchstart="drag" v-on:mousedown="drag" style="width:100px;height:100px;">
+              <div class="g-s-resize" style="z-index: 90;"></div>
+              <div class="g-e-resize" style="z-index: 90;"></div>
+              <div class="g-resize" v-on:touchstart="resize" v-on:mousedown="resize"></div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="info-aside">
-      <p class="btn-groups">
-        <button type="button" v-on:click="doCrop" class="btn btn-upload">确定</button>
-        <button type="button" v-on:click="cancel()" class="btn btn-cancel">取消</button>
-      </p>
-    </div>
-</div>
-
+      <div class="info-aside">
+        <p class="btn-groups">
+          <button type="button" v-on:click="doCrop" class="btn btn-upload">确定</button>
+          <button type="button" v-on:click="cancel()" class="btn btn-cancel">取消</button>
+        </p>
+      </div>
+  </div>
 </template>
 
 <style>
-.g-core-image-upload-btn{
-    position: relative;
-}
-  
-.g-core-image-upload-form{
-  position: absolute;
-  left:0;
-  right: 0;
-  top:0;
-  bottom:0;
-  opacity: 0;
-}
-.g-core-image-upload-container{
-    position: absolute;
-    background: #111;
-    z-index: 900;
-}
-.g-core-image-upload-modal{
-    position: absolute;
-    left:0;
-    right:0;
-    width: 100%;
-    height: 100%;
-    border:1px solid #ccc;
-    z-index: 899;
-}
-.dropped{
-    border:4px solid #ea6153;
-}
-
-.g-core-image-corp-container{
-    z-index: 1900;
-    position:fixed;
-    left:0;
-    right:0;
-    top:0;
-    bottom: 0;
-    background: rgba(0,0,0,.9);
-    color:#f1f1f1;
-}
-.g-core-image-corp-container .image-aside{
-    overflow: hidden;
-    position: absolute;
-    right: 30px;
-    left:30px;
-    top:60px;
-    bottom:20px;
-    text-align: center;
-}
-.g-core-image-corp-container .image-aside img{
-    max-width: 100%;
-}
-.g-core-image-corp-container .info-aside{
+  .g-core-image-upload-btn{
+      position: relative;
+  }
+    
+  .g-core-image-upload-form{
     position: absolute;
     left:0;
     right: 0;
     top:0;
-    height: 40px;
-    padding-left: 10px;
-    padding-right: 10px;
-    background: #fefefe;
-    color:#777;
-}
-.g-core-image-corp-container .info-aside .image-corp-preview{
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-    border:2px solid #ccc;
-}
-.g-core-image-corp-container .info-aside .image-corp-preview.circled{
-    border-radius: 160px;
-}
-.g-core-image-corp-container .info-aside .image-corp-preview img{
-    width: 100%;
-}
-.g-core-image-corp-container .info-aside .config-info .image-details{
-    width: 100%;
-    color:#999;    
-}
+    bottom:0;
+    opacity: 0;
+  }
+  .g-core-image-upload-container{
+      position: absolute;
+      background: #111;
+      z-index: 900;
+  }
+  .g-core-image-upload-modal{
+      position: absolute;
+      left:0;
+      right:0;
+      width: 100%;
+      height: 100%;
+      border:1px solid #ccc;
+      z-index: 899;
+  }
+  .dropped{
+      border:4px solid #ea6153;
+  }
 
-.g-core-image-corp-container .info-aside .config-info .image-details td{
-    border:none; 
-    line-height: 24px;
-}
-.g-core-image-corp-container .info-aside .config-info .image-details tr td:first-child{
-    width:36%;  
-}
-.g-core-image-corp-container .info-aside .config-info .image-details tr td:last-child{
-    color:#555; 
-}
-.g-core-image-corp-container .btn-groups{
-    text-align: right;
-    margin: 5px 0 0;
-}
-.g-core-image-corp-container .btn{
-    display: inline-block;
-    padding: 0 15px;
-    height: 32px;
-    margin-left: 15px;
-    background: #fff;
-    border:1px solid #ccc;
-    border-radius: 2px;
-    font-size: 13px;
-    color:#222;
-    line-height: 32px;
-    transition: all .1s ease-in;
-}
-.g-core-image-corp-container .btn:hover{
-    border:1px solid #777;
-    box-shadow: 0 1px 3px rgba(0,0,0,.05); 
-}
-.g-core-image-corp-container .btn:active,{
-    background: #ddd;
-}
-.g-core-image-corp-container .btn:disabled{
-    background: #eee !important;
-    border-color:#ccc;
-    cursor: not-allowed;
-}
-.g-core-image-corp-container .btn-upload{
-    background: #27ae60;
-    border-color:#27ae60;
-    color:#fff;
-}
-.g-core-image-corp-container .btn-upload:hover{
-    background: #2dc26c;
-    border-color:#27ae60;
-    box-shadow: 0 1px 3px rgba(0,0,0,.05); 
-}
-.g-core-image-corp-container .g-crop-image-box,.g-core-image-corp-container .g-crop-image-box .g-crop-image-principal{
-    position: relative;   
-    
-}
-.g-core-image-corp-container .g-crop-image-box .select-recorte{
+  .g-core-image-corp-container{
+      z-index: 1900;
+      position:fixed;
+      left:0;
+      right:0;
+      top:0;
+      bottom: 0;
+      background: rgba(0,0,0,.9);
+      color:#f1f1f1;
+  }
+  .g-core-image-corp-container .image-aside{
+      overflow: hidden;
+      position: absolute;
+      right: 30px;
+      left:30px;
+      top:60px;
+      bottom:20px;
+      text-align: center;
+  }
+  .g-core-image-corp-container .image-aside img{
+      max-width: 100%;
+  }
+  .g-core-image-corp-container .info-aside{
+      position: absolute;
+      left:0;
+      right: 0;
+      top:0;
+      height: 40px;
+      padding-left: 10px;
+      padding-right: 10px;
+      background: #fefefe;
+      color:#777;
+  }
+  .g-core-image-corp-container .info-aside .image-corp-preview{
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      border:2px solid #ccc;
+  }
+  .g-core-image-corp-container .info-aside .image-corp-preview.circled{
+      border-radius: 160px;
+  }
+  .g-core-image-corp-container .info-aside .image-corp-preview img{
+      width: 100%;
+  }
+  .g-core-image-corp-container .info-aside .config-info .image-details{
+      width: 100%;
+      color:#999;    
+  }
+
+  .g-core-image-corp-container .info-aside .config-info .image-details td{
+      border:none; 
+      line-height: 24px;
+  }
+  .g-core-image-corp-container .info-aside .config-info .image-details tr td:first-child{
+      width:36%;  
+  }
+  .g-core-image-corp-container .info-aside .config-info .image-details tr td:last-child{
+      color:#555; 
+  }
+  .g-core-image-corp-container .btn-groups{
+      text-align: right;
+      margin: 5px 0 0;
+  }
+  .g-core-image-corp-container .btn{
+      display: inline-block;
+      padding: 0 15px;
+      height: 32px;
+      margin-left: 15px;
+      background: #fff;
+      border:1px solid #ccc;
+      border-radius: 2px;
+      font-size: 13px;
+      color:#222;
+      line-height: 32px;
+      transition: all .1s ease-in;
+  }
+  .g-core-image-corp-container .btn:hover{
+      border:1px solid #777;
+      box-shadow: 0 1px 3px rgba(0,0,0,.05); 
+  }
+  .g-core-image-corp-container .btn:active,{
+      background: #ddd;
+  }
+  .g-core-image-corp-container .btn:disabled{
+      background: #eee !important;
+      border-color:#ccc;
+      cursor: not-allowed;
+  }
+  .g-core-image-corp-container .btn-upload{
+      background: #27ae60;
+      border-color:#27ae60;
+      color:#fff;
+  }
+  .g-core-image-corp-container .btn-upload:hover{
+      background: #2dc26c;
+      border-color:#27ae60;
+      box-shadow: 0 1px 3px rgba(0,0,0,.05); 
+  }
+  .g-core-image-corp-container .g-crop-image-box,.g-core-image-corp-container .g-crop-image-box .g-crop-image-principal{
+      position: relative;   
+      
+  }
+  .g-core-image-corp-container .g-crop-image-box .select-recorte{
+      position: absolute;
+      background: #fff;
+      opacity: .5;
+      border:2px dashed #555;
+      cursor: move;
+      
+  }
+  .g-core-image-corp-container .g-resize{
+    z-index: 90;
     position: absolute;
-    background: #fff;
-    opacity: .5;
-    border:2px dashed #555;
-    cursor: move;
-    
-}
-.g-core-image-corp-container .g-resize{
-  z-index: 90;
-  position: absolute;
-  bottom: 1px;
-  right: 1px;
-  width: 14px;
-  height: 14px;
-  cursor: se-resize;
-}
-.g-core-image-corp-container .g-e-resize{
-  cursor: e-resize;
-  position: absolute;
-  width: 7px;
-  right: -5px;
-  top: 0;
-  height: 100%;
-}
-.g-core-image-corp-container .g-s-resize{
-  position: absolute;
-  cursor: s-resize;
-  height: 7px;
-  width: 100%;
-  bottom: -5px;
-  left: 0;
-}  
+    bottom: 1px;
+    right: 1px;
+    width: 20px;
+    height: 20px;
+    cursor: se-resize;
+  }
+  .g-core-image-corp-container .g-e-resize{
+    cursor: e-resize;
+    position: absolute;
+    width: 7px;
+    right: -5px;
+    top: 0;
+    height: 100%;
+  }
+  .g-core-image-corp-container .g-s-resize{
+    position: absolute;
+    cursor: s-resize;
+    height: 7px;
+    width: 100%;
+    bottom: -5px;
+    left: 0;
+  }  
 </style>
 
 <script>
@@ -309,7 +308,7 @@
   * @el  dom
   * @container  dom
   * @ratio  string '1:1' like this
-  * @e events
+  * e events
   **/
   class Resize {
     constructor($el,$container,ratio,e) {
@@ -320,27 +319,125 @@
         w: parseInt(window.getComputedStyle($el).width),
         h: parseInt(window.getComputedStyle($el).height),
       };
+      this.splitX = ratio.split(':')[0];
+      this.splitY = ratio.split(':')[1];
       this.el = $el;
       this.container = $container;
       if(isMobile) {
         this.container.addEventListener('touchmove',this.drag.bind(this),false);
-        this.container.addEventListener('touchend',this.stopDrag.bind(this),false);  
-        return;
+         
       }
       this.container.addEventListener('mousemove',this.drag.bind(this),false);
-      this.container.addEventListener('mouseup',this.stopDrag.bind(this),false);
+      
     }
     
     drag(e) {
       if(!this.el) {
         return;
       }
-      this.el.style.width = (this.coor.w + (isMobile ? e.changedTouches[0]['clientX']:e.clientX) - this.coor.x) + 'px';
-      this.el.style.height = (this.coor.h + (isMobile ? e.changedTouches[0]['clientY']:e.clientY) - this.coor.y) + 'px';
+      let $dotBox = document.querySelector('.g-crop-image-principal');
+      let $topH = document.querySelector('.info-aside');
+      let $halfX = parseInt(document.body.offsetWidth) - parseInt(window.getComputedStyle($dotBox).width);
+      let $halfY = parseInt(document.body.offsetHeight) - parseInt(window.getComputedStyle($dotBox).height) - parseInt(window.getComputedStyle($topH).height);
+      let resetX = isMobile ? e.changedTouches[0]['clientX'] : e.clientX;
+      let resetY = isMobile ? e.changedTouches[0]['clientY'] : e.clientY;
+
+      if (this.splitX > this.splitY) {
+        if (parseInt(resetX) >= ($halfX / 2) + parseInt(window.getComputedStyle($dotBox).width)) {
+          return;
+        } else {
+          if (parseInt(this.el.style.width) >= parseInt(window.getComputedStyle($dotBox).width)) {
+            this.el.style.width = window.getComputedStyle($dotBox).width;
+          };
+          this.el.style.width = (this.coor.w + (isMobile ? e.changedTouches[0]['clientX']:e.clientX) - this.coor.x) + 'px';
+          this.el.style.height = parseInt(this.el.style.width) * (this.splitY / this.splitX) + 'px';
+          //限制拖拉的范围在图片内
+          if ( parseInt(window.getComputedStyle($dotBox).width) >  parseInt(window.getComputedStyle($dotBox).height)) {
+            if (parseInt(this.el.style.height) >= parseInt(window.getComputedStyle($dotBox).height)) {
+              this.el.style.height = window.getComputedStyle($dotBox).height;
+              this.el.style.width = parseInt(window.getComputedStyle($dotBox).height) * (this.splitX / this.splitY) + 'px';
+              return;
+            };
+          } else if(parseInt(window.getComputedStyle($dotBox).width) <  parseInt(window.getComputedStyle($dotBox).height)) {
+            if (parseInt(this.el.style.width) >= parseInt(window.getComputedStyle($dotBox).width)) {
+              this.el.style.width = window.getComputedStyle($dotBox).width;
+              this.el.style.height = parseInt(window.getComputedStyle($dotBox).width) * (this.splitY / this.splitX) + 'px';
+              return;
+            }
+          } else {
+            if (parseInt(this.el.style.width) >= parseInt(window.getComputedStyle($dotBox).width)) {
+              this.el.style.width = window.getComputedStyle($dotBox).width;
+              this.el.style.height = parseInt(window.getComputedStyle($dotBox).width) * (this.splitY / this.splitX) + 'px';
+              return;
+            }
+          }
+        }
+      } else if(this.splitX < this.splitY){
+        if (parseInt(resetY) >= ($halfY / 2) + parseInt(window.getComputedStyle($dotBox).height) + parseInt(window.getComputedStyle($topH).height)) {
+          return;
+        } else {
+          this.el.style.height = (this.coor.h + (isMobile ? e.changedTouches[0]['clientY']:e.clientY) - this.coor.y) + 'px';
+          this.el.style.width = parseInt(this.el.style.height) * (this.splitX / this.splitY) + 'px';
+          //限制拖拉的范围在图片内
+          if ( parseInt(window.getComputedStyle($dotBox).width) >  parseInt(window.getComputedStyle($dotBox).height)) {
+            if (parseInt(this.el.style.height) >= parseInt(window.getComputedStyle($dotBox).height)) {
+              this.el.style.height = window.getComputedStyle($dotBox).height;
+              this.el.style.width = parseInt(window.getComputedStyle($dotBox).height) * (this.splitX / this.splitY) + 'px';
+              return;
+            };
+          } else if(parseInt(window.getComputedStyle($dotBox).width) <  parseInt(window.getComputedStyle($dotBox).height)) {
+            if (parseInt(this.el.style.width) >= parseInt(window.getComputedStyle($dotBox).width)) {
+              this.el.style.width = window.getComputedStyle($dotBox).width;
+              this.el.style.height = parseInt(window.getComputedStyle($dotBox).width) * (this.splitY / this.splitX) + 'px';
+              return;
+            }
+          } else {
+            if (parseInt(this.el.style.width) >= parseInt(window.getComputedStyle($dotBox).width)) {
+              this.el.style.width = window.getComputedStyle($dotBox).width;
+              this.el.style.height = parseInt(window.getComputedStyle($dotBox).width) * (this.splitY / this.splitX) + 'px';
+              return;
+            }
+          }
+        }
+      } else {
+        if (parseInt(resetX) >= ($halfX / 2) + parseInt(window.getComputedStyle($dotBox).width)) {
+          //现在拖拉范围不准超过某一边的范围
+          return;
+        } else {
+
+          this.el.style.width = (this.coor.w + (isMobile ? e.changedTouches[0]['clientX']:e.clientX) - this.coor.x) + 'px';
+          this.el.style.height = this.el.style.width;
+          //限制拖拉的范围在图片内
+          if ( parseInt(window.getComputedStyle($dotBox).width) >  parseInt(window.getComputedStyle($dotBox).height)) {
+            if (parseInt(this.el.style.height) >= parseInt(window.getComputedStyle($dotBox).height)) {
+              this.el.style.height = window.getComputedStyle($dotBox).height;
+              this.el.style.width = window.getComputedStyle($dotBox).height;
+            };
+          } else if(parseInt(window.getComputedStyle($dotBox).width) <  parseInt(window.getComputedStyle($dotBox).height)) {
+            if (parseInt(this.el.style.width) >= parseInt(window.getComputedStyle($dotBox).width)) {
+              this.el.style.width = window.getComputedStyle($dotBox).width;
+              this.el.style.height = window.getComputedStyle($dotBox).width;
+            }
+          } else {
+            if (parseInt(this.el.style.width) >= parseInt(window.getComputedStyle($dotBox).width)) {
+              this.el.style.width = this.el.style.height = window.getComputedStyle($dotBox).width;
+            }
+          }
+        }
+      }
+      if(isMobile) {
+        this.container.addEventListener('touchend',this.stopDrag.bind(this),false);
+      } else {
+        this.container.addEventListener('mouseup',this.stopDrag.bind(this),false);
+      }
     }
     
     stopDrag(e) {
       this.el = null;
+      // if(isMobile) {
+      //   this.container.removeEventListener('touchmove',this.drag.bind(this),false);
+      // }
+      // this.container.removeEventListener('mousemove',this.drag.bind(this),false);
       this.container = null;
     }
   };
@@ -657,8 +754,7 @@
       resize(e) {
         let $el = e.target.parentElement;
         let $container = document.querySelector('.g-crop-image-principal');
-        let resizedObj = new Resize($el,$container,this.ratio,e);
-        
+        let resizedObj = new Resize($el,$container,this.cropRatio,e);
       },
       
       drag(e) {
