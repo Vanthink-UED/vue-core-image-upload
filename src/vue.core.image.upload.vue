@@ -600,7 +600,6 @@
         }
         
         this.files = e.target.files;
-        console.log(this.files);
         if(this.crop) {
           this.__showImage();
           return;
