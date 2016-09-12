@@ -22,7 +22,7 @@
     echo json_encode(array(
         'errcode' => 0,
         'data' => array(
-            'src' => './images' . '/images/' . basename($_FILES['files']['name']),
+            'src' =>  './images/' . basename($_FILES['files']['name']),
             'name' => $file['name'],
         ),
         'errmsg' => 'not found your image'
