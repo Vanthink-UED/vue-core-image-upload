@@ -1,6 +1,6 @@
 {
   "name": "vue-core-image-upload",
-  "version": "0.9.1",
+  "version": "0.9.5",
   "description": "a vue plgin for image upload and crop",
   "main": "index.js",
   "dependencies": {
@@ -23,7 +23,8 @@
   },
   "scripts": {
     "test": "npm run test",
-    "build": "rm -f ./index.js && webpack --config ./webpack.config.js"
+    "build": "rm -f ./index.js && webpack --config ./webpack.config.js",
+    "demo": "webpack --config ./webpack.config.demo.js"
   },
   "repository": {
     "type": "git",

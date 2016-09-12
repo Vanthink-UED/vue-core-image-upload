@@ -1,13 +1,12 @@
 const webpack = require( 'webpack' )
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/vue.core.image.upload.vue',
   output: {
     path: './',
     filename: 'index.js',
-    library: 'vue-core-image-upload',
-    libraryTarget: 'cmd',
-    umdNamedDefine: true
+    library: 'VueCoreImageUpload',
+    libraryTarget: 'umd',
   },
   resolve: {
     extensions: [ '', '.js', '.vue' ]
