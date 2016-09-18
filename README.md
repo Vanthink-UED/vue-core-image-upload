@@ -54,6 +54,7 @@ new Vue({
 | maxFileSize | Number   |   10485760(10M) | limit the file size|
 | maxWidth | Number   |   150 | limit the width of your image you cropped|
 | maxheight | Number   |   150 | limit the height of your image you cropped|
+| inputAccept | string   |  'image/*' / 'image/jpg,image/jpeg,image/png' |  the image file of accept type |
 
 ### $dispatch, events
 
@@ -92,8 +93,6 @@ If you crop a image , your crop will send a request to your server with some cro
 + `toCropImgH`: the height of cropbox
 + `maxWidth`: the maxium width of your target image 
 + `maxHeight`: the maxium height of your target image 
-+ `inputAccept`: the image file of accept type 
-
 If you want to change the crop window style , you should write your own css files.
 
 ### MIT Liscense 
