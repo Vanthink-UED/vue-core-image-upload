@@ -36,7 +36,7 @@
                 <div class="user">
                     <img class="avatar" v-bind:src="src"/>
                 </div>
-                <vue-core-image-upload v-bind:class="['pure-button','pure-button-primary','js-btn-crop']" v-bind:crop="false" url="./upload.php" extensions="png,gif,jpeg,jpg"></vue-core-image-upload>
+                <vue-core-image-upload v-bind:class="['pure-button','pure-button-primary','js-btn-crop']" v-bind:crop="false" url="./upload.php" extensions="png,gif,jpeg,jpg" input-accept="image/*"></vue-core-image-upload>
                 <p>Click button to upload your image</p>
                 <pre><code>
 import VueCoreImageUpload  from './vue.core.image.upload.vue';
@@ -76,7 +76,7 @@ new Vue({
                     <img class="avatar" v-bind:src="cropSrc"/>
                     <p>{{name}}</p>
                 </div>
-              <vue-core-image-upload  crop-ratio="1:1" v-bind:class="['pure-button','pure-button-primary','js-btn-crop']" v-bind:crop="true" url="./crop.php" extensions="png,gif,jpeg,jpg"></vue-core-image-upload>
+              <vue-core-image-upload  crop-ratio="1:1" v-bind:class="['pure-button','pure-button-primary','js-btn-crop']" v-bind:crop="true" url="./crop.php" extensions="png,gif,jpeg,jpg" input-accept="image/*"></vue-core-image-upload>
               <h3>Crop Arguments</h3>
               <table class="pure-table" style="width:100%;">
                 <thead>

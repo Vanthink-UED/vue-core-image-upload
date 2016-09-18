@@ -92,6 +92,7 @@ If you crop a image , your crop will send a request to your server with some cro
 + `toCropImgH`: the height of cropbox
 + `maxWidth`: the maxium width of your target image 
 + `maxHeight`: the maxium height of your target image 
++ `inputAccept`: the image file of accept type 
 
 If you want to change the crop window style , you should write your own css files.
 
