@@ -746,7 +746,7 @@
             }      
 
         }
-        
+        this. __dispatch('imageUploading',this.files);
         xhr('POST',this.url,{},data,function(res) {
           if(typeof callback === 'function') {
             callback();
