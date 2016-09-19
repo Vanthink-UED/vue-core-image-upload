@@ -48,6 +48,7 @@ new Vue({
 | url     | String | '/crop.php' | your server url |
 | text      | String      |  'Upload Image' | the text you want to show |
 | inputOfFile | String     |   'file' | upload file form name |
+|inputAccept  | String    | 'image/*' | limit the file accept|
 | extensions | String   |    'png,jpg,gif' | limit the file type |
 | crop | Boolean   |   true | if need crop image |
 | cropRatio | String   |   '1:1' | limit the cropped image shape|
