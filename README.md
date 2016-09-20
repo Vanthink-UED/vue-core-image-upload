@@ -1,4 +1,4 @@
-## Vue-Core-Image-Upload  [![Build Status](https://travis-ci.org/Vanthink-UED/vue.core.image.upload.svg?branch=master)](https://travis-ci.org/Vanthink-UED/vue.core.image.upload)
+## Vue-Core-Image-Upload 
 a vue plugin for image upload and crop ( Support 📱 IE9+)
 
 <img width="360" src="./shots/vued0486684bfe534fd6fbec2aa18f8f83a1.png" />
