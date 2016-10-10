@@ -25,7 +25,7 @@ new Vue({
 
   },
   events: {
-    imageUploaded(res) {
+    imageuploaded(res) {
       if (res.errcode == 0) {
         if(res.data.src) {
           this.src = res.data.src;

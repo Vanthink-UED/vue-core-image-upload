@@ -746,7 +746,7 @@
             }      
 
         }
-        this. __dispatch('imageUploading',this.files);
+        this. __dispatch('imageuploading',this.files);
         xhr('POST',this.url,{},data,function(res) {
           if(typeof callback === 'function') {
             callback();
@@ -755,7 +755,7 @@
           if(self.crop) {
               self.hasImage = false;
            } 
-           self.__dispatch('imageUploaded',res);
+           self.__dispatch('imageuploaded',res);
         });  
       },
       
