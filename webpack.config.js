@@ -34,7 +34,7 @@ module.exports = {
       plugins: ['transform-runtime']
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin( {
+    /**new webpack.optimize.UglifyJsPlugin( {
       minimize : true,
       sourceMap : false,
       mangle: true,
@@ -42,5 +42,6 @@ module.exports = {
         warnings: false
       }
     } )
+    */
   ]
 }

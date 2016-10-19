@@ -35,6 +35,33 @@ new Vue({
 });
 ```
 
+Use CDN Script
+```js
+// include the script
+<script src="http://s1.vued.vanthink.cn/e3c077a46b11/index.js"></script>
+...
+var MyComponent = Vue.extend(VueCoreImageUpload);
+new Vue({
+  el: '#app',
+  components: {
+    'vue-core-image-upload': MyComponent
+  },
+  data: {
+    src: 'http://img1.vued.vanthink.cn/vued0a233185b6027244f9d43e653227439a.png',
+  },
+  methods: {
+
+  },
+  events: {
+    imageUploaded(res) {
+      if (res.errcode == 0) {
+        this.src = 'http://img1.vued.vanthink.cn/vued751d13a9cb5376b89cb6719e86f591f3.png';
+      }
+    }
+  },
+});
+```
+
 ``` html
 <vue-core-image-upload v-bind:class="['pure-button','pure-button-primary','js-btn-crop']" v-bind:crop="false" url="./crop.php" extensions="png,gif,jpeg,jpg"></vue-core-image-upload>
 ```

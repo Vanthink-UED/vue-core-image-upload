@@ -8,7 +8,7 @@ Google Code style (c) Aahan Krish <geekpanth3r@gmail.com>
   display: block;
   overflow-x: auto;
   padding: 0.5em;
-  background: #f1f1f1;
+  background: #f8f8f8;
   color: black;
 }
 
@@ -22,7 +22,7 @@ Google Code style (c) Aahan Krish <geekpanth3r@gmail.com>
 .hljs-section,
 .hljs-title,
 .hljs-name {
-  color: #008;
+  color: #e96900;;
 }
 
 .hljs-variable,
@@ -34,7 +34,7 @@ Google Code style (c) Aahan Krish <geekpanth3r@gmail.com>
 .hljs-selector-attr,
 .hljs-selector-pseudo,
 .hljs-regexp {
-  color: #080;
+  color: #42b983;
 }
 
 .hljs-literal,
@@ -53,7 +53,7 @@ Google Code style (c) Aahan Krish <geekpanth3r@gmail.com>
 .hljs-built_in,
 .hljs-builtin-name,
 .hljs-params {
-  color: #606;
+  color: #2973b7;
 }
 
 .hljs-attribute,

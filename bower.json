@@ -1,0 +1,44 @@
+{
+  "name": "vue-core-image-upload",
+  "description": "a vue plgin for image upload and crop",
+  "main": "index.js",
+  "authors": [
+    "JackPu"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "vue",
+    "plugin",
+    "upload",
+    "image",
+    "crop",
+    "image"
+  ],
+  "homepage": "https://github.com/Vanthink-UED/vue.core.image.upload",
+  "private": true,
+  "dependencies": {
+    "vue": "^1.0.26"
+  },
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-stage-2": "^6.13.0",
+    "babel-runtime": "^6.11.6",
+    "css-loader": "^0.25.0",
+    "style-loader": "^0.13.1",
+    "vue-html-loader": "^1.2.3",
+    "vue-loader": "^8.5.2",
+    "vue-style-loader": "^1.0.0",
+    "webpack": "^1.13.2"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
