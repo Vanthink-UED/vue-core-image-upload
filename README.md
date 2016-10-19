@@ -35,7 +35,7 @@ new Vue({
 });
 ```
 
-Use CDN Script
+Use CDN Script(ES5)
 ```js
 // include the script
 <script src="http://s1.vued.vanthink.cn/e3c077a46b11/index.js"></script>
