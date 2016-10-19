@@ -80,6 +80,7 @@ Use CDN Script(ES5)
 | extensions | String   |    'png,jpg,gif' | limit the file type |
 | crop | Boolean   |   true | if need crop image |
 | cropRatio | String   |   '1:1' | limit the cropped image shape|
+| cropBtn | Object   |   {ok:'Save','cancel':'Give Up'} | the text of crop button|
 | maxFileSize | Number   |   10485760(10M) | limit the file size|
 | maxWidth | Number   |   150 | limit the width of your image you cropped|
 | maxheight | Number   |   150 | limit the height of your image you cropped|

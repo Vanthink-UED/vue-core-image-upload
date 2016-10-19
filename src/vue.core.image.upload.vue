@@ -22,8 +22,8 @@
       </div>
       <div class="info-aside">
         <p class="btn-groups">
-          <button type="button" v-on:click="doCrop" class="btn btn-upload">确定</button>
-          <button type="button" v-on:click="cancel()" class="btn btn-cancel">取消</button>
+          <button type="button" v-on:click="doCrop" class="btn btn-upload">{{cropBtn.ok}}</button>
+          <button type="button" v-on:click="cancel()" class="btn btn-cancel">{{cropBtn.cancel}}</button>
         </p>
       </div>
   </div>
@@ -82,6 +82,12 @@
   }
   .g-core-image-corp-container .image-aside img{
     max-width: 100%;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
   .g-core-image-corp-container .info-aside{
     position: absolute;
@@ -180,6 +186,16 @@
     width: 20px;
     height: 20px;
     cursor: se-resize;
+  }
+  .g-core-image-corp-container .g-resize:after{
+    content: '';
+    display: block;
+    position: absolute;
+    background: #000;
+    width: 5px;
+    height: 5px;
+    right: 0;
+    bottom: 0;
   }
   .g-core-image-corp-container .g-e-resize{
     cursor: e-resize;
@@ -538,6 +554,15 @@
         type: Boolean,
         default: false,
       },
+      cropBtn: {
+        type: Object,
+        default: function() {
+          return {
+            ok: '保存',
+            cancel: '取消',
+          }
+        }
+      },
       cropRatio: {
         type: String,
         default: '1:1'
@@ -619,6 +644,7 @@
       
       
       __showImage() {
+      
         this.hasImage = true;  
         this.__readFiles();
       },

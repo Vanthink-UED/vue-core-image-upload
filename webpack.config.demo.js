@@ -7,7 +7,7 @@ module.exports = {
     filename: 'demo.min.js',
   },
   resolve: {
-    extensions: [ '', '.js', '.vue' ]
+    extensions: [ '','.js', '.vue' ]
   },
   module: {
     loaders: [
@@ -33,8 +33,8 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.UglifyJsPlugin( {
-      minimize : false,
-      sourceMap : true,
+      minimize : true,
+      sourceMap : false,
       mangle: true,
       compress: {
         warnings: false

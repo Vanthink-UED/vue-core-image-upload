@@ -1,14 +1,11 @@
 var Vue = require('vue');
 
-import VueCoreImageUpload  from '../index';
+var VueCoreImageUpload = require('./vue.core.image.upload');
 
-Vue.config.debug = true;
+Vue.config.debug = false;
 Vue.config.silent = false;
 Vue.config.async = false;
-Vue.config.devtools = true;
-
-
-
+Vue.config.devtools = false;
 
 new Vue({
   el: '#app',
