@@ -66,7 +66,7 @@ new Vue({
 <vue-core-image-upload v-bind:class="['pure-button','pure-button-primary','js-btn-crop']" v-bind:crop="false" url="./crop.php" extensions="png,gif,jpeg,jpg"></vue-core-image-upload>
 ```
 
-[Demo] (http://events.jackpu.com/vue-core-image-upload/demo/upload.html)
+[Demo] (http://vanthink-ued.github.io/vue-core-image-upload/upload.html)
 
 ### Options
 
