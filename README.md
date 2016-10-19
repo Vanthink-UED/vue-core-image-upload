@@ -54,7 +54,7 @@ Use CDN Script(ES5)
 
       },
       events: {
-        imageUploaded(res) {
+        imageUploaded: function(res) {
           if (res.errcode == 0) {
             this.src = 'http://img1.vued.vanthink.cn/vued751d13a9cb5376b89cb6719e86f591f3.png';
           }
