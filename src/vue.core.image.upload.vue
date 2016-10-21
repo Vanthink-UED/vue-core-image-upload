@@ -12,10 +12,10 @@
         <div class="g-crop-image-box">
           <div class="g-crop-image-principal">
             <img v-bind:src="image.src" v-bind:style="{ width:image.width + 'px',height: image.height + 'px' }">
-            <div class="select-recorte" v-on:touchstart="drag" v-on:mousedown="drag" style="width:100px;height:100px;">
+            <div class="select-recorte" v-on:touchstart.self="drag" v-on:mousedown.self="drag" style="width:100px;height:100px;">
               <div class="g-s-resize" style="z-index: 90;"></div>
               <div class="g-e-resize" style="z-index: 90;"></div>
-              <div class="g-resize" v-on:touchstart="resize" v-on:mousedown="resize"></div>
+              <div class="g-resize" v-on:touchstart.self="resize" v-on:mousedown.self="resize"></div>
             </div>
           </div>
         </div>
@@ -320,16 +320,17 @@
   };
   
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  
   /** Reszie
   * @el  dom
   * @container  dom
   * @ratio  string '1:1' like this
   * e events
   **/
+  let moves , stopM, drags, stopD;
   class Resize {
     constructor($el,$container,ratio,e) {
       e.stopPropagation();
+      let self = this;
       this.coor = {
         x: isMobile ? e.touches[0]['clientX']:e.clientX,
         y: isMobile ? e.touches[0]['clientY']:e.clientY,
@@ -340,11 +341,18 @@
       this.splitY = ratio.split(':')[1];
       this.el = $el;
       this.container = $container;
-      if(isMobile) {
-        this.container.addEventListener('touchmove',this.drag.bind(this),false);
-         
+      drags = function(e) {
+        self.drag(e);
+      };
+      stopD = function(e) {
+        self.stopDrag(e);
       }
-      this.container.addEventListener('mousemove',this.drag.bind(this),false);
+      if(isMobile) {
+        document.addEventListener('touchmove',drags,false);
+        document.addEventListener('touchend',stopD,false)
+      }
+      document.addEventListener('mousemove',drags,false);
+      document.addEventListener('mouseup',stopD,false);
       
     }
     
@@ -363,26 +371,26 @@
         if (parseInt(resetX) >= ($halfX / 2) + parseInt(window.getComputedStyle($dotBox).width)) {
           return;
         } else {
-          if (parseInt(this.el.style.width) >= parseInt(window.getComputedStyle($dotBox).width)) {
+          if (parseInt(this.el.offsetWidth) >= parseInt(window.getComputedStyle($dotBox).width)) {
             this.el.style.width = window.getComputedStyle($dotBox).width;
           };
           this.el.style.width = (this.coor.w + (isMobile ? e.changedTouches[0]['clientX']:e.clientX) - this.coor.x) + 'px';
-          this.el.style.height = parseInt(this.el.style.width) * (this.splitY / this.splitX) + 'px';
+          this.el.style.height = parseInt(this.el.offsetWidth) * (this.splitY / this.splitX) + 'px';
           //限制拖拉的范围在图片内
           if ( parseInt(window.getComputedStyle($dotBox).width) >  parseInt(window.getComputedStyle($dotBox).height)) {
-            if (parseInt(this.el.style.height) >= parseInt(window.getComputedStyle($dotBox).height)) {
+            if (parseInt(this.el.offsetWidth) >= parseInt(window.getComputedStyle($dotBox).height)) {
               this.el.style.height = window.getComputedStyle($dotBox).height;
               this.el.style.width = parseInt(window.getComputedStyle($dotBox).height) * (this.splitX / this.splitY) + 'px';
               return;
             };
           } else if(parseInt(window.getComputedStyle($dotBox).width) <  parseInt(window.getComputedStyle($dotBox).height)) {
-            if (parseInt(this.el.style.width) >= parseInt(window.getComputedStyle($dotBox).width)) {
+            if (parseInt(this.el.offsetWidth) >= parseInt(window.getComputedStyle($dotBox).width)) {
               this.el.style.width = window.getComputedStyle($dotBox).width;
               this.el.style.height = parseInt(window.getComputedStyle($dotBox).width) * (this.splitY / this.splitX) + 'px';
               return;
             }
           } else {
-            if (parseInt(this.el.style.width) >= parseInt(window.getComputedStyle($dotBox).width)) {
+            if (parseInt(this.el.offsetHeight) >= parseInt(window.getComputedStyle($dotBox).width)) {
               this.el.style.width = window.getComputedStyle($dotBox).width;
               this.el.style.height = parseInt(window.getComputedStyle($dotBox).width) * (this.splitY / this.splitX) + 'px';
               return;
@@ -397,19 +405,19 @@
           this.el.style.width = parseInt(this.el.style.height) * (this.splitX / this.splitY) + 'px';
           //限制拖拉的范围在图片内
           if ( parseInt(window.getComputedStyle($dotBox).width) >  parseInt(window.getComputedStyle($dotBox).height)) {
-            if (parseInt(this.el.style.height) >= parseInt(window.getComputedStyle($dotBox).height)) {
+            if (parseInt(this.el.offsetHeight) >= parseInt(window.getComputedStyle($dotBox).height)) {
               this.el.style.height = window.getComputedStyle($dotBox).height;
               this.el.style.width = parseInt(window.getComputedStyle($dotBox).height) * (this.splitX / this.splitY) + 'px';
               return;
             };
           } else if(parseInt(window.getComputedStyle($dotBox).width) <  parseInt(window.getComputedStyle($dotBox).height)) {
-            if (parseInt(this.el.style.width) >= parseInt(window.getComputedStyle($dotBox).width)) {
+            if (parseInt(this.el.offsetWidth) >= parseInt(window.getComputedStyle($dotBox).width)) {
               this.el.style.width = window.getComputedStyle($dotBox).width;
               this.el.style.height = parseInt(window.getComputedStyle($dotBox).width) * (this.splitY / this.splitX) + 'px';
               return;
             }
           } else {
-            if (parseInt(this.el.style.width) >= parseInt(window.getComputedStyle($dotBox).width)) {
+            if (parseInt(this.el.offsetWidth) >= parseInt(window.getComputedStyle($dotBox).width)) {
               this.el.style.width = window.getComputedStyle($dotBox).width;
               this.el.style.height = parseInt(window.getComputedStyle($dotBox).width) * (this.splitY / this.splitX) + 'px';
               return;
@@ -426,70 +434,81 @@
           this.el.style.height = this.el.style.width;
           //限制拖拉的范围在图片内
           if ( parseInt(window.getComputedStyle($dotBox).width) >  parseInt(window.getComputedStyle($dotBox).height)) {
-            if (parseInt(this.el.style.height) >= parseInt(window.getComputedStyle($dotBox).height)) {
+            if (parseInt(this.el.offsetHeight) >= parseInt(window.getComputedStyle($dotBox).height)) {
               this.el.style.height = window.getComputedStyle($dotBox).height;
               this.el.style.width = window.getComputedStyle($dotBox).height;
             };
           } else if(parseInt(window.getComputedStyle($dotBox).width) <  parseInt(window.getComputedStyle($dotBox).height)) {
-            if (parseInt(this.el.style.width) >= parseInt(window.getComputedStyle($dotBox).width)) {
+            if (parseInt(this.el.offsetWidth) >= parseInt(window.getComputedStyle($dotBox).width)) {
               this.el.style.width = window.getComputedStyle($dotBox).width;
               this.el.style.height = window.getComputedStyle($dotBox).width;
             }
           } else {
-            if (parseInt(this.el.style.width) >= parseInt(window.getComputedStyle($dotBox).width)) {
+            if (parseInt(this.el.offsetWidth) >= parseInt(window.getComputedStyle($dotBox).width)) {
               this.el.style.width = this.el.style.height = window.getComputedStyle($dotBox).width;
             }
           }
         }
       }
-      if(isMobile) {
-        this.container.addEventListener('touchend',this.stopDrag.bind(this),false);
-      } else {
-        this.container.addEventListener('mouseup',this.stopDrag.bind(this),false);
-      }
+      // if(isMobile) {
+      //   document.addEventListener('touchend',this.stopDrag.bind(this),false);
+      // } else {
+      //   document.addEventListener('mouseup',this.stopDrag.bind(this),false);
+      // }
     }
     
     stopDrag(e) {
       this.el = null;
-      // if(isMobile) {
-      //   this.container.removeEventListener('touchmove',this.drag.bind(this),false);
-      // }
-      // this.container.removeEventListener('mousemove',this.drag.bind(this),false);
-      this.container = null;
+      if(isMobile) {
+        document.removeEventListener('touchmove',drags,false);
+        document.removeEventListener('touchend',stopD,false);
+      }
+      document.removeEventListener('mousemove',drags,false);
+      document.removeEventListener('mouseup',stopD,false);
+      //this.container = null;
     }
   };
   
   // 拖拽
   class Drag {
     constructor($el,$container,e) {
-      
+      let self = this;
       this.el = $el;
       this.container = $container;
       this.coor = {
-        x:(isMobile ? e.touches[0]['clientX']:e.clientX) - $el.offsetLeft - $el.parentElement.offsetLeft,
-        y:(isMobile ? e.touches[0]['clientY']:e.clientY) - $el.offsetTop - $el.parentElement.offsetTop,
+        x:(isMobile ? e.touches[0]['clientX']:e.clientX) - $el.offsetLeft - $el.parentElement.offsetLeft - document.getElementsByClassName('image-aside')[0].offsetLeft,
+        y:(isMobile ? e.touches[0]['clientY']:e.clientY) - $el.offsetTop - $el.parentElement.offsetTop - document.getElementsByClassName('image-aside')[0].offsetTop,
         posX: isMobile ? e.touches[0]['clientX']:e.clientX,
         posy: isMobile ? e.touches[0]['clientY']:e.clientY,
         maxLeft: parseInt(this.container.style.width) - parseInt(this.el.style.width),
         maxTop: parseInt(this.container.style.height) - parseInt(this.el.style.height),
       };
+      moves = function(e) {
+        self.move(e);
+      }
+      stopM = function(e) {
+        self.stopMove(e);
+      }
       if(isMobile) {
-        this.container.addEventListener('touchmove',this.move.bind(this),false);
-        this.container.addEventListener('touchend',this.stopMove.bind(this),false);  
+        document.addEventListener('touchmove',moves,false);
+        document.addEventListener('touchend',stopM,false);  
         return;
       }
-      this.container.addEventListener('mousemove',this.move.bind(this),false);
-      this.container.addEventListener('mouseup',this.stopMove.bind(this),false);
+      document.addEventListener('mousemove',moves,false);
+      document.addEventListener('mouseup',stopM,false);
+
     }
     
     move(e) {
       if(!this.el) {
         return;
       }
-      this.coor.posX = isMobile ? e.changedTouches[0]['clientX']:e.clientX;
-      this.coor.posY = isMobile ? e.changedTouches[0]['clientY']:e.clientY;
-      let newPosX = this.coor.posX - this.coor.x;
-      let newPosY = this.coor.posY - this.coor.y;
+      // this.coor.posX = isMobile ? e.changedTouches[0]['clientX']:e.clientX;
+      // this.coor.posY = isMobile ? e.changedTouches[0]['clientY']:e.clientY;
+      var aa = isMobile ? e.changedTouches[0]['clientX']:e.clientX;
+      var bb = isMobile ? e.changedTouches[0]['clientY']:e.clientY;
+      var newPosX = aa - this.el.parentElement.offsetLeft - document.getElementsByClassName('image-aside')[0].offsetLeft - this.coor.x;
+      var newPosY = bb - this.el.parentElement.offsetTop - document.getElementsByClassName('image-aside')[0].offsetTop - this.coor.y;
       if(newPosX <= 0) {
         newPosX = 0;
       }
@@ -507,14 +526,15 @@
     }
     
     stopMove() {
+      var self = this;
       this.el = null;
       if(isMobile) {
-        this.container.removeEventListener('touchmove',this.move.bind(this),false);
-        this.container.removeEventListener('touchend',this.stopMove.bind(this),false);  
+        document.removeEventListener('touchmove',moves,false);
+        document.removeEventListener('touchend',stopM,false);  
         return;
       }
-      this.container.removeEventListener('mousemove',this.move.bind(this),false);
-      this.container.removeEventListener('mouseup',this.stopMove.bind(this),false);
+      document.removeEventListener('mousemove',moves,false);
+      document.removeEventListener('mouseup',stopM,false);
     }
     
   };
@@ -787,18 +807,18 @@
       
       // resize and drag move
       resize(e) {
+        e.stopPropagation();
         let $el = e.target.parentElement;
         let $container = this.__find('.g-crop-image-principal');
         let resizedObj = new Resize($el,$container,this.cropRatio,e);
       },
       
       drag(e) {
+        e.preventDefault();
         let $el = e.target;
         let $container = this.__find('.g-crop-image-principal');
         let dragObj = new Drag($el,$container,e);
       }
-      
-      
     },
     
   };
