@@ -1,6 +1,8 @@
 ## Vue-Core-Image-Upload 
 a vue plugin for image upload and crop ( Support 📱 IE9+)
 
+if you use vue.js(>=2.0), you should go [here](https://github.com/JackPu/vue2.x-core-image-upload).We will merge it in the future😊.
+
 <img width="360" src="./shots/vued0486684bfe534fd6fbec2aa18f8f83a1.png" />
 
 
