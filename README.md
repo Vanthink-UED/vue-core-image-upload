@@ -3,9 +3,10 @@
 
 a vue plugin for image upload and crop ( Support 📱 IE9+)
 
-if you use vue.js(>=2.0), you should go [here](https://github.com/JackPu/vue2.x-core-image-upload).We will merge it in the future😊.
+if you use vue.js(<=2.0), you should go [here](https://github.com/Vanthink-UED/vue-core-image-upload/tree/v1.x).Or select 
+1.x.x version.
 
-<img width="360" src="./shots/vued0486684bfe534fd6fbec2aa18f8f83a1.png" />
+<img width="360" src="./shots/vue-core-image-upload.png" />
 
 
 ### Install
@@ -59,7 +60,7 @@ Use CDN Script(ES5)
 
       },
       events: {
-        imageUploaded: function(res) {
+        imageuploaded: function(res) {
           if (res.errcode == 0) {
             this.src = 'http://img1.vued.vanthink.cn/vued751d13a9cb5376b89cb6719e86f591f3.png';
           }

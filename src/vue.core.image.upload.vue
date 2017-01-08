@@ -1,32 +1,33 @@
 
 <template>
-  <div class="g-core-image-upload-btn" v-bind:class="class">
-      {{text}}
-      <form class="g-core-image-upload-form" v-show="!hasImage" method="post" enctype="multipart/form-data" action="/api2/common_user/cropHeadUrl" style="display: block; cursor: pointer; position: absolute; left: 0px; top: 0px; width: 1242px; height: 61px; opacity: 0; margin: 0px; padding: 0px; overflow: hidden;">
-        <input v-bind:disabled="uploading" id="g-core-upload-input-{{formID}}" name="{{inputOfFile}}" type="file" accept="{{inputAccept}}" v-on:change="change" style="width: 100%; height: 100%;">
-      </form>
-  </div>  
-
-  <div class="g-core-image-corp-container" id="vciu-modal-{{formID}}" v-show="hasImage">
-      <div class="image-aside">
-        <div class="g-crop-image-box">
-          <div class="g-crop-image-principal">
-            <img v-bind:src="image.src" v-bind:style="{ width:image.width + 'px',height: image.height + 'px' }">
-            <div class="select-recorte" v-on:touchstart.self="drag" v-on:mousedown.self="drag" style="width:100px;height:100px;">
-              <div class="g-s-resize" style="z-index: 90;"></div>
-              <div class="g-e-resize" style="z-index: 90;"></div>
-              <div class="g-resize" v-on:touchstart.self="resize" v-on:mousedown.self="resize"></div>
-            </div>
+  <div class="g-core-image-upload-btn">
+    {{text}}
+    <form class="g-core-image-upload-form" v-show="!hasImage" method="post" enctype="multipart/form-data" action="/api2/common_user/cropHeadUrl" style="display: block; cursor: pointer; position: absolute; left: 0px; top: 0px; width: 1242px; height: 61px; opacity: 0; margin: 0px; padding: 0px; overflow: hidden;">
+      <input v-bind:disabled="uploading" v-bind:id="'g-core-upload-input-' + formID" v-bind:name="inputOfFile" type="file" v-bind:accept="inputAccept" v-on:change="change" style="width: 100%; height: 100%;">
+    </form>
+    <div class="g-core-image-corp-container" v-bind:id="'vciu-modal-' + formID" v-show="hasImage">
+    <div class="image-aside">
+      <div class="g-crop-image-box">
+        <div class="g-crop-image-principal">
+          <img v-bind:src="image.src" v-bind:style="{ width:image.width + 'px',height: image.height + 'px' }">
+          <div class="select-recorte" v-on:touchstart.self="drag" v-on:mousedown.self="drag" style="width:100px;height:100px;">
+            <div class="g-s-resize" style="z-index: 90;"></div>
+            <div class="g-e-resize" style="z-index: 90;"></div>
+            <div class="g-resize" v-on:touchstart.self="resize" v-on:mousedown.self="resize"></div>
           </div>
         </div>
       </div>
-      <div class="info-aside">
-        <p class="btn-groups">
-          <button type="button" v-on:click="doCrop" class="btn btn-upload">{{cropBtn.ok}}</button>
-          <button type="button" v-on:click="cancel()" class="btn btn-cancel">{{cropBtn.cancel}}</button>
-        </p>
-      </div>
-  </div>
+    </div>
+    <div class="info-aside">
+      <p class="btn-groups">
+        <button type="button" v-on:click="doCrop" class="btn btn-upload">{{cropBtn.ok}}</button>
+        <button type="button" v-on:click="cancel()" class="btn btn-cancel">{{cropBtn.cancel}}</button>
+      </p>
+    </div>
+</div>
+  </div>  
+
+  
 </template>
 
 <style>
@@ -559,7 +560,9 @@
       },
       class: {
         type: Array,
-        default:[]
+        default:function() {
+          return [];
+        }
       },
       extensions: {
         type: String,
@@ -620,8 +623,7 @@
     methods: {
       
       __dispatch(name,res) {
-        this.$dispatch && this.$dispatch(name, res);
-        this.events && this.events[name] && this.events[name](res);
+        this.$emit && this.$emit(name, res);
       },
       __find(str) {
         let dq = document.querySelector('#vciu-modal-' + this.formID);

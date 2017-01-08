@@ -15,16 +15,16 @@
     <link rel="stylesheet" href="http://s1.vued.vanthink.cn/211cd6e325e7/googlecode.css">
 </head>
 
-<body>
-<a href="https://github.com/Vanthink-UED/vue-core-image-upload" title="Fork me on GitHub" class="github-corner"><svg width="80" height="80" viewbox="0 0 250 250"><title>Fork me on GitHub</title><path d="M0 0h250v250"></path><path d="M127.4 110c-14.6-9.2-9.4-19.5-9.4-19.5 3-7 1.5-11 1.5-11-1-6.2 3-2 3-2 4 4.7 2 11 2 11-2.2 10.4 5 14.8 9 16.2" fill="currentColor" style="transform-origin:130px 110px" class="octo-arm"></path><path d="M113.2 114.3s3.6 1.6 4.7.6l15-13.7c3-2.4 6-3 8.2-2.7-8-11.2-14-25 3-41 4.7-4.4 10.6-6.4 16.2-6.4.6-1.6 3.6-7.3 11.8-10.7 0 0 4.5 2.7 6.8 16.5 4.3 2.7 8.3 6 12 9.8 3.3 3.5 6.7 8 8.6 12.3 14 3 16.8 8 16.8 8-3.4 8-9.4 11-11.4 11 0 5.8-2.3 11-7.5 15.5-16.4 16-30 9-40 .2 0 3-1 7-5.2 11l-13.3 11c-1 1 .5 5.3.8 5z" fill="currentColor" class="octo-body"></path></svg><style> .github-corner svg{position:absolute;right:0;top:0;;color:#3ab981;fill:white;}.github-corner:hover .octo-arm{animation:octocat-wave .56s;}@keyframes octocat-wave{0%, 100%{transform:rotate(0);}20%, 60%{transform:rotate(-20deg);}40%, 80%{transform:rotate(10deg);}}</style></a>
+<body >
+<a href="https://github.com/JackPu/vue2.x-core-image-upload" title="Fork me on GitHub" class="github-corner"><svg width="80" height="80" viewbox="0 0 250 250"><title>Fork me on GitHub</title><path d="M0 0h250v250"></path><path d="M127.4 110c-14.6-9.2-9.4-19.5-9.4-19.5 3-7 1.5-11 1.5-11-1-6.2 3-2 3-2 4 4.7 2 11 2 11-2.2 10.4 5 14.8 9 16.2" fill="currentColor" style="transform-origin:130px 110px" class="octo-arm"></path><path d="M113.2 114.3s3.6 1.6 4.7.6l15-13.7c3-2.4 6-3 8.2-2.7-8-11.2-14-25 3-41 4.7-4.4 10.6-6.4 16.2-6.4.6-1.6 3.6-7.3 11.8-10.7 0 0 4.5 2.7 6.8 16.5 4.3 2.7 8.3 6 12 9.8 3.3 3.5 6.7 8 8.6 12.3 14 3 16.8 8 16.8 8-3.4 8-9.4 11-11.4 11 0 5.8-2.3 11-7.5 15.5-16.4 16-30 9-40 .2 0 3-1 7-5.2 11l-13.3 11c-1 1 .5 5.3.8 5z" fill="currentColor" class="octo-body"></path></svg><style> .github-corner svg{position:absolute;right:0;top:0;;color:#3ab981;fill:white;}.github-corner:hover .octo-arm{animation:octocat-wave .56s;}@keyframes octocat-wave{0%, 100%{transform:rotate(0);}20%, 60%{transform:rotate(-20deg);}40%, 80%{transform:rotate(10deg);}}</style></a>
 <div class="splash-container">
     
     <div class="splash">
         <h1 class="splash-head">
-            <img width="360" src="http://img1.vued.vanthink.cn/vued0486684bfe534fd6fbec2aa18f8f83a1.png" />
+            <img width="360" src="http://img1.vued.vanthink.cn/vued5cd5837414f8b09773e23360b1de9079.png" />
         </h1>
         <p class="splash-subhead">
-            A Vue Plugin For Image To Upload and Crop
+          A Vue Plugin For Image To Upload and Crop
         </p>
     </div>
 </div>
@@ -39,7 +39,7 @@
                 <div class="user">
                     <img class="avatar" v-bind:src="src"/>
                 </div>
-                <vue-core-image-upload v-bind:class="['pure-button','pure-button-primary','js-btn-crop']" v-bind:crop="false" url="http://101.198.151.190/api/upload.php" extensions="png,gif,jpeg,jpg" input-accept="image/*"></vue-core-image-upload>
+                <vue-core-image-upload v-bind:class="['pure-button','pure-button-primary','js-btn-crop']" v-bind:crop="false" v-on:imageuploaded="imageuploaded" url="http://101.198.151.190/api/upload.php" extensions="png,gif,jpeg,jpg" input-accept="image/*"></vue-core-image-upload>
                 <p>Click button to upload your image</p>
                 <pre class="highlight javascript"><code>
 import VueCoreImageUpload  from './vue.core.image.upload.vue';
@@ -53,15 +53,12 @@ new Vue({
     src: 'http://img1.vued.vanthink.cn/vued0a233185b6027244f9d43e653227439a.png',
   },
   methods: {
-
-  },
-  events: {
     imageUploaded(res) {
       if (res.errcode == 0) {
         this.src = 'http://img1.vued.vanthink.cn/vued751d13a9cb5376b89cb6719e86f591f3.png';
       }
     }
-  },
+  }
 });
                 </code></pre>
                 <h4>HTML</h4>
@@ -69,7 +66,8 @@ new Vue({
  &lt;vue-core-image-upload 
   v-bind:class="['pure-button','pure-button-primary','js-btn-crop']" 
   v-bind:crop="false" url="./crop.php" 
-  extensions="png,gif,jpeg,jpg"&gt;
+  extensions="png,gif,jpeg,jpg"
+  v-on:imageuploaded="imageuploaded"&gt;
 &lt;/vue-core-image-upload&gt;               
                 </code></pre>
                 
@@ -90,7 +88,7 @@ new Vue({
                     <img class="avatar" v-bind:src="cropSrc"/>
                     <p>{{name}}</p>
                 </div>
-              <vue-core-image-upload  crop-ratio="1:1" v-bind:class="['pure-button','pure-button-primary','js-btn-crop']" v-bind:crop="true" url="./crop.php" extensions="png,gif,jpeg,jpg" input-accept="image/*"></vue-core-image-upload>
+              <vue-core-image-upload  crop-ratio="1:1" v-bind:class="['pure-button','pure-button-primary','js-btn-crop']" v-bind:crop="true" url="http://101.198.151.190/api/crop.php" extensions="png,gif,jpeg,jpg" input-accept="image/*" v-on:imageuploaded="imageuploaded"></vue-core-image-upload>
               <h3>Crop Arguments</h3>
               <table class="pure-table" style="width:100%;">
                 <thead>
@@ -117,10 +115,12 @@ new Vue({
   v-bind:class="['pure-button','pure-button-primary','js-btn-crop']" 
   v-bind:crop="true" 
   url="./crop.php" 
-  extensions="png,gif,jpeg,jpg"&gt;
+  extensions="png,gif,jpeg,jpg"
+  v-on:imageuploaded="imageuploaded"&gt;
+  
 &lt;/vue-core-image-upload&gt;
                 </code></pre>
-                <h3 style="padding-top:40px;"><a href="https://github.com/Vanthink-UED/vue-core-image-upload" class="button-xlarge pure-button pure-button-radius" href="">DOWNLOAD AND DOCUMENT</a></h3>
+                <h3 style="padding-top:40px;"><a href="https://github.com/JackPu/vue2.x-core-image-upload" class="button-xlarge pure-button pure-button-radius" href="">DOWNLOAD AND DOCUMENT</a></h3>
             </div>
          </div>
     </div>

@@ -1,10 +1,10 @@
-var Vue = require('vue');
+import Vue from 'vue/dist/vue.js'
 
-var VueCoreImageUpload = require('./vue.core.image.upload');
+var VueCoreImageUpload = require('./index');
 
-Vue.config.debug = false;
+
 Vue.config.silent = false;
-Vue.config.async = false;
+
 Vue.config.devtools = false;
 
 new Vue({
@@ -19,9 +19,6 @@ new Vue({
     cropArgs: {},
   },
   methods: {
-
-  },
-  events: {
     imageuploaded(res) {
       if (res.errcode == 0) {
         if(res.data.src) {
@@ -43,6 +40,5 @@ new Vue({
     errorHandle: function(msg) {
       console.warn(msg);
     }
-    
-  },
+  }
 });
