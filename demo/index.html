@@ -1,0 +1,31 @@
+
+
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/vue/1.0.26/vue.min.js"></script>
+        <script src="http://s1.vued.vanthink.cn/e3c077a46b11/index.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            {{ message }}
+            
+            <vue-core-image-upload v-bind:class="['pure-button','pure-button-primary','js-btn-crop']" v-bind:crop="false" url="./crop.php" extensions="png,gif,jpeg,jpg"></vue-core-image-upload>
+        </div>
+        
+        <script>
+            
+            console.log(VueCoreImageUpload);
+            var MyComponent = Vue.extend(VueCoreImageUpload);
+            console.log(VueCoreImageUpload);
+            new Vue({
+                el: '#app',
+                components: {
+                'vue-core-image-upload': MyComponent
+                },
+                data: {
+                    message: 'Hello Vue.js!'
+                }
+            })
+        </script>
+    </body>
+</html>
