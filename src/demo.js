@@ -37,7 +37,7 @@ new Vue({
         
       }
     },
-    errorHandle: function(msg) {
+    errorhandle: function(msg) {
       console.warn(msg);
     }
   }

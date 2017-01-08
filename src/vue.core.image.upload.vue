@@ -217,8 +217,10 @@
 </style>
 
 <script>
+  if(window.Vue.version.substring(0,1) == '1') {
+    console.warn('please use vue-core-image-upload 1.x https://github.com/Vanthink-UED/vue-core-image-upload/tree/v1.x');
+  }
   /**simple ajax handler**/
-
   let xhr = function (method, url, headers, data, callback,error) {
 
     var r = new XMLHttpRequest();
