@@ -4,7 +4,7 @@
 module.exports = function (method, url, headers, data, callback, error) {
   const r = new XMLHttpRequest();
   let error = error || function () {
-    console.error('AJAX ERROR!')
+    console.error('AJAX ERROR!');
   };
   // Binary?
   let binary = false;

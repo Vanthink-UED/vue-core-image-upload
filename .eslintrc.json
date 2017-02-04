@@ -3,8 +3,11 @@
     "plugins": [
         "import"
     ],
+    "globals": {
+        "XMLHttpRequest": 1
+    },
     "rules": {
         "func-names": 0,
-        "comma-dangle": 0
+        "comma-dangle": 0,
     }
 }
