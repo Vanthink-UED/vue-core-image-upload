@@ -8,6 +8,10 @@
     },
     "rules": {
         "func-names": 0,
-        "comma-dangle": 0,
+        "prefer-template": 0,
+        "dot-notation": 0,
+        "radix": 0,
+        "no-mixed-operators": 0,
+        "comma-dangle": 0
     }
 }
