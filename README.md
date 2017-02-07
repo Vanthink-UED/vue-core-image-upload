@@ -91,6 +91,7 @@ Use CDN Script(ES5)
 | maxWidth | Number   |   150 | limit the width of your image you cropped|
 | maxheight | Number   |   150 | limit the height of your image you cropped|
 | inputAccept | string   |  'image/*' / 'image/jpg,image/jpeg,image/png' |  the image file of accept type |
+| isXhr | Boolean  | true  |  cancel default xhr uploading 
 
 ### $dispatch, events
 
@@ -101,6 +102,10 @@ imageuploaded(res) {
     this.src = 'http://img1.vued.vanthink.cn/vued751d13a9cb5376b89cb6719e86f591f3.png';
 
   }
+}
+// return file object
+imagechanged(res) {
+  console.log(res.name)
 }
 
 

@@ -1,9 +1,9 @@
 /**
  * simple ajax handler
  **/
-module.exports = function (method, url, headers, data, callback, error) {
+module.exports = function (method, url, headers, data, callback, err) {
   const r = new XMLHttpRequest();
-  let error = error || function () {
+  const error = err || function () {
     console.error('AJAX ERROR!');
   };
   // Binary?
@@ -14,29 +14,29 @@ module.exports = function (method, url, headers, data, callback, error) {
   }
   method = method.toUpperCase();
   // Xhr.responseType 'json' is not supported in any of the vendors yet.
-  r.onload = function (e) {
-    var json = r.response;
+  r.onload = function () {
+    let json = r.response;
     try {
       json = JSON.parse(r.responseText);
-    }
-    catch (_e) {
+    } catch (_e) {
       if (r.status === 401) {
         json = error('access_denied', r.statusText);
       }
     }
-    var headers = headersToJSON(r.getAllResponseHeaders());
+    let headers = headersToJSON(r.getAllResponseHeaders());
     headers.statusCode = r.status;
     callback(json || (method === 'GET' ? error('empty_response', 'Could not get resource') : {}), headers);
   };
-  r.onerror = function (e) {
-    var json = r.responseText;
+  r.onerror = function () {
+    let json = r.responseText;
     try {
       json = JSON.parse(r.responseText);
+    } catch (_e) {
+      console.error(_e);
     }
-    catch (_e) {}
     callback(json || error('access_denied', 'Could not get resource'));
   };
-  var x;
+  let x;
   // Should we add the query to the URL?
   if (method === 'GET' || method === 'DELETE') {
     data = null;
@@ -80,12 +80,12 @@ module.exports = function (method, url, headers, data, callback, error) {
   return r;
   // Headers are returned as a string
   function headersToJSON(s) {
-    const r = {};
+    const o = {};
     const reg = /([a-z\-]+):\s?(.*);?/gi;
     let m;
     while (m = reg.exec(s)) {
-      r[m[1]] = m[2];
+      o[m[1]] = m[2];
     }
-    return r;
+    return o;
   }
 };

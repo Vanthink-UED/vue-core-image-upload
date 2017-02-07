@@ -1,13 +1,13 @@
-const webpack = require( 'webpack' )
+const webpack = require('webpack');
 
 module.exports = {
-  entry: './src/demo.js',
+  entry: './src/demo/index.js',
   output: {
     path: './demo',
     filename: 'demo.min.js',
   },
   resolve: {
-    extensions: [ '','.js', '.vue' ]
+    extensions: ['', '.js', '.vue']
   },
   module: {
     loaders: [
@@ -33,8 +33,8 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.UglifyJsPlugin( {
-      minimize : true,
-      sourceMap : false,
+      minimize: true,
+      sourceMap: false,
       mangle: true,
       compress: {
         warnings: false
