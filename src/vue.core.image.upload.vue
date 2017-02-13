@@ -262,8 +262,8 @@
         type: Object,
         default: function() {
           return {
-            ok: '保存',
-            cancel: '取消',
+            ok: 'Ok',
+            cancel: 'Cancel',
           }
         }
       },
