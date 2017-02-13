@@ -1,11 +1,11 @@
-## Vue-Core-Image-Upload 
+## Vue-Core-Image-Upload  中文文档
 
-[Chinese Doc](./README.md)
+[English Doc]('./README.md')
 
-a vue plugin for image upload and crop ( Support 📱 IE9+)
+一款轻量级的vue上传插件 ( 支持 📱 IE9+)
 
-if you use vue.js(<=2.0), you should go [here](https://github.com/Vanthink-UED/vue-core-image-upload/tree/v1.x).Or select 
-1.x.x version.
+如果你使用 vue.js(<=2.0), 你可以到这里克隆代码 [here](https://github.com/Vanthink-UED/vue-core-image-upload/tree/v1.x).或者在安装的时候使用
+1.x.x 版本.
 
 <img width="360" src="./shots/vue-core-image-upload.png" />
 
@@ -16,7 +16,7 @@ if you use vue.js(<=2.0), you should go [here](https://github.com/Vanthink-UED/v
 npm i vue-core-image-upload --save
 ```
 
-Code Example (ES6)
+使用ES6
 ``` js
 import VueCoreImageUpload  from './vue.core.image.upload.vue';
 
@@ -38,7 +38,7 @@ new Vue({
 });
 ```
 
-Use CDN Script(ES5)
+使用ES5
 ```js
 
 // include the script ./node_modules/vue-core-image-upload/index.js
@@ -71,25 +71,25 @@ Use CDN Script(ES5)
 
 [Demo] (http://vanthink-ued.github.io/vue-core-image-upload/upload.html)
 
-### Options
+### 配置属性
 
 | Props        | Type         | Example  | Description  |
 | ------------- |:----------| ---------|--------------|
-| url     | String | '/crop.php' | your server url |
-| text      | String      |  'Upload Image' | the text you want to show |
-| inputOfFile | String     |   'file' | upload file form name |
-| extensions | String   |    'png,jpg,gif' | limit the file type |
-| crop | Boolean   |   true | if need crop image |
-| cropRatio | String   |   '1:1' | limit the cropped image shape|
-| cropBtn | Object   |   {ok:'Save','cancel':'Give Up'} | the text of crop button|
-| maxFileSize | Number   |   10485760(10M) | limit the file size|
-| maxWidth | Number   |   150 | limit the width of your image you cropped|
-| maxheight | Number   |   150 | limit the height of your image you cropped|
-| inputAccept | string   |  'image/*' / 'image/jpg,image/jpeg,image/png' |  the image file of accept type |
-| isXhr | Boolean  | true  |  cancel default xhr uploading 
-| headers | Object  | {auth: xxxxx}  |  the http header to send server 
+| url     | String | '/crop.php' | 服务端上传的地址 |
+| text      | String      |  'Upload Image' | 你需要显示按钮的文本|
+| inputOfFile | String     |   'file' | 上船服务端对应表单 name |
+| extensions | String   |    'png,jpg,gif' | 限制的图片类型 |
+| crop | Boolean   |   true | 是否需要裁剪 |
+| cropRatio | String   |   '1:1' | 限制裁剪的形状|
+| cropBtn | Object   |   {ok:'Save','cancel':'Give Up'} | 按钮文本|
+| maxFileSize | Number   |   10485760(10M) | 文件大小限制|
+| maxWidth | Number   |   150 | 限制图片的最大宽度|
+| maxheight | Number   |   150 | 限制图片的最大高度|
+| inputAccept | string   |  'image/*' / 'image/jpg,image/jpeg,image/png' |  赋予上传file的接受类型  |
+| isXhr | Boolean  | true  |  是否需要调用系统内自己的上传功能
+| headers | Object  | {auth: xxxxx}  |  设置xhr上传 的header
 
-### $dispatch, events
+### 支持的事件类型
 
 ``` js
 //finish image uload
@@ -116,20 +116,11 @@ errorhandle(err) {
 }
 ```
 
-### Server Crop Arguments
-
-If you crop a image , your crop will send a request to your server with some crop arguments;
+### 发给服务端的裁剪参数
 
                         
 <img src="./shots/vuedba0ed377b88fc84d51026310efcb255b.png" />
 
+参数如上图。
 
-+ `toCropImgX`: the distance of cropbox to the image left;
-+ `toCropImgY`: the distance of cropbox to the image top
-+ `toCropImgW`: the width of cropbox
-+ `toCropImgH`: the height of cropbox
-+ `maxWidth`: the maxium width of your target image 
-+ `maxHeight`: the maxium height of your target image 
-If you want to change the crop window style , you should write your own css files.
-
-### MIT Liscense 
+如果你需要自定义裁剪弹窗的的样式，你可以自己写css进行覆盖
