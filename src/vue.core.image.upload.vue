@@ -288,6 +288,12 @@
       isXhr: {
         type: Boolean,
         default: true
+      },
+      headers: {
+        type: Object,
+        default: function() {
+          return {};
+        }
       }
     },
     data() {
@@ -484,7 +490,7 @@
 
         }
         
-        xhr('POST',this.url,{},data,function(res) {
+        xhr('POST',this.url,this.headers,data,function(res) {
           if(typeof callback === 'function') {
             callback();
           }

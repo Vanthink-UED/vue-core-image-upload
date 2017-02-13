@@ -92,6 +92,7 @@ Use CDN Script(ES5)
 | maxheight | Number   |   150 | limit the height of your image you cropped|
 | inputAccept | string   |  'image/*' / 'image/jpg,image/jpeg,image/png' |  the image file of accept type |
 | isXhr | Boolean  | true  |  cancel default xhr uploading 
+| headers | Object  | {auth: xxxxx}  |  the http header to send server 
 
 ### $dispatch, events
 
