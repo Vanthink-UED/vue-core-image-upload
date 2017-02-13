@@ -54,16 +54,13 @@ Use CDN Script(ES5)
         src: 'http://img1.vued.vanthink.cn/vued0a233185b6027244f9d43e653227439a.png',
       },
       methods: {
-
-      },
-      events: {
         imageuploaded: function(res) {
           if (res.errcode == 0) {
             this.src = 'http://img1.vued.vanthink.cn/vued751d13a9cb5376b89cb6719e86f591f3.png';
           }
         }
-      },
-    });
+
+      }
 </script>
 ```
 
