@@ -77,7 +77,7 @@ new Vue({
 | ------------- |:----------| ---------|--------------|
 | url     | String | '/crop.php' | 服务端上传的地址 |
 | text      | String      |  'Upload Image' | 你需要显示按钮的文本|
-| inputOfFile | String     |   'file' | 上船服务端对应表单 name |
+| inputOfFile | String     |   'file' | 上传服务端对应表单 name |
 | extensions | String   |    'png,jpg,gif' | 限制的图片类型 |
 | crop | Boolean   |   true | 是否需要裁剪 |
 | cropRatio | String   |   '1:1' | 限制裁剪的形状|
