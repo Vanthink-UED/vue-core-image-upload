@@ -43,15 +43,14 @@ export default class Resize {
     if (!this.el) {
       return;
     }
-    const $dotBox = document.querySelector('.g-crop-image-principal');
-    const dotBoxW = window.getComputedStyle($dotBox).width;
-    const dotBoxH = window.getComputedStyle($dotBox).height;
+    const $dotBox = this.container;
+    const dotBoxW = parseInt(window.getComputedStyle($dotBox).width);
+    const dotBoxH = parseInt(window.getComputedStyle($dotBox).height);
     const $topH = document.querySelector('.info-aside');
     const $halfX = W - dotBoxW;
     const $halfY = H - dotBoxH - window.getComputedStyle($topH).height;
     const resetX = isMobile ? e.changedTouches[0]['clientX'] : e.clientX;
     const resetY = isMobile ? e.changedTouches[0]['clientY'] : e.clientY;
-
     if (this.splitX > this.splitY) {
       if (parseInt(resetX) <= ($halfX / 2) + dotBoxW) {
         if (parseInt(this.el.offsetWidth) >= dotBoxW) {
@@ -112,11 +111,6 @@ export default class Resize {
         this.el.style.width = this.el.style.height = dotBoxW;
       }
     }
-    // if(isMobile) {
-    //   document.addEventListener('touchend',this.stopDrag.bind(this),false);
-    // } else {
-    //   document.addEventListener('mouseup',this.stopDrag.bind(this),false);
-    // }
   }
 
   stopDrag() {
