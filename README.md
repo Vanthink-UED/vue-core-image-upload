@@ -1,6 +1,6 @@
 ## Vue-Core-Image-Upload 
 
-[Chinese Doc](./README.md)
+[Chinese Doc](./README_CN.md)
 
 a vue plugin for image upload and crop ( Support 📱 IE9+)
 
