@@ -149,7 +149,7 @@
     border:1px solid #777;
     box-shadow: 0 1px 3px rgba(0,0,0,.05); 
   }
-  .g-core-image-corp-container .btn:active,{
+  .g-core-image-corp-container .btn:active{
     background: #ddd;
   }
   .g-core-image-corp-container .btn:disabled{
@@ -479,17 +479,14 @@
         for(let i=0;i<this.files.length;i++) { 
           data.append(self.inputOfFile, this.files[i]);  
         }
-        
         if (typeof this.data === 'object') { 
             for(let k in this.data) {
               if(this.data[k] !== undefined) {
                 data.append(k,this.data[k]);
               }
-              
             }      
 
         }
-        
         xhr('POST',this.url,this.headers,data,function(res) {
           if(typeof callback === 'function') {
             callback();

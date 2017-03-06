@@ -18,7 +18,7 @@ npm i vue-core-image-upload --save
 
 使用ES6
 ``` js
-import VueCoreImageUpload  from './vue.core.image.upload.vue';
+import VueCoreImageUpload  from 'vue.core.image.upload';
 
 new Vue({
   el: '#app',

@@ -2,7 +2,8 @@
     "extends": "airbnb-base",
     "plugins": [
         "import",
-        "vue"
+        "vue",
+        "html"
     ],
     "globals": {
         "XMLHttpRequest": 1,
