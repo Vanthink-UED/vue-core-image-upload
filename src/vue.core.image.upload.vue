@@ -326,7 +326,7 @@
         if(extensionsArr.length>1) {
             var reg = new RegExp('^[' + extensionsArr.join('|') + ']+$','i');
             if (!reg.test(fileExt)) {
-                return this.__dispatch('errorHandle','TYPE ERROR');
+                return this.__dispatch('errorhandle','TYPE ERROR');
             }
         }
 
@@ -339,8 +339,8 @@
             } else {
                 formatSize = options.maxFileSize.toFixed(2) + 'Byte';
             }
-            this.errorHandle('FILE IS TOO LARGER MAX FILE IS ' + formatSize);
-            return;
+            console.warn('FILE IS TOO LARGER MAX FILE IS ' + formatSize);
+            return this.__dispatch('errorhandle','FILE IS TOO LARGER MAX FILE IS ' + formatSize); 
         }
         
         this.files = e.target.files;

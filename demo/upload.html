@@ -39,7 +39,7 @@
                 <div class="user">
                     <img class="avatar" v-bind:src="src"/>
                 </div>
-                <vue-core-image-upload v-bind:class="['pure-button','pure-button-primary','js-btn-crop']" v-bind:crop="false" v-on:imageuploaded="imageuploaded" url="http://101.198.151.190/api/upload.php" extensions="png,gif,jpeg,jpg" input-accept="image/*"></vue-core-image-upload>
+                <vue-core-image-upload v-bind:class="['pure-button','pure-button-primary','js-btn-crop']" v-bind:crop="false" v-on:imageuploaded="imageuploaded" v-bind:max-file-size="5242880" url="http://101.198.151.190/api/upload.php" extensions="png,gif,jpeg,jpg" v-on:errorhandle="errorhandle"  input-accept="image/*"></vue-core-image-upload>
                 <p>Click button to upload your image</p>
                 <pre class="highlight javascript"><code>
 import VueCoreImageUpload  from './vue.core.image.upload.vue';
