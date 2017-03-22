@@ -1,6 +1,6 @@
 ## Vue-Core-Image-Upload  中文文档
 
-[English Doc]('./README.md')
+[English Doc](./README.md)
 
 一款轻量级的vue上传插件 ( 支持 📱 IE9+)
 
