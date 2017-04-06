@@ -294,6 +294,12 @@
         default: function() {
           return {};
         }
+      },
+      data: {
+        type: Object,
+        default: function() {
+          return {};
+        }
       }
     },
     data() {
@@ -480,6 +486,7 @@
           data.append(self.inputOfFile, this.files[i]);  
         }
         if (typeof this.data === 'object') { 
+            
             for(let k in this.data) {
               if(this.data[k] !== undefined) {
                 data.append(k,this.data[k]);

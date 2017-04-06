@@ -88,6 +88,7 @@ Use CDN Script(ES5)
 | inputAccept | string   |  'image/*' / 'image/jpg,image/jpeg,image/png' |  the image file of accept type |
 | isXhr | Boolean  | true  |  cancel default xhr uploading 
 | headers | Object  | {auth: xxxxx}  |  the http header to send server 
+| data | Object  | {id: xxxxx}  |  the http post data to send server 
 
 ### $dispatch, events
 
