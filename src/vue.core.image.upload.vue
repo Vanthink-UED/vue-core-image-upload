@@ -494,14 +494,15 @@
             }      
 
         }
-        xhr('POST',this.url,this.headers,data,function(res) {
+        xhr('POST',this.url, this.headers, data,function(res) {
           if(typeof callback === 'function') {
             callback();
           }
           self.uploading = false;
           if(self.crop) {
               self.hasImage = false;
-           } 
+           }
+           document.querySelector("#g-core-upload-input-" + self.formID).value = '';
            self.__dispatch('imageuploaded',res);
         });  
       },
