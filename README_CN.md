@@ -1,6 +1,6 @@
 ## Vue-Core-Image-Upload  中文文档
 
-[English Doc]('./README.md')
+[English Doc](./README.md)
 
 一款轻量级的vue上传插件 ( 支持 📱 IE9+)
 
@@ -18,7 +18,7 @@ npm i vue-core-image-upload --save
 
 使用ES6
 ``` js
-import VueCoreImageUpload  from './vue.core.image.upload.vue';
+import VueCoreImageUpload  from 'vue.core.image.upload';
 
 new Vue({
   el: '#app',

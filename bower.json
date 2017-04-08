@@ -17,7 +17,7 @@
   "homepage": "https://github.com/Vanthink-UED/vue.core.image.upload",
   "private": true,
   "dependencies": {
-    "vue": "^1.0.26"
+    "vue": "^2.0.6"
   },
   "devDependencies": {
     "babel": "^6.5.2",

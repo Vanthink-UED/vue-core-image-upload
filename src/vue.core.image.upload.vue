@@ -149,7 +149,7 @@
     border:1px solid #777;
     box-shadow: 0 1px 3px rgba(0,0,0,.05); 
   }
-  .g-core-image-corp-container .btn:active,{
+  .g-core-image-corp-container .btn:active{
     background: #ddd;
   }
   .g-core-image-corp-container .btn:disabled{
@@ -294,6 +294,12 @@
         default: function() {
           return {};
         }
+      },
+      data: {
+        type: Object,
+        default: function() {
+          return {};
+        }
       }
     },
     data() {
@@ -326,7 +332,7 @@
         if(extensionsArr.length>1) {
             var reg = new RegExp('^[' + extensionsArr.join('|') + ']+$','i');
             if (!reg.test(fileExt)) {
-                return this.__dispatch('errorHandle','TYPE ERROR');
+                return this.__dispatch('errorhandle','TYPE ERROR');
             }
         }
 
@@ -339,8 +345,8 @@
             } else {
                 formatSize = options.maxFileSize.toFixed(2) + 'Byte';
             }
-            this.errorHandle('FILE IS TOO LARGER MAX FILE IS ' + formatSize);
-            return;
+            console.warn('FILE IS TOO LARGER MAX FILE IS ' + formatSize);
+            return this.__dispatch('errorhandle','FILE IS TOO LARGER MAX FILE IS ' + formatSize); 
         }
         
         this.files = e.target.files;
@@ -479,25 +485,24 @@
         for(let i=0;i<this.files.length;i++) { 
           data.append(self.inputOfFile, this.files[i]);  
         }
-        
         if (typeof this.data === 'object') { 
+            
             for(let k in this.data) {
               if(this.data[k] !== undefined) {
                 data.append(k,this.data[k]);
               }
-              
             }      
 
         }
-        
-        xhr('POST',this.url,this.headers,data,function(res) {
+        xhr('POST',this.url, this.headers, data,function(res) {
           if(typeof callback === 'function') {
             callback();
           }
           self.uploading = false;
           if(self.crop) {
               self.hasImage = false;
-           } 
+           }
+           document.querySelector("#g-core-upload-input-" + self.formID).value = '';
            self.__dispatch('imageuploaded',res);
         });  
       },

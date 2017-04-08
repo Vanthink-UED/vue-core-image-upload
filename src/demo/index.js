@@ -16,6 +16,7 @@ new Vue({
     src: 'http://img1.vued.vanthink.cn/vued0a233185b6027244f9d43e653227439a.png',
     cropSrc: 'http://img1.vued.vanthink.cn/vued7553a09a5d5209ebd00a48264394b7f3.png',
     cropArgs: {},
+    data: {token: '123123123'}
   },
   methods: {
     imageuploaded(res) {
