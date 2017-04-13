@@ -18,7 +18,7 @@ npm i vue-core-image-upload --save
 
 Code Example (ES6)
 ``` js
-import VueCoreImageUpload  from 'vue.core.image.upload';
+import VueCoreImageUpload  from 'vue-core-image-upload';
 
 new Vue({
   el: '#app',
