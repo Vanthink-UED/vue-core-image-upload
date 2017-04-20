@@ -31,7 +31,7 @@
     "vue-html-loader": "^1.2.3",
     "vue-loader": "^8.5.4",
     "vue-style-loader": "^1.0.0",
-    "webpack": "^1.13.2"
+    "webpack": "^2.4.1"
   },
   "scripts": {
     "test": "npm run test",

@@ -1,37 +1,39 @@
-const webpack = require( 'webpack' )
+const webpack = require( 'webpack' );
+const path = require('path');
 
 module.exports = {
-  entry: './src/vue.core.image.upload.vue',
+  context: path.resolve(__dirname, './src'),
+  entry: {
+    'index': './vue-core-image-upload.vue'
+  },
   output: {
-    path: './',
+    path: path.resolve(__dirname),
     filename: 'index.js',
     library: 'VueCoreImageUpload',
     libraryTarget: 'umd',
   },
-  resolve: {
-    extensions: [ '', '.js', '.vue' ]
-  },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        loader: 'babel',
-        include: __dirname,
+        use: [{
+            loader: 'babel-loader',
+        }],
         exclude: /node_modules/
       },
       {
         test: /\.vue$/,
-        loader: 'vue'
+        use: {
+            loader: 'vue-loader'
+        },
       },
       {
         test: /\.css$/,
-        loader: 'style!css'
+        use: {
+            loader: 'style!css'
+        },
       }
     ]
-  },
-  babel: {
-      presets: ['es2015', 'stage-2'],
-      plugins: ['transform-runtime']
   },
   plugins: [
     new webpack.optimize.UglifyJsPlugin( {
@@ -42,5 +44,5 @@ module.exports = {
         warnings: false
       }
     } )
-  ]
+  ],
 }
