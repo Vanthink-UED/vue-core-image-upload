@@ -1,27 +1,31 @@
 <template>
+
   <div id="app">
-    <router-view></router-view>
+    <header-nav></header-nav>
+    <div class="container">
+      <nav-list></nav-list>
+      <div class="page main">
+        <router-view></router-view>
+      </div>
+    </div>
+    
+    <ft></ft>
   </div>
 </template>
 
 <style>
-body {
-  margin: 0;
-  font-size: 2rem;
-  font-family: -apple-system, BlinkMacSystemFont,
-               'avenir next', avenir,
-               helvetica, 'helvetica neue',
-               Ubuntu,
-               'segoe ui', arial,
-               sans-serif;
-}
-.page {
-  text-align: center;
-  /* nesting for the need to test postcss */
-  code {
-    background-color: #f0f0f0;
-    padding: 3px 5px;
-    border-radius: 2px;
-  }
-}
 </style>
+
+<script>
+import headerNav from './Header.vue'
+import navList from './NavList.vue'
+import ft from './Footer.vue'
+export default {
+  components: {
+    'header-nav': headerNav,
+    'nav-list': navList,
+    'ft': ft,
+  },
+}
+
+</script>

@@ -1,4 +1,9 @@
 /** layout **/
+.container {
+    position: relative;
+    width: 1170px;
+    margin: 0 auto;
+}
 
 .nav {
     position: fixed;
@@ -16,11 +21,7 @@
     opacity: .95;
 }
 
-.nav .container {
-    position: relative;
-    width: 1170px;
-    margin: 0 auto;
-}
+
 
 .nav-logo {
     display: inline-block;
@@ -48,7 +49,6 @@
     line-height: 40px;
     margin-top: 15px;
     margin-left: 2rem;
-    padding-right: 2.5rem;
     transition: all .25s ease;
     text-align: right;
 }
@@ -77,22 +77,32 @@ aside{
     float: left;
     position: relative;
     width: 220px;
-    padding: 80px 15px 40px 20px;
-    background: #fff;
+    padding: 100px 15px 40px 20px;
+    h4{
+      margin: 0;
+      background-color: #bbb;
+      color: #fff;
+      padding: 10px;
+      font-size: 15px;
+      
+    }
+    ul{
+        background-color: #e1e1e1;
+        padding-bottom: 20px;
+    }
     li{
         margin-bottom: 5px;
     }
     a{
         display: inline-block;
         line-height: 30px;
-        color: #999;
-        border-left: 3px solid #fff;
-        padding-left: 10px;
+        color: #777;
+        padding-left: 15px;
         &.active{
             color: @peter-river;
         }
     }
-    
+
 }
 
 
@@ -103,17 +113,22 @@ aside{
     padding: 80px 20px;
 }
 
-body.loading{
-    background: url(../img/article-theme.jpg) no-repeat center 120px;
+.ft{
+    background: #fff;
+    padding-top: 120px;
+    padding-bottom: 40px;
+    margin-top: 40px;
+    text-align: center;
+}
+.ft .icon-list a{
+    position: relative;
+    display: inline-block;
+    width: 75px;
+    height: 75px;
+    margin: 20px;
 }
 
-
-.ft{
-    margin-left: 240px;
-    max-width: 900px;
-    padding-top: 40px;
-    padding-bottom: 20px;
-    text-align: center;
-    font-size: 13px;
-    color: #999;
+.ft .other-info {
+	font-size: 13px;
+  color:#888;
 }
