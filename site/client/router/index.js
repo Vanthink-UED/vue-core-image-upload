@@ -5,6 +5,9 @@ import EnHome from '../components/doc/en/Home.vue';
 import CnGetStarted from '../components/doc/cn/GetStarted.vue';
 import CnAttributes from '../components/doc/cn/Attributes.vue';
 import CnEvents from '../components/doc/cn/Events.vue';
+import CnCropImage from '../components/doc/cn/CropImage.vue';
+import CnCompressImage from '../components/doc/cn/CompressImage.vue';
+import CnOthers from '../components/doc/cn/Others.vue';
 
 Vue.use(Router)
 
@@ -39,6 +42,14 @@ export default new Router({
     {
       path: '/cn/crop-image',
       component: CnEvents
+    },
+    {
+      path: '/cn/compress-image',
+      component: CnCompressImage,
+    },
+    {
+      path: '/cn/others',
+      component: CnOthers,
     }
   ]
 })

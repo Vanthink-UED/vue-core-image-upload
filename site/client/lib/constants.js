@@ -29,7 +29,7 @@ let routers = [
     cn_name: '向服务端发送数据'
   },
   {
-    name: 'Others & Feedback',
+    name: 'Others',
     cn_name: '其他 & 问题反馈'
   }
 ]
