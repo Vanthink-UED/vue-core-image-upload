@@ -4,10 +4,10 @@
       <img src="http://img1.vued.vanthink.cn/vued6c7ab0cd17f3d6159e2b23a270437b44.png" alt="vue core image upload" />
     </p>
     <p class="btn-wrap center">
-      <a class="btn btn-primary btn-go-started" href="#display-svg">快速开始</a>
+      <a class="btn btn-primary btn-go-started" href="#display-svg">Get Started</a>
     </p>
-    <p class="center"><a @click.prevent="goToEnglishDoc" title="View English Document">English Document</a></p>
-    <p><strong>vue-core-image-upload</strong> 是一款轻量级的 Vue.js 上传插件，它可以支持的图片的上传，裁剪，压缩。它同样也支持在移动端的图片处理，它定义了诸多上传周期，你可以自由的进行流程控制。</p>
+    <p class="center"><a href="javascipt:;" title="View Chinese Document">Chinese Document</a></p>
+    <p><strong>vue-core-image-upload</strong> is a lightweight plugin for developers to upload and crop images. There is also a good experience on mobile devices. We has define different type events for developers and they can control the file flow and do more thing they want. </p>
     
   </div>
 </template>
@@ -32,7 +32,7 @@ export default {
     goToEnglishDoc() {
       vendor.setLocalData('lan', 'en');
       window.lan = 'en';
-      location.href = './index.html#/en/home';
+      location.href = './index.html/#/en/home';
     }
   }
 };

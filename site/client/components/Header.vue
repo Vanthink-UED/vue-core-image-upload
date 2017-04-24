@@ -11,7 +11,6 @@
                   </g>
                 </svg>
               </a>
-              <a href="">🇨🇳 CN</a>
           </div>
       </div>
   </div>

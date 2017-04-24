@@ -4,7 +4,8 @@
   "description": "a vue plgin for image upload and crop",
   "main": "index.js",
   "dependencies": {
-    "vue": "^2.0.5"
+    "vue": "^2.0.5",
+    "vue-highlight": "0.0.0"
   },
   "devDependencies": {
     "babel": "^6.5.2",

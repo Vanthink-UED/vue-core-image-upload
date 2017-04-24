@@ -1,6 +1,7 @@
 <template>
 
   <div id="app">
+    <vue-progress-bar></vue-progress-bar>
     <header-nav></header-nav>
     <div class="container">
       <nav-list></nav-list>
@@ -26,6 +27,16 @@ export default {
     'nav-list': navList,
     'ft': ft,
   },
+  
+  created() {
+    this.$router.beforeEach((to, from, next) => {
+      this.$Progress.start()
+      next()
+    })
+    this.$router.afterEach((to, from) => {
+      this.$Progress.finish()
+    })
+  }
 }
 
 </script>

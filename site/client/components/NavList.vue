@@ -14,6 +14,16 @@
 
 <script>
 import { routers } from '../lib/constants';
+
+  const lan = window.lan || 'cn';
+
+for(var item of routers) {
+  item.url = '#/' + lan + '/' + item.url;
+  if (lan !== 'en') {
+    item.name = item.cn_name;  
+  }
+}
+
 export default {
   data() {
     return {

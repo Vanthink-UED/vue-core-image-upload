@@ -1,6 +1,6 @@
 export default {
   getLocalData(key) {
-    let data = null;
+    let data = '';
     try {
       data = localStorage.getItem(key);
     } catch (ew) {
