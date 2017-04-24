@@ -1,6 +1,6 @@
 <template>
   <div class="components">
-    <h3>属性介绍</h3>
+    <h3>基本属性</h3>
     <p>Vue-core-image-upload 提供了很多可配置的选项，从而希望尽可能的满足开发者的需求。</p>
     <p>Code Example</p>
     <pre v-highlightjs><code class="html">&lt;vue-core-image-upload 

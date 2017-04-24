@@ -25,12 +25,12 @@ export default new Router({
       component: EnHome
     },
     {
-      path: '/cn/get-stared',
-      component: EnHome
+      path: '/cn/get-started',
+      component: CnGetStarted
     },
     {
-      path: '/cn/api',
-      component: CnApi
+      path: '/cn/attributes',
+      component: CnAttributes
     },
     {
       path: '/cn/events',
