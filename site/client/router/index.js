@@ -6,6 +6,7 @@ import CnGetStarted from '../components/doc/cn/GetStarted.vue';
 import CnAttributes from '../components/doc/cn/Attributes.vue';
 import CnEvents from '../components/doc/cn/Events.vue';
 import CnCropImage from '../components/doc/cn/CropImage.vue';
+import CnMultipleFile from '../components/doc/cn/MultipleFile.vue';
 import CnCompressImage from '../components/doc/cn/CompressImage.vue';
 import CnOthers from '../components/doc/cn/Others.vue';
 
@@ -42,6 +43,10 @@ export default new Router({
     {
       path: '/cn/crop-image',
       component: CnCropImage
+    },
+    {
+      path: '/cn/multiple-file',
+      component: CnMultipleFile
     },
     {
       path: '/cn/compress-image',

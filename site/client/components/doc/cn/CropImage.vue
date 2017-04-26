@@ -16,7 +16,91 @@
       <li><code>maxWidth</code>: 你期望裁剪的图片的最大宽度</li>
       <li><code>maxHeight</code>: 你期望裁剪的图片的最大高度</li>
     </ul>
-   <p>裁剪区域的样式，你可以自行复写样式。</p> 
-    
+    <p>裁剪区域的样式，你可以自行复写样式进行覆盖</p>
+    <h4>服务端裁剪DEMO</h4>
+    <p>上传图片后可以看到裁剪的参数</p>
+    <div class="center">
+      <div class="user">
+          <img class="avatar" :src="cropSrc"/>
+      </div>
+      <vue-core-image-upload  
+         crop-ratio="1:1" 
+         :class="['btn', 'btn-primary']" 
+         :crop="true" 
+         url="http://101.198.151.190/api/crop.php" 
+         extensions="png,gif,jpeg,jpg" 
+         text="Crop Image"                    
+         @imageuploaded="crpoServerImageUploaded">
+      </vue-core-image-upload>
+    </div>
+    <table class="m-table bordered" style="width:100%;">
+      <thead>
+        <tr>
+          <th>H</th>
+          <th>W</th>
+          <th>X</th>
+          <th>Y</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{cropArgs.toCropImgH}}</td>
+          <td>{{cropArgs.toCropImgW}}</td>
+          <td>{{cropArgs.toCropImgX}}</td>
+          <td>{{cropArgs.toCropImgY}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <pre v-highlightjs><code class="HTML">&lt;vue-core-image-upload  
+   crop-ratio="1:1"
+   :class="['btn', 'btn-primary']" 
+   :crop="true" 
+   url="http://101.198.151.190/api/crop.php" 
+   extensions="png,gif,jpeg,jpg" 
+   text="Crop Image"                    
+   @imageuploaded="crpoServerImageUploaded"&gt;
+&lt;/vue-core-image-upload&gt;
+  
+    </code></pre>
   </div>
 </template>
+
+<script>
+import VueCoreImageUpload from '../../../../src/vue-core-image-upload.vue'  
+export default {
+  components: {
+    VueCoreImageUpload
+  },
+  data() {
+    return {
+      cropSrc: 'http://img1.vued.vanthink.cn/vued7553a09a5d5209ebd00a48264394b7f3.png',
+      cropArgs: {
+        toCropImgH: '?',
+        toCropImgW: '?',
+        toCropImgX: '?',
+        toCropImgY: '?'
+      }
+    };
+  },
+  
+  methods: {
+    crpoServerImageUploaded(res) {
+      if (res.errcode === 0) {
+        if (res.data.src) {
+          this.src = res.data.src;
+          return;
+        }
+        this.name = res.data.name;
+        this.cropArgs = {
+          toCropImgH: parseInt(res.data.post.toCropImgH),
+          toCropImgW: parseInt(res.data.post.toCropImgW),
+          toCropImgX: parseInt(res.data.post.toCropImgX),
+          toCropImgY: parseInt(res.data.post.toCropImgY)
+        }
+        this.cropSrc = 'http://img1.vued.vanthink.cn/vued41b900045d6d44f3b32e06049621b415.png';   
+      }  
+    }
+  }
+};
+
+</script>

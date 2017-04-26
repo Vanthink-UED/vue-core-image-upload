@@ -12,8 +12,9 @@
 
 <script>
 import { routers } from '../lib/constants';
+import vendor from '../lib/vendor';
 
-const lan = window.lan || 'cn';
+const lan = vendor.getLocalData('lan') || 'cn';
 
 for(var item of routers) {
   item.url = '#/' + lan + '/' + item.url;
@@ -21,7 +22,6 @@ for(var item of routers) {
     item.name = item.cn_name;  
   }
 }
-console.log(location.hash.substring(1));
   
 export default {
   data() {
