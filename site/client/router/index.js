@@ -41,7 +41,7 @@ export default new Router({
     },
     {
       path: '/cn/crop-image',
-      component: CnEvents
+      component: CnCropImage
     },
     {
       path: '/cn/compress-image',
