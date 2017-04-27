@@ -66,7 +66,12 @@ Use CDN Script(ES5)
 ```
 
 ``` html
-<vue-core-image-upload v-bind:class="['pure-button','pure-button-primary','js-btn-crop']" v-bind:crop="false" url="./crop.php" extensions="png,gif,jpeg,jpg"></vue-core-image-upload>
+<vue-core-image-upload 
+    v-bind:class="['pure-button','pure-button-primary','js-btn-crop']"
+    v-bind:crop="false" 
+    url="./crop.php" 
+    extensions="png,gif,jpeg,jpg">
+</vue-core-image-upload>
 ```
 
 [Demo] (http://vanthink-ued.github.io/vue-core-image-upload/upload.html)
