@@ -133,50 +133,7 @@
   border-color:#27ae60;
   box-shadow: 0 1px 3px rgba(0,0,0,.05);
 }
-.g-core-image-corp-container .g-crop-image-box,.g-core-image-corp-container .g-crop-image-box .g-crop-image-principal{
+.g-core-image-corp-container .g-crop-image-box,
+.g-core-image-corp-container .g-crop-image-box .g-crop-image-principal{
   position: relative;
-
-}
-.g-core-image-corp-container .g-crop-image-box .select-recorte{
-  position: absolute;
-  background: #fff;
-  opacity: .5;
-  border:2px dashed #555;
-  cursor: move;
-
-}
-.g-core-image-corp-container .g-resize{
-  z-index: 90;
-  position: absolute;
-  bottom: 1px;
-  right: 1px;
-  width: 20px;
-  height: 20px;
-  cursor: se-resize;
-}
-.g-core-image-corp-container .g-resize:after{
-  content: '';
-  display: block;
-  position: absolute;
-  background: #000;
-  width: 5px;
-  height: 5px;
-  right: 0;
-  bottom: 0;
-}
-.g-core-image-corp-container .g-e-resize{
-  cursor: e-resize;
-  position: absolute;
-  width: 7px;
-  right: -5px;
-  top: 0;
-  height: 100%;
-}
-.g-core-image-corp-container .g-s-resize{
-  position: absolute;
-  cursor: s-resize;
-  height: 7px;
-  width: 100%;
-  bottom: -5px;
-  left: 0;
 }

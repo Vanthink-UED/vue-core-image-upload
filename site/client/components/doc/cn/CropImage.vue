@@ -2,8 +2,23 @@
   <div class="components">
     <h3>裁剪图片</h3>
     <p>插件支持图片的裁剪，你可以指定图片裁剪的宽高，图片的的最大宽度和高度这些。</p>
-    <p>图片裁剪完成后你有两者选择，选择<strong>本地裁剪</strong>或者<strong>服务端裁剪</strong>。</p>
+    <p>图片裁剪完有两种选择，选择<strong>本地裁剪<code>local</code></strong>或者<strong>服务端裁剪 <code>server</code></strong>。你可以设置 <code>crop</code>的值来开启裁剪</p>
     <h4>本地裁剪</h4>
+    <p>你可以将 crop 设置为 local 来实现本地裁剪。裁剪完成后会发送裁剪完成后的图片到服务端。</p>
+    <div class="center">
+      <div class="user">
+          <img class="avatar" :src="cropSrc"/>
+      </div>
+      <vue-core-image-upload
+         crop-ratio="1:1"
+         :class="['btn', 'btn-primary']"
+         crop="local"
+         url="http://101.198.151.190/api/crop.php"
+         extensions="png,jpeg,jpg"
+         text="Crop Image"
+         @imageuploaded="crpoServerImageUploaded">
+      </vue-core-image-upload>
+    </div>
     <h4>服务端裁剪</h4>
     <p>服务端裁剪是指将原图片和裁剪的参数一起发给后端，方便服务端保存原图，以及对原图的其他操作，而服务端能够接收到post的参数如下:</p>
     <img src="http://img1.vued.vanthink.cn/vueda26e41f79edd6208ec92f6ce915e558a.png" />
@@ -23,13 +38,13 @@
       <div class="user">
           <img class="avatar" :src="cropSrc"/>
       </div>
-      <vue-core-image-upload  
-         crop-ratio="1:1" 
-         :class="['btn', 'btn-primary']" 
-         :crop="true" 
-         url="http://101.198.151.190/api/crop.php" 
-         extensions="png,gif,jpeg,jpg" 
-         text="Crop Image"                    
+      <vue-core-image-upload
+         crop-ratio="1:1"
+         :class="['btn', 'btn-primary']"
+         crop="true"
+         url="http://101.198.151.190/api/crop.php"
+         extensions="png,gif,jpeg,jpg"
+         text="Crop Image"
          @imageuploaded="crpoServerImageUploaded">
       </vue-core-image-upload>
     </div>
@@ -51,22 +66,22 @@
         </tr>
       </tbody>
     </table>
-    <pre v-highlightjs><code class="HTML">&lt;vue-core-image-upload  
+    <pre v-highlightjs><code class="HTML">&lt;vue-core-image-upload
    crop-ratio="1:1"
-   :class="['btn', 'btn-primary']" 
-   :crop="true" 
-   url="http://101.198.151.190/api/crop.php" 
-   extensions="png,gif,jpeg,jpg" 
-   text="Crop Image"                    
+   :class="['btn', 'btn-primary']"
+   :crop="true"
+   url="http://101.198.151.190/api/crop.php"
+   extensions="png,gif,jpeg,jpg"
+   text="Crop Image"
    @imageuploaded="crpoServerImageUploaded"&gt;
 &lt;/vue-core-image-upload&gt;
-  
+
     </code></pre>
   </div>
 </template>
 
 <script>
-import VueCoreImageUpload from '../../../../src/vue-core-image-upload.vue'  
+import VueCoreImageUpload from '../../../../src/vue-core-image-upload.vue'
 export default {
   components: {
     VueCoreImageUpload
@@ -82,7 +97,7 @@ export default {
       }
     };
   },
-  
+
   methods: {
     crpoServerImageUploaded(res) {
       if (res.errcode === 0) {
@@ -97,8 +112,8 @@ export default {
           toCropImgX: parseInt(res.data.post.toCropImgX),
           toCropImgY: parseInt(res.data.post.toCropImgY)
         }
-        this.cropSrc = 'http://img1.vued.vanthink.cn/vued41b900045d6d44f3b32e06049621b415.png';   
-      }  
+        this.cropSrc = 'http://img1.vued.vanthink.cn/vued41b900045d6d44f3b32e06049621b415.png';
+      }
     }
   }
 };
