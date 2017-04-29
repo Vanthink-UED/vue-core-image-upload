@@ -4,7 +4,7 @@
       "vue"
     ],
     "env": {
-      "browser": 1,
+      "browser": 1
     },
     "plugins": [
         "import",
@@ -26,6 +26,7 @@
         "no-param-reassign": 0,
         "no-console": 0,
         "comma-dangle": 0,
-        "no-extra-semi": 0
+        "no-extra-semi": 0,
+        "semi": ["error", "always"]
     }
 }
