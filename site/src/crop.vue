@@ -38,7 +38,10 @@
   height: 100px;
   border:1px solid rgba(255,255,255, .95);
 }
-.crop-box .reference-line{
+.crop-box:after,
+.crop-box:before{
+  content: '';
+  display: block;
   opacity: 0;
   position: absolute;
   left: 33.3333%;
@@ -48,15 +51,17 @@
   background-color: transparent;
   border-color: rgba(255,255,255,.7);
   border-style: solid;
+  border-width: 0;
 }
-.crop-box:active .reference-line{
+.crop-box:active::before,
+.crop-box:active::after{
   opacity: 1;
 }
-.crop-box .reference-line.v{
+.crop-box:before{
   border-left-width: 1px;
   border-right-width: 1px;
 }
-.crop-box .reference-line.h{
+.crop-box:after{
   top: 33.3333%;
   left: 0;
   height: 33.3334%;
@@ -76,6 +81,7 @@
   cursor: se-resize;
   border-radius: 10px;
   background-color: #fff;
+  box-shadow: 0 2px 4px -2px rgba(0,0,0,.25);
 }
 </style>
 
@@ -190,7 +196,6 @@ export default {
       this.container = $container;
       const move = function (ev) {
         const newCropStyle = resize(ev, self.el, $container, coor, self.ratioW / self.ratioH, helper.isMobile);
-        console.log(newCropStyle);
         if (newCropStyle) {
           self.cropCSS.width = newCropStyle.width;
           self.cropCSS.height = newCropStyle.height;
@@ -233,6 +238,7 @@ export default {
       };
       const move = function (ev) {
         const newCropStyle = drag(ev, self.el, coor);
+        console.log(newCropStyle);
         if (newCropStyle) {
           self.cropCSS.left = newCropStyle.left;
           self.cropCSS.top = newCropStyle.top;
@@ -253,7 +259,6 @@ export default {
         document.addEventListener('touchend', stopMove, false);
         return;
       }
-      console.log(1);
       document.addEventListener('mousemove', move, false);
       document.addEventListener('mouseup', stopMove, false);
     },

@@ -23,7 +23,6 @@
 <script>
 
 import VueCoreImageUpload from '../../../../src/vue-core-image-upload.vue'
-import coreImageCompress from '../../../lib/core-compress-image';
 export default {
   components: {
     VueCoreImageUpload,
