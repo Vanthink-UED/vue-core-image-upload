@@ -3,12 +3,12 @@
     <h3>基本属性</h3>
     <p>Vue-core-image-upload 提供了很多可配置的选项，从而希望尽可能的满足开发者的需求。</p>
     <p>Code Example</p>
-    <pre v-highlightjs><code class="html">&lt;vue-core-image-upload 
-  :class="['btn', 'btn-primary']" 
-  :crop="false" 
-  @imageuploaded="imageuploaded" 
-  :data="data" 
-  :max-file-size="5242880" 
+    <pre v-highlightjs><code class="html">&lt;vue-core-image-upload
+  :class="['btn', 'btn-primary']"
+  :crop="false"
+  @imageuploaded="imageuploaded"
+  :data="data"
+  :max-file-size="5242880"
   url="http://101.198.151.190/api/upload.php" &gt;
 &lt;/vue-core-image-upload&gt;</code></pre>
     <p>其中 class、url、max-file-size均是插件支持的属性，你可以具体查看这张表格:</p>
@@ -88,6 +88,12 @@
             <td align="left">string</td>
             <td>'image/*' / 'image/jpg,image/jpeg,image/png'</td>
             <td>赋予上传file的接受类型</td>
+          </tr>
+          <tr>
+            <td>compress</td>
+            <td align="left">Number</td>
+            <td>50</td>
+            <td>设置本地图片压缩的质量</td>
           </tr>
           <tr>
             <td>isXhr</td>

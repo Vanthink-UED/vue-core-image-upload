@@ -2,17 +2,17 @@
   <div class="components">
     <h3>快速开始</h3>
     <p class="user center">
-      <img class="avatar" :src="src" />  
+      <img class="avatar" :src="src" />
     </p>
     <div class="center">
-      <vue-core-image-upload 
-        :class="['btn', 'btn-primary']" 
-        :crop="false" 
-        @imageuploaded="imageuploaded" 
-        :data="data" 
-        :max-file-size="5242880" 
+      <vue-core-image-upload
+        :class="['btn', 'btn-primary']"
+        :crop="false"
+        @imageuploaded="imageuploaded"
+        :data="data"
+        :max-file-size="5242880"
         url="http://101.198.151.190/api/upload.php" >
-      </vue-core-image-upload>  
+      </vue-core-image-upload>
     </div>
     <h5>Code Example</h5>
     <p>使用 npm 安装依赖</p>
@@ -20,12 +20,12 @@
     <p>使用ES2015</p>
     <pre v-highlightjs><code class="javascript">&lt;template&gt;
 &lt;div class="center"&gt;
-  &lt;vue-core-image-upload 
-    :class="['btn', 'btn-primary']" 
-    :crop="false" 
-    @imageuploaded="imageuploaded" 
-    :data="data" 
-    :max-file-size="5242880" 
+  &lt;vue-core-image-upload
+    :class="['btn', 'btn-primary']"
+    :crop="false"
+    @imageuploaded="imageuploaded"
+    :data="data"
+    :max-file-size="5242880"
     url="http://101.198.151.190/api/upload.php" &gt;
   &lt;/vue-core-image-upload&gt;
 &lt;/div&gt;
@@ -66,7 +66,7 @@ new Vue({
   border-radius: 50%;
   border: 2px solid rgba(0,0,0,.05);
 }
-  
+
 </style>
 
 <script>

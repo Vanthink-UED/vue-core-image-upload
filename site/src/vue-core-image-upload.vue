@@ -56,6 +56,16 @@
           return this.inputOfFile + '[]';
         }
         return this.inputOfFile;
+      },
+
+      compress() {
+        if (this.compress >= 100) {
+          return 99;
+        }
+        if(this.compress <= 0) {
+          return 0;
+        }
+        return this.compress;
       }
 
     },

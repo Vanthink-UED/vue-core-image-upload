@@ -1,15 +1,15 @@
 <template>
   <div class="components">
-    <h3>响应事件</h3>
-    <p>我们在上传的不同阶段指定了不同的派发事件，你可以绑定每个事件的响应方法，实现对于流程的控制。</p>
+    <h3>Custom Events</h3>
+    <p>It defines different custom event in different upload progress. You can control the files flow via binding some functions.</p>
     <h5>imageuploaded</h5>
-    <p>当图片上传完，会调用该事件绑定的函数，并且用户可以获取到服务端返回的数据。</p>
+    <p>When image has been uploaded, it call the function you bind. You could recive response from server as an param</p>
     <h5>imagechanged</h5>
-    <p>当input框改变选择图片时候触发，会返回input的获取的图片数据</p>
+    <p>When input[file] velue has been changed, it call the function you bind. You could recive an file source param</p>
     <h5>imageuploading</h5>
-    <p>当图片上传过程中触发，你可以自定义你需要处理的内容比如显示加载动画等。</p>
+    <p>When the image is uploading.</p>
     <h5>errorhandle</h5>
-    <p>当图片上传发生错误的时候触发，会返回错误状态信息</p>
+    <p>Whne you meet some error like network error or file size error.</p>
     <h5>Code Example</h5>
     <div class="center">
       <img class="avatar" :src="src" />
@@ -29,9 +29,9 @@
       <table class="m-table bordered">
         <thead>
           <tr>
-            <th>图片选中</th>
-            <th>图片上传</th>
-            <th>图片完成</th>
+            <th>Selected</th>
+            <th>Uplaoding</th>
+            <th>Finished</th>
           </tr>
         </thead>
         <tbody>
@@ -45,7 +45,7 @@
         </tbody>
       </table>
     </div>
-    <p>上面的演示，表示了上传自定义事件的执行状况，参考代码如下：</p>
+    <p>Code：</p>
     <pre v-highlightjs><code class="html">&lt;vue-core-image-upload
   :class="['btn', 'btn-primary']"
   :crop="false"
@@ -69,7 +69,7 @@
       this.src = res.data.src;
     }
   }</code></pre>
-    <a href="">完整代码</a>
+    <a href="">View code source</a>
   </div>
 </template>
 
@@ -104,7 +104,6 @@ export default {
     imagechanged() {
       this.step += 1;
     },
-
     imageuploading() {
       this.step += 1;
     },
