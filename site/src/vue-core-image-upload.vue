@@ -56,16 +56,6 @@
           return this.inputOfFile + '[]';
         }
         return this.inputOfFile;
-      },
-
-      compress() {
-        if (this.compress >= 100) {
-          return 99;
-        }
-        if(this.compress <= 0) {
-          return 0;
-        }
-        return this.compress;
       }
 
     },
@@ -155,7 +145,6 @@
         const newCSSObj = cropBox.getCropData();
 
         for (const k of Object.keys(newCSSObj)) {
-          console.log(k);
           this.data[k] = newCSSObj[k];
         }
         if (this.maxWidth) {
@@ -164,17 +153,17 @@
         if (this.maxHeight) {
           this.data['maxHeight'] = this.maxHeight;
         }
-        const upload = () => {
+        const upload = (code) => {
           this.tryAjaxUpload(() => {
             btn.value = btn.value.replace('...','');
             btn.disabled = false;
-          });
+          }, true, code);
         };
         if (this.crop === 'local') {
           const targetImage = cropBox.getCropImage();
-          this.data.compress = 100 - this.compress;
-          return canvasHelper.crop(targetImage, this.data, () => {
-              // upload();
+          this.data.comprose = 100 - this.compress;
+          return canvasHelper.crop(targetImage, this.data, (code) => {
+            upload(code);
           })
         }
         upload();

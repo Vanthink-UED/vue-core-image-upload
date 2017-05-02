@@ -51,12 +51,7 @@ export default {
       const ctx = cvs.getContext('2d').drawImage(image, options.toCropImgX, options.toCropImgY, options.toCropImgW, options.toCropImgH, 0 , 0, w, h);
       const mimeType = this._getImageType(image.src);
       const data = cvs.toDataURL(mimeType, options.compress/100);
-      console.log(data);
-      const targetImage = new Image();
-      targetImage.src = data;
-      return targetImage;
-    } else {
-      callback();
+      callback(data);
     }
   },
 

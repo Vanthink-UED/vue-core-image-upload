@@ -1,10 +1,11 @@
 <template>
   <div class="components">
     <h3>裁剪图片</h3>
-    <p>插件支持图片的裁剪，你可以指定图片裁剪的宽高，图片的的最大宽度和高度这些。</p>
-    <p>图片裁剪完有两种选择，选择<strong>本地裁剪<code>local</code></strong>或者<strong>服务端裁剪 <code>server</code></strong>。你可以设置 <code>crop</code>的值来开启裁剪</p>
+    <p>你可以通过设置 <code>crop</code>，来实现图片的裁剪。你可以指定图片裁剪的宽高，以及它的最大宽度和高度这些参数。</p>
+    <p class="warnning"> 设置图片裁剪后，批量上传将不再生效。</p>
+    <p>图片裁剪完有两种选择，选择<strong>本地裁剪<code>local</code></strong>或者<strong>服务端裁剪 <code>server</code></strong>。</p>
     <h4>本地裁剪</h4>
-    <p>你可以将 crop 设置为 local 来实现本地裁剪。裁剪完成后会发送裁剪完成后的图片到服务端。</p>
+    <p>你可以将 crop 设置为 local 来实现本地裁剪。本地裁剪完成后发送给服务端接口的图片便是已经裁剪好的图片。</p>
     <div class="center">
       <div class="user">
           <img class="avatar" :src="cropSrc"/>
@@ -16,6 +17,7 @@
          url="http://101.198.151.190/api/crop.php"
          extensions="png,jpeg,jpg"
          text="Crop Image"
+         compress="20"
          @imageuploaded="crpoServerImageUploaded">
       </vue-core-image-upload>
     </div>
@@ -41,7 +43,7 @@
       <vue-core-image-upload
          crop-ratio="1:1"
          :class="['btn', 'btn-primary']"
-         crop="true"
+         crop="server"
          url="http://101.198.151.190/api/crop.php"
          extensions="png,gif,jpeg,jpg"
          text="Crop Image"
@@ -69,7 +71,7 @@
     <pre v-highlightjs><code class="HTML">&lt;vue-core-image-upload
    crop-ratio="1:1"
    :class="['btn', 'btn-primary']"
-   :crop="true"
+   crop="server"
    url="http://101.198.151.190/api/crop.php"
    extensions="png,gif,jpeg,jpg"
    text="Crop Image"
@@ -77,6 +79,7 @@
 &lt;/vue-core-image-upload&gt;
 
     </code></pre>
+    <a  href>View Code Source</a>
   </div>
 </template>
 
