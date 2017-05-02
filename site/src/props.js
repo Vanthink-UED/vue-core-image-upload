@@ -21,7 +21,7 @@ export default {
     default: 'files'
   },
   crop: {
-    type: [String],
+    type: [String, Boolean],
     default: ''
   },
   cropBtn: {

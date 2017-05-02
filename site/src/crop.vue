@@ -251,7 +251,6 @@ export default {
       };
       const move = function (ev) {
         const newCropStyle = drag(ev, self.el, coor);
-        console.log(newCropStyle);
         if (newCropStyle) {
           self.cropCSS.left = newCropStyle.left;
           self.cropCSS.top = newCropStyle.top;

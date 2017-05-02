@@ -1,6 +1,6 @@
 /**
 * compress image
-* @param src
+* reference https://github.com/brunobar79/J-I-C
 **/
 
 export default {
@@ -20,13 +20,11 @@ export default {
       let image = new Image();
       image.src = event.target.result;
       image.onload = function() {
-        const outputType = self._getImageType(src.type);
+        const mimeType = self._getImageType(src.type);
         const cvs = self._getCanvas(image.naturalWidth, image.naturalHeight);
         const ctx = cvs.getContext("2d").drawImage(image, 0, 0);
         const newImageData = cvs.toDataURL(mimeType, quality/100);
-        const targetImage = new Image();
-        targetImage.src = newImageData;
-        return targetImage;
+        callback(newImageData);
       }
     };
     reader.readAsDataURL(src);

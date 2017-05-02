@@ -98,12 +98,15 @@
           this.__showImage();
           return;
         }
-        this. __dispatch('imagechanged',this.files[0]);
-        this.tryAjaxUpload();
-
+        this. __dispatch('imagechanged', this.files[0]);
+        if (this.compress) {
+          canvasHelper.compress(this.files[0], 100 - this.compress, (code) => {
+            this.tryAjaxUpload('', true, code);
+          });
+        } else {
+          this.tryAjaxUpload();
+        }
       },
-
-
       __showImage() {
         this.hasImage = true;
         this.__readFiles();
@@ -174,37 +177,49 @@
       },
 
       // use ajax upload  IE9+
-      tryAjaxUpload(callback) {
+      tryAjaxUpload(callback, isBinary, base64Code) {
+        const self = this;
         this. __dispatch('imageuploading',this.files[0]);
+        const done = function(res) {
+          if(typeof callback === 'function') {
+            callback();
+          }
+          self.uploading = false;
+          self.cancel();
+          self.__dispatch('imageuploaded',res);
+        };
+        const errorUpload = function(err) {
+          self.__dispatch('errorhandle', err);
+        };
         if (!this.isXhr) {
           if(this.crop) {
             this.hasImage = false;
           }
           return typeof callback === 'function' && callback();
         }
-        const self = this;
-        let data = new FormData();
-        for(let i=0;i<this.files.length;i++) {
-          data.append(self.inputOfFile, this.files[i]);
-        }
-        if (typeof this.data === 'object') {
-            for(let k in this.data) {
-              if(this.data[k] !== undefined) {
-                data.append(k,this.data[k]);
-              }
-            }
-        }
-        xhr('POST',this.url, this.headers, data,function(res) {
-          if(typeof callback === 'function') {
-            callback();
+        let data;
+        if (isBinary) {
+          data = {
+            type: this.files[0]['type'],
+            filename: this.files[0]['name'],
+            filed: this.inputOfFile,
+            base64Code: base64Code
+          };
+        } else {
+          data = new FormData();
+          for (let i=0;i<this.files.length;i++) {
+            data.append(this.inputOfFile, this.files[i]);
           }
-          self.uploading = false;
-          if(self.crop) {
-              self.hasImage = false;
-           }
-           document.querySelector("#g-core-upload-input-" + self.formID).value = '';
-           self.__dispatch('imageuploaded',res);
-        });
+          console.log(data);
+          if (typeof this.data === 'object') {
+              for(let k in this.data) {
+                if(this.data[k] !== undefined) {
+                  data.append(k,this.data[k]);
+                }
+              }
+          }
+        }
+        xhr('POST',this.url, this.headers, data, done, errorUpload, isBinary);
       },
     },
 

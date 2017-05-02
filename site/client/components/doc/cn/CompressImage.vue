@@ -11,11 +11,9 @@
         @imageuploaded="imageUploded"
         :max-file-size="5242880"
         compress="50"
-        url="http://101.198.151.190/api/crop.php" >
+        url="http://101.198.151.190/api/upload.php" >
       </vue-core-image-upload>
     </div>
-
-
   </div>
 </template>
 
@@ -35,10 +33,10 @@ export default {
 
   methods: {
     imageChanged(files) {
-      coreImageCompress(files, 'asd', 90);
+
     },
     imageUploded(res) {
-
+        this.src = res.data.src;
     }
   }
 
