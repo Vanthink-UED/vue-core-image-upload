@@ -4,6 +4,15 @@
 **/
 
 export default {
+  _getImageType(str) {
+    let mimeType = 'image/jpeg';
+    const outputType = str.match(/(image\/[\w]+)\.*/)[0];
+    if (typeof outputType !== 'undefined'){
+      mimeType = outputType;
+    }
+    return mimeType;
+  },
+
   compress (src, quality, callback) {
     const reader = new FileReader();
     const self = this;
@@ -11,11 +20,7 @@ export default {
       let image = new Image();
       image.src = event.target.result;
       image.onload = function() {
-        const outputType = getImageType(src.type);
-        let mimeType = 'image/jpeg';
-        if (typeof outputType !== 'undefined' && outputType === 'png'){
-          mimeType = 'image/png';
-        }
+        const outputType = self._getImageType(src.type);
         const cvs = self._getCanvas(image.naturalWidth, image.naturalHeight);
         const ctx = cvs.getContext("2d").drawImage(image, 0, 0);
         const newImageData = cvs.toDataURL(mimeType, quality/100);
@@ -30,8 +35,11 @@ export default {
   * crop image via canvas and generate data
   **/
   crop(image, options, callback) {
+    const checkNumber = function(num) {
+      return (typeof num === 'number');
+    };
     // check crop options
-    if(Number.isNumber(options.toCropImgX)&& Number.isNumber(options.toCropImgY) && options.toCropImgW > 0 && options.toCropImgH > 0) {
+    if(checkNumber(options.toCropImgX) && checkNumber(options.toCropImgY) && options.toCropImgW > 0 && options.toCropImgH > 0) {
       let w = options.toCropImgW;
       let h = options.toCropImgH;
       if(options.maxWidth && options.maxWidth < w) {
@@ -42,18 +50,16 @@ export default {
         h = options.maxHeight
       }
       const cvs = this._getCanvas(w, h);
-      const ctx = cvs.drawImage(image, options.toCropImgX, options.toCropImgY, options.toCropImgW, options.toCropImgH, 0 , 0, w, h);
-      const data = cvs.toDataURL(options.mimeType, options.compress/100);
+      const ctx = cvs.getContext('2d').drawImage(image, options.toCropImgX, options.toCropImgY, options.toCropImgW, options.toCropImgH, 0 , 0, w, h);
+      const mimeType = this._getImageType(image.src);
+      const data = cvs.toDataURL(mimeType, options.compress/100);
+      console.log(data);
       const targetImage = new Image();
       targetImage.src = data;
       return targetImage;
     } else {
       callback();
     }
-
-
-
-
   },
 
   _loadImage(data, callback) {

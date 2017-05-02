@@ -5,21 +5,19 @@
       <input v-bind:disabled="uploading" v-bind:id="'g-core-upload-input-' + formID" v-bind:name="name" v-bind:multiple="multiple" type="file" v-bind:accept="inputAccept" v-on:change="change" style="width: 100%; height: 100%;">
     </form>
     <div class="g-core-image-corp-container" v-bind:id="'vciu-modal-' + formID" v-show="hasImage">
-    <div class="image-aside">
-      <div class="g-crop-image-box">
-        <crop :form-id="formID" ref="cropBox" :ratio="cropRatio"></crop>
+      <div class="image-aside">
+        <div class="g-crop-image-box">
+          <crop :form-id="formID" ref="cropBox" :ratio="cropRatio"></crop>
+        </div>
       </div>
-    </div>
-    <div class="info-aside">
-      <p class="btn-groups">
-        <button type="button" v-on:click="doCrop" class="btn btn-upload">{{cropBtn.ok}}</button>
-        <button type="button" v-on:click="cancel()" class="btn btn-cancel">{{cropBtn.cancel}}</button>
-      </p>
-    </div>
-</div>
+      <div class="info-aside">
+        <p class="btn-groups">
+          <button type="button" v-on:click="doCrop" class="btn btn-upload">{{cropBtn.ok}}</button>
+          <button type="button" v-on:click="cancel()" class="btn btn-cancel">{{cropBtn.cancel}}</button>
+        </p>
+      </div>
   </div>
-
-
+</div>
 </template>
 
 <style src="./style/style.css">
@@ -99,7 +97,6 @@
         if(this.crop) {
           this.__showImage();
           return;
-
         }
         this. __dispatch('imagechanged',this.files[0]);
         this.tryAjaxUpload();
@@ -137,21 +134,37 @@
         let btn = e.target;
         btn.value = btn.value + '...';
         btn.disabled = true;
-        if(typeof this.data !== 'object') {
+        if (typeof this.data !== 'object') {
           this.data = {};
         }
-
-        let $selectCrop = this.__find('.select-recorte');
         this.data["request"] = "crop";
+        const cropBox = this.$refs.cropBox;
+        const newCSSObj = cropBox.getCropData();
 
-        this.data["toCropImgX"] = parseInt(window.getComputedStyle($selectCrop).left) * this.imgChangeRatio;
-        this.data["toCropImgY"] = parseInt(window.getComputedStyle($selectCrop).top) * this.imgChangeRatio;
-        this.data["toCropImgW"] = parseInt(window.getComputedStyle($selectCrop).width)  * this.imgChangeRatio;
-        this.data["toCropImgH"] = parseInt(window.getComputedStyle($selectCrop).height)  * this.imgChangeRatio;
-        this.tryAjaxUpload(function() {
-          btn.value = btn.value.replace('...','');
-          btn.disabled = false;
-        });
+        for (const k of Object.keys(newCSSObj)) {
+          console.log(k);
+          this.data[k] = newCSSObj[k];
+        }
+        if (this.maxWidth) {
+          this.data['maxWidth'] = this.maxWidth;
+        }
+        if (this.maxHeight) {
+          this.data['maxHeight'] = this.maxHeight;
+        }
+        const upload = () => {
+          this.tryAjaxUpload(() => {
+            btn.value = btn.value.replace('...','');
+            btn.disabled = false;
+          });
+        };
+        if (this.crop === 'local') {
+          const targetImage = cropBox.getCropImage();
+          this.data.compress = 100 - this.compress;
+          return canvasHelper.crop(targetImage, this.data, () => {
+              // upload();
+          })
+        }
+        upload();
 
       },
       cancel() {
@@ -175,7 +188,6 @@
           data.append(self.inputOfFile, this.files[i]);
         }
         if (typeof this.data === 'object') {
-
             for(let k in this.data) {
               if(this.data[k] !== undefined) {
                 data.append(k,this.data[k]);
@@ -194,20 +206,6 @@
            self.__dispatch('imageuploaded',res);
         });
       },
-      // resize and drag move
-      resize(e) {
-        e.stopPropagation();
-        let $el = e.target.parentElement;
-        let $container = this.__find('.g-crop-image-principal');
-        let resizedObj = new Resize($el,$container,this.cropRatio,e);
-      },
-
-      drag(e) {
-        e.preventDefault();
-        let $el = e.target;
-        let $container = this.__find('.g-crop-image-principal');
-        let dragObj = new Drag($el,$container,e);
-      }
     },
 
   };

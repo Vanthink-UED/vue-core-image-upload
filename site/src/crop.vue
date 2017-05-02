@@ -1,7 +1,7 @@
 <template>
 <div class="g-crop-image-principal">
   <div class="image-wrap" :style="{ width:width + 'px',height: height + 'px' }">
-    <img :src="src" :style="{ width:width + 'px',height: height + 'px' }">
+    <img ref="crop-image" :src="src" :style="{ width:width + 'px',height: height + 'px' }">
   </div>
   <div class="image-mask">
     <div class="mask top" :style="{ top:0, height: cropCSS.top + 'px', left: 0, width: '100%'}"></div>
@@ -15,7 +15,6 @@
     <a class="g-resize" v-on:touchstart.self="resize" v-on:mousedown.self="resize"></a>
   </div>
 </div>
-
 </template>
 
 <style scoped>
@@ -171,6 +170,20 @@ export default {
         $selectCropBox.style.cssText = helper.setCssText(CSSObj);
       };
       this.cropCSS = CSSObj;
+    },
+
+    getCropData() {
+      // keep compatible with old api
+      return {
+        toCropImgX: this.cropCSS.left / this.imgChangeRatio,
+        toCropImgY: this.cropCSS.top / this.imgChangeRatio,
+        toCropImgW: this.cropCSS.width / this.imgChangeRatio,
+        toCropImgH: this.cropCSS.height / this.imgChangeRatio,
+      };
+    },
+
+    getCropImage() {
+      return this.$refs['crop-image'];
     },
 
     __find(str) {
