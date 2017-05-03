@@ -207,7 +207,7 @@
         } else {
           data = new FormData();
           for (let i=0;i<this.files.length;i++) {
-            data.append(this.inputOfFile, this.files[i]);
+            data.append(this.name, this.files[i]);
           }
           console.log(data);
           if (typeof this.data === 'object') {
