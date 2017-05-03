@@ -10,6 +10,7 @@ import CnEvents from '../components/doc/cn/Events.vue';
 import EnEvents from '../components/doc/en/Events.vue';
 import CnCropImage from '../components/doc/cn/CropImage.vue';
 import CnMultipleFile from '../components/doc/cn/MultipleFile.vue';
+import EnMultipleFile from '../components/doc/en/MultipleFile.vue';
 import CnCompressImage from '../components/doc/cn/CompressImage.vue';
 import CnPostData from '../components/doc/cn/PostData.vue';
 import EnPostData from '../components/doc/en/PostData.vue';
@@ -65,6 +66,10 @@ export default new Router({
     {
       path: '/cn/multiple-file',
       component: CnMultipleFile
+    },
+    {
+      path: '/en/multiple-file',
+      component: EnMultipleFile
     },
     {
       path: '/cn/compress-image',
