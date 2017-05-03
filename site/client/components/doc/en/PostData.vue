@@ -1,11 +1,11 @@
 <template>
 <div class="components">
-  <h3>向服务端发送数据</h3>
-  <p>你可以设置<code>data</code> 来将一些附带的数据发送给服务端。</p>
+  <h3>Send Data to Server</h3>
+  <p>Setting <code>data</code> attribute will send some data you bind to the server via ajax</p>
   <h4>Exmaple:</h4>
-  <p>下面会将输入框的内容一并发送过去</p>
+  <p>You could type some text here and its text will be sended to the server when you upload your image.</p>
   <div class="m-form">
-    <input type="text" v-model="data.text" placeholder="输入一些内容吧" class="form-control text" />
+    <input type="text" v-model="data.text" placeholder="type some..." class="form-control text" />
     <vue-core-image-upload
       :class="['btn', 'btn-primary']"
       :crop="false"
@@ -16,7 +16,7 @@
       url="http://101.198.151.190/api/upload.php" >
     </vue-core-image-upload>
   </div>
-  <p>上传的过程中我们可以打开devtool查看请求，可以看到发送数据中带上了一个新的 text 字段，也就是文本框内容。</p>
+  <p>We could open chrome devtool to view http status when uploading image. Below is the result after uploading image successfully.</p>
   <p><img width="480" src="http://img1.vued.vanthink.cn/vued6491e814a4b12bfcaecd628a6732beb0.png" /></p>
   <h4>Code Example</h4>
   <pre v-highlightjs><code class="javascript">&lt;template&gt;
@@ -52,7 +52,7 @@ export default {
 };
 &lt;/script&gt;
 </code></pre>
-  <a href="">查看完整源码</a>
+  <a href="">View code source</a>
 </div>
 </template>
 <style>
@@ -84,7 +84,6 @@ export default {
 
     }
   }
-
 };
 
 </script>

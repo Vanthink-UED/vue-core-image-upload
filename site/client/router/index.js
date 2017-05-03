@@ -10,7 +10,9 @@ import CnCropImage from '../components/doc/cn/CropImage.vue';
 import CnMultipleFile from '../components/doc/cn/MultipleFile.vue';
 import CnCompressImage from '../components/doc/cn/CompressImage.vue';
 import CnPostData from '../components/doc/cn/PostData.vue';
+import EnPostData from '../components/doc/en/PostData.vue';
 import CnOthers from '../components/doc/cn/Others.vue';
+import EnOthers from '../components/doc/en/Others.vue';
 
 Vue.use(Router)
 
@@ -63,8 +65,16 @@ export default new Router({
       component: CnPostData
     },
     {
+      path: '/en/post-data',
+      component: EnPostData,
+    },
+    {
       path: '/cn/others',
       component: CnOthers,
+    },
+    {
+      path: '/en/others',
+      component: EnOthers,
     }
   ]
 })
