@@ -1,9 +1,9 @@
 <template>
   <div class="components">
-    <h3>快速开始</h3>
-    <p>使用 npm 安装依赖</p>
+    <h3>Get Started</h3>
+    <p>Use npm to install the module</p>
     <pre v-highlightjs><code class="bash">npm install vue-core-image-upload --save</code></pre>
-    <p>安装完成后，编辑源码</p>
+    <p>Then edit a vue file</p>
     <pre v-highlightjs><code class="javascript">&lt;template&gt;
 &lt;div class="center"&gt;
   &lt;vue-core-image-upload
@@ -53,10 +53,10 @@ export default {
        url="http://101.198.151.190/api/upload.php" >
      </vue-core-image-upload>
    </div>
-    <p>如果我们要使用上传插件，我们首先需要引入我们的组件然后并在<code>components</code>中声明。
-      实现上传，我们需要定义我们上传的服务器地址<code>url</code>，然后我们需要指定上传完成后触发的方法，也就是<code>@imageuploaded</code>，这样我们才能获取上传完后的数据，从而进行下一步的操作。
+    <p>First of all , we need to include out plugin in <code>components</code> . Then we must define the <code>url</code> as your server api ,then we bind a function to
+      <code>@imageuploaded</code> for handling the server response.
     </p>
-    <p><a class="btn btn-info" href="#/cn/attributes">查看详细文档</a></p>
+    <p><a class="btn btn-info" href="#/en/attributes">View more details</a></p>
   </div>
 </template>
 

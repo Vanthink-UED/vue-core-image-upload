@@ -3,7 +3,9 @@ import Router from 'vue-router'
 import CnHome from '../components/doc/cn/Home.vue';
 import EnHome from '../components/doc/en/Home.vue';
 import CnGetStarted from '../components/doc/cn/GetStarted.vue';
-import CnAttributes from '../components/doc/cn/Attributes.vue';
+import EnGetStarted from '../components/doc/en/GetStarted.vue';
+import CnProps from '../components/doc/cn/Props.vue';
+import EnProps from '../components/doc/en/Props.vue';
 import CnEvents from '../components/doc/cn/Events.vue';
 import EnEvents from '../components/doc/en/Events.vue';
 import CnCropImage from '../components/doc/cn/CropImage.vue';
@@ -37,8 +39,16 @@ export default new Router({
       component: CnGetStarted
     },
     {
-      path: '/cn/attributes',
-      component: CnAttributes
+      path: '/en/get-started',
+      component: EnGetStarted,
+    },
+    {
+      path: '/cn/props',
+      component: CnProps
+    },
+    {
+      path: '/en/props',
+      component: EnProps
     },
     {
       path: '/cn/events',
