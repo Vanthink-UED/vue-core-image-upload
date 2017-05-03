@@ -1,116 +1,40 @@
-
 <template>
   <div class="g-core-image-upload-btn">
     {{text}}
     <form class="g-core-image-upload-form" v-show="!hasImage" method="post" enctype="multipart/form-data" action="/api2/common_user/cropHeadUrl" style="display: block; cursor: pointer; position: absolute; left: 0px; top: 0px; width: 1242px; height: 61px; opacity: 0; margin: 0px; padding: 0px; overflow: hidden;">
-      <input v-bind:disabled="uploading" v-bind:id="'g-core-upload-input-' + formID" v-bind:name="inputOfFile" type="file" v-bind:accept="inputAccept" v-on:change="change" style="width: 100%; height: 100%;">
+      <input v-bind:disabled="uploading" v-bind:id="'g-core-upload-input-' + formID" v-bind:name="name" v-bind:multiple="multiple" type="file" v-bind:accept="inputAccept" v-on:change="change" style="width: 100%; height: 100%;">
     </form>
     <div class="g-core-image-corp-container" v-bind:id="'vciu-modal-' + formID" v-show="hasImage">
-    <div class="image-aside">
-      <div class="g-crop-image-box">
-        <div class="g-crop-image-principal">
-          <img v-bind:src="image.src" v-bind:style="{ width:image.width + 'px',height: image.height + 'px' }">
-          <div class="select-recorte" v-on:touchstart.self="drag" v-on:mousedown.self="drag" style="width:100px;height:100px;">
-            <div class="g-s-resize" style="z-index: 90;"></div>
-            <div class="g-e-resize" style="z-index: 90;"></div>
-            <div class="g-resize" v-on:touchstart.self="resize" v-on:mousedown.self="resize"></div>
-          </div>
+      <div class="image-aside">
+        <div class="g-crop-image-box">
+          <crop :form-id="formID" ref="cropBox" :ratio="cropRatio"></crop>
         </div>
       </div>
-    </div>
-    <div class="info-aside">
-      <p class="btn-groups">
-        <button type="button" v-on:click="doCrop" class="btn btn-upload">{{cropBtn.ok}}</button>
-        <button type="button" v-on:click="cancel()" class="btn btn-cancel">{{cropBtn.cancel}}</button>
-      </p>
-    </div>
-</div>
+      <div class="info-aside">
+        <p class="btn-groups">
+          <button type="button" v-on:click="doCrop" class="btn btn-upload">{{cropBtn.ok}}</button>
+          <button type="button" v-on:click="cancel()" class="btn btn-cancel">{{cropBtn.cancel}}</button>
+        </p>
+      </div>
   </div>
-
-
+</div>
 </template>
 
 <style src="./style/style.css">
 </style>
 
 <script>
-
-  import Drag from './lib/drag';
-  import Resize from './lib/resize';
   import xhr from './lib/xhr';
   import GIF_LOADING_SRC from './lib/loading-gif';
+  import canvasHelper from './lib/canvas-helper';
+  import props from './props';
+  import Crop from './crop.vue';
 
   export default {
-    props:{
-      url: {
-        type: String,
-      },
-      text: {
-        type:String,
-        default:  'Upload Image'
-      },
-      class: {
-        type: Array,
-        default:function() {
-          return [];
-        }
-      },
-      extensions: {
-        type: String,
-        default:'png.jpg,jpeg,gif,svg,webp'
-      },
-      inputOfFile: {
-        type: String,
-        default: 'files'
-      },
-      crop: {
-        type: Boolean,
-        default: false,
-      },
-      cropBtn: {
-        type: Object,
-        default: function() {
-          return {
-            ok: 'Ok',
-            cancel: 'Cancel',
-          }
-        }
-      },
-      cropRatio: {
-        type: String,
-        default: '1:1'
-      },
-      maxFileSize:{
-        type: Number,
-        default: 1024 * 1024 * 100,
-      },
-      maxWidth:{
-        type: Number,
-      },
-      maxHeight:{
-        type: Number,
-      },
-      inputAccept:{
-        type: String,
-        default: 'image/jpg,image/jpeg,image/png'
-      },
-      isXhr: {
-        type: Boolean,
-        default: true
-      },
-      headers: {
-        type: Object,
-        default: function() {
-          return {};
-        }
-      },
-      data: {
-        type: Object,
-        default: function() {
-          return {};
-        }
-      }
+    components: {
+      Crop,
     },
+    props: props,
     data() {
       return {
         files: [],
@@ -124,6 +48,16 @@
           height:24,
         },
       }
+    },
+
+    computed: {
+      name() {
+        if(this.multiple) {
+          return this.inputOfFile + '[]';
+        }
+        return this.inputOfFile;
+      }
+
     },
 
     methods: {
@@ -163,16 +97,17 @@
         if(this.crop) {
           this.__showImage();
           return;
-
         }
-        this. __dispatch('imagechanged',this.files[0]);
-        this.tryAjaxUpload();
-
+        this. __dispatch('imagechanged', this.files[0]);
+        if (this.compress) {
+          canvasHelper.compress(this.files[0], 100 - this.compress, (code) => {
+            this.tryAjaxUpload('', true, code);
+          });
+        } else {
+          this.tryAjaxUpload();
+        }
       },
-
-
       __showImage() {
-
         this.hasImage = true;
         this.__readFiles();
       },
@@ -183,9 +118,8 @@
         reader.onload = function(e) {
           let src = e.target.result;
           self.__initImage(src);
-
         }
-         reader.readAsDataURL(this.files[0]);
+        reader.readAsDataURL(this.files[0]);
       },
 
       // set the image size
@@ -193,87 +127,48 @@
         let pic = new Image();
         let self = this;
         pic.src = src;
-
+        const cropBox = this.$refs.cropBox;
         pic.onload= function() {
-          self.image.src = src;
-          self.image.width = pic.naturalWidth;
-          self.image.height = pic.naturalHeight;
-          self.__reseyLayout();
-          self.__initCropBox();
+          self.imgChangeRatio = cropBox.setImage(src, pic.naturalWidth, pic.naturalHeight);
         }
-      },
-
-      // init crop area
-      __initCropBox (){
-        let dq = document.querySelector('#vciu-modal-' + this.formID);
-        let $selectCropBox = dq.querySelector('.select-recorte');
-        let $wrap = dq.querySelector('.g-crop-image-principal');
-        let imageWidth = parseInt($wrap.style['width']),
-            imageHeight = parseInt($wrap.style['height']);
-        let ratioW = this.cropRatio.split(':')[0],
-            ratioH = this.cropRatio.split(':')[1];
-        let Swidth = (imageWidth / 100) * 80;
-        let Sheight = (Swidth / ratioW) * ratioH;
-        $selectCropBox.style.cssText = 'width:' + Swidth + 'px;height: ' + Sheight + 'px;left:' + (imageWidth - Swidth) / 2 + 'px;top:' + (imageHeight - Sheight) / 2 + 'px;';
-        if (Sheight > imageHeight) {
-          Sheight = (imageHeight / 100) * 80;
-          Swidth = (Sheight * ratioW) / ratioH;
-          $selectCropBox.style.cssText = 'width:' + Swidth + 'px;height:' + Sheight + 'px;left:' + (imageWidth - Swidth) / 2 + 'px;top:' + (imageHeight - Sheight) / 2 + 'px';
-        };
-
-      },
-
-
-      // reset layout
-      __reseyLayout: function() {
-        let H = window.innerHeight - 80,
-            W = window.innerWidth - 60,
-            imageWidth = this.image.width,
-            imageHeight = this.image.height;
-        // caculate the image ratio
-        let R = imageWidth / imageHeight;
-        let Rs = W / H;
-        let dq = document.querySelector('#vciu-modal-' + this.formID);
-        let $container = dq.querySelector('.g-crop-image-principal');
-        if (R > Rs) {
-          this.image.width = W;
-          this.image.height = W / R;
-          // I don't hope to use a state to change the container stye
-          $container.style.cssText = 'width:' + W + 'px;height:' + W / R + 'px;margin-top:' + (H - W / R) / 2 + 'px';
-
-        } else {
-          this.image.width =  H * R,
-          this.image.height = H;
-
-          $container.style.cssText = 'width:' + H * R + 'px;height:' + H + 'px;margin-left:' + (W - H * R) / 2 + 'px;';
-        }
-        this.imgChangeRatio = imageWidth / this.image.width;
-
       },
 
       doCrop(e) {
         let btn = e.target;
         btn.value = btn.value + '...';
         btn.disabled = true;
-        if(typeof this.data !== 'object') {
+        if (typeof this.data !== 'object') {
           this.data = {};
         }
-
-        let $selectCrop = this.__find('.select-recorte');
         this.data["request"] = "crop";
+        const cropBox = this.$refs.cropBox;
+        const newCSSObj = cropBox.getCropData();
 
-        this.data["toCropImgX"] = parseInt(window.getComputedStyle($selectCrop).left) * this.imgChangeRatio;
-        this.data["toCropImgY"] = parseInt(window.getComputedStyle($selectCrop).top) * this.imgChangeRatio;
-        this.data["toCropImgW"] = parseInt(window.getComputedStyle($selectCrop).width)  * this.imgChangeRatio;
-        this.data["toCropImgH"] = parseInt(window.getComputedStyle($selectCrop).height)  * this.imgChangeRatio;
-        this.tryAjaxUpload(function() {
-          btn.value = btn.value.replace('...','');
-          btn.disabled = false;
-        });
+        for (const k of Object.keys(newCSSObj)) {
+          this.data[k] = newCSSObj[k];
+        }
+        if (this.maxWidth) {
+          this.data['maxWidth'] = this.maxWidth;
+        }
+        if (this.maxHeight) {
+          this.data['maxHeight'] = this.maxHeight;
+        }
+        const upload = (code) => {
+          this.tryAjaxUpload(() => {
+            btn.value = btn.value.replace('...','');
+            btn.disabled = false;
+          }, code ? true: false, code);
+        };
+        if (this.crop === 'local') {
+          const targetImage = cropBox.getCropImage();
+          this.data.comprose = 100 - this.compress;
+          return canvasHelper.crop(targetImage, this.data, (code) => {
+            upload(code);
+          })
+        }
+        upload();
 
       },
-
-
       cancel() {
         this.hasImage = false;
         this.files = '';
@@ -281,55 +176,49 @@
       },
 
       // use ajax upload  IE9+
-      tryAjaxUpload(callback) {
+      tryAjaxUpload(callback, isBinary, base64Code) {
+        const self = this;
         this. __dispatch('imageuploading',this.files[0]);
+        const done = function(res) {
+          if(typeof callback === 'function') {
+            callback();
+          }
+          self.uploading = false;
+          self.cancel();
+          self.__dispatch('imageuploaded',res);
+        };
+        const errorUpload = function(err) {
+          self.__dispatch('errorhandle', err);
+        };
         if (!this.isXhr) {
           if(this.crop) {
             this.hasImage = false;
           }
           return typeof callback === 'function' && callback();
         }
-        const self = this;
-        let data = new FormData();
-        for(let i=0;i<this.files.length;i++) {
-          data.append(self.inputOfFile, this.files[i]);
-        }
-        if (typeof this.data === 'object') {
-
-            for(let k in this.data) {
-              if(this.data[k] !== undefined) {
-                data.append(k,this.data[k]);
-              }
-            }
-
-        }
-        xhr('POST',this.url, this.headers, data,function(res) {
-          if(typeof callback === 'function') {
-            callback();
+        let data;
+        if (isBinary) {
+          data = {
+            type: this.files[0]['type'],
+            filename: this.files[0]['name'],
+            filed: this.inputOfFile,
+            base64Code: base64Code
+          };
+        } else {
+          data = new FormData();
+          for (let i=0;i<this.files.length;i++) {
+            data.append(this.name, this.files[i]);
           }
-          self.uploading = false;
-          if(self.crop) {
-              self.hasImage = false;
-           }
-           document.querySelector("#g-core-upload-input-" + self.formID).value = '';
-           self.__dispatch('imageuploaded',res);
-        });
+          if (typeof this.data === 'object') {
+              for(let k in this.data) {
+                if(this.data[k] !== undefined) {
+                  data.append(k,this.data[k]);
+                }
+              }
+          }
+        }
+        xhr('POST',this.url, this.headers, data, done, errorUpload, isBinary);
       },
-
-      // resize and drag move
-      resize(e) {
-        e.stopPropagation();
-        let $el = e.target.parentElement;
-        let $container = this.__find('.g-crop-image-principal');
-        let resizedObj = new Resize($el,$container,this.cropRatio,e);
-      },
-
-      drag(e) {
-        e.preventDefault();
-        let $el = e.target;
-        let $container = this.__find('.g-crop-image-principal');
-        let dragObj = new Drag($el,$container,e);
-      }
     },
 
   };

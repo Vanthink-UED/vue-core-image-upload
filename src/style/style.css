@@ -133,7 +133,7 @@
   border-color:#27ae60;
   box-shadow: 0 1px 3px rgba(0,0,0,.05);
 }
-.g-core-image-corp-container .g-crop-image-box,
-.g-core-image-corp-container .g-crop-image-box .g-crop-image-principal{
+.g-core-image-corp-container .g-crop-image-box,.g-core-image-corp-container .g-crop-image-box .g-crop-image-principal{
   position: relative;
+
 }

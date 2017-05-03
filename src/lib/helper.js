@@ -5,11 +5,11 @@ module.exports = {
     let cssArr = [];
     for(let key in obj) {
       let val = obj[key];
-      if (Number.isNumber(val)) {
+      if (typeof val === 'number') {
         val = '' + val + 'px';
       }
       cssArr.push(`${key}:${val};`)
     }
-    return cssArr;
+    return cssArr.join('');
   }
 };

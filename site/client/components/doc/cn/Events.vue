@@ -69,7 +69,7 @@
       this.src = res.data.src;
     }
   }</code></pre>
-    <a href="">完整代码</a>
+    <a href="https://github.com/Vanthink-UED/vue-core-image-upload/blob/master/site/client/components/doc/cn/Events.vue">完整代码</a>
   </div>
 </template>
 
@@ -87,7 +87,7 @@
 </style>
 
 <script>
-import VueCoreImageUpload from '../../../../src/vue-core-image-upload.vue'
+import VueCoreImageUpload from 'vue-core-image-upload'
 export default {
   components: {
     VueCoreImageUpload,

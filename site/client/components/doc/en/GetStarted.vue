@@ -56,7 +56,7 @@ export default {
     <p>First of all , we need to include out plugin in <code>components</code> . Then we must define the <code>url</code> as your server api ,then we bind a function to
       <code>@imageuploaded</code> for handling the server response.
     </p>
-    <p><a class="btn btn-info" href="#/en/attributes">View more details</a></p>
+    <p><a class="btn btn-info" href="#/en/props">View more details</a></p>
   </div>
 </template>
 
@@ -72,7 +72,7 @@ export default {
 </style>
 
 <script>
-import VueCoreImageUpload from '../../../../src/vue-core-image-upload.vue'
+import VueCoreImageUpload from 'vue-core-image-upload'
 
 export default {
   components: {

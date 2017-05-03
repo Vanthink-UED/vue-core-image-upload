@@ -1,11 +1,24 @@
 /**
  * simple ajax handler
  **/
-module.exports = function (method, url, headers, data, callback, err) {
+
+ //ADD sendAsBinary compatibilty to older browsers
+ if (XMLHttpRequest.prototype.sendAsBinary === undefined) {
+   XMLHttpRequest.prototype.sendAsBinary = function(string) {
+     var bytes = Array.prototype.map.call(string, function(c) {
+         return c.charCodeAt(0) & 0xff;
+     });
+     this.send(new Uint8Array(bytes).buffer);
+   };
+ }
+
+module.exports = function (method, url, headers, data, callback, err, isBinary) {
+
   const r = new XMLHttpRequest();
   const error = err || function () {
     console.error('AJAX ERROR!');
   };
+  const boundary = 'vuecodeimageupload';
   // Binary?
   let binary = false;
   if (method === 'blob') {
@@ -40,25 +53,9 @@ module.exports = function (method, url, headers, data, callback, err) {
   // Should we add the query to the URL?
   if (method === 'GET' || method === 'DELETE') {
     data = null;
-  }
-  else if (data && typeof (data) !== 'string' && !(data instanceof FormData) && !(data instanceof File) && !(data instanceof Blob)) {
-    // Loop through and add formData
-    var f = new FormData();
-    for (x in data)
-      if (data.hasOwnProperty(x)) {
-        if (data[x] instanceof HTMLInputElement) {
-          if ('files' in data[x] && data[x].files.length > 0) {
-            f.append(x, data[x].files[0]);
-          }
-        }
-        else if (data[x] instanceof Blob) {
-          f.append(x, data[x], data.name);
-        }
-        else {
-          f.append(x, data[x]);
-        }
-      }
-    data = f;
+  } else if (isBinary) {
+    const code = data.base64Code.replace('data:' + data.type + ';base64,', '');
+    data = ['--' + boundary, 'Content-Disposition: form-data; name="' + data.filed + '"; filename="' + data.filename + '"', 'Content-Type: ' + data.type, '', window.atob(code), '--' + boundary + '--'].join('\r\n');
   }
   // Open the path, async
   r.open(method, url, true);
@@ -75,6 +72,12 @@ module.exports = function (method, url, headers, data, callback, err) {
     for (x in headers) {
       r.setRequestHeader(x, headers[x]);
     }
+    if (isBinary) {
+      r.setRequestHeader('Content-Type', 'multipart/form-data; boundary=' + boundary);
+    }
+  }
+  if (isBinary) {
+    return r.sendAsBinary(data);
   }
   r.send(data);
   return r;

@@ -79,12 +79,12 @@
 &lt;/vue-core-image-upload&gt;
 
     </code></pre>
-    <a  href>View Code Source</a>
+    <a  href="https://github.com/Vanthink-UED/vue-core-image-upload/blob/master/site/client/components/doc/cn/CropImage.vue">View Code Source</a>
   </div>
 </template>
 
 <script>
-import VueCoreImageUpload from '../../../../src/vue-core-image-upload.vue'
+import VueCoreImageUpload from 'vue-core-image-upload'
 export default {
   components: {
     VueCoreImageUpload

@@ -36,7 +36,7 @@
 &lt;/template&gt;
 
 &lt;script&gt;
-import VueCoreImageUpload from '../../../../src/vue-core-image-upload.vue'
+import VueCoreImageUpload from 'vue-core-image-upload'
 export default {
   components: {
     VueCoreImageUpload,
@@ -54,7 +54,7 @@ export default {
 &lt;/script&gt;
 </code></pre>
   <p class="warnning">Set <code>isXhr</code> equal false to cancel default ajax uploading.</p>
-  <a href="">View code source</a>
+  <a href="https://github.com/Vanthink-UED/vue-core-image-upload/blob/master/site/client/components/doc/en/PostData.vue">View code source</a>
 </div>
 </template>
 <style>
@@ -67,7 +67,7 @@ export default {
 
 
 <script>
-import VueCoreImageUpload from '../../../../src/vue-core-image-upload.vue'
+import VueCoreImageUpload from 'vue-core-image-upload'
 export default {
   components: {
     VueCoreImageUpload,

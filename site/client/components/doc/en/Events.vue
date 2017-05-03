@@ -69,7 +69,7 @@
       this.src = res.data.src;
     }
   }</code></pre>
-    <a href="">View code source</a>
+    <a href="https://github.com/Vanthink-UED/vue-core-image-upload/blob/master/site/client/components/doc/en/Events.vue">View code source</a>
   </div>
 </template>
 

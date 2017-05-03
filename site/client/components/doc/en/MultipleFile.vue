@@ -41,12 +41,12 @@
 :multiple-size="4"
 url="http://101.198.151.190/api/upload2.php" &gt;
 &lt;/vue-core-image-upload&gt;</code></pre>
-  <a href="">View code source</a>
+  <a href="https://github.com/Vanthink-UED/vue-core-image-upload/blob/master/site/client/components/doc/en/MultipleFile.vue">View code source</a>
   </div>
 </template>
 
 <script>
-import VueCoreImageUpload from '../../../../src/vue-core-image-upload.vue'
+import VueCoreImageUpload from 'vue-core-image-upload';
 export default {
   components: {
     VueCoreImageUpload,

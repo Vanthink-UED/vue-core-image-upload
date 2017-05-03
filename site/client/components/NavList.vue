@@ -35,7 +35,8 @@ export default {
   methods: {
     setUrl(url) {
       this.url = url;  
-    }
+    },
+    
   }
 
 }

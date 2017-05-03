@@ -9,7 +9,7 @@ let routers = [
     cn_name: '快速开始',
   },
   {
-    name: 'props',
+    name: 'Props',
     cn_name: '基本属性'
   },
   {
