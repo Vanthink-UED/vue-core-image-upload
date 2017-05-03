@@ -8,13 +8,13 @@
     <p>你可以将 crop 设置为 local 来实现本地裁剪。本地裁剪完成后发送给服务端接口的图片便是已经裁剪好的图片。</p>
     <div class="center">
       <div class="user">
-          <img class="avatar" :src="cropSrc"/>
+          <img class="avatar" :src="src"/>
       </div>
       <vue-core-image-upload
          crop-ratio="1:1"
          :class="['btn', 'btn-primary']"
          crop="local"
-         url="http://101.198.151.190/api/crop.php"
+         url="http://101.198.151.190/api/upload.php"
          extensions="png,jpeg,jpg"
          text="Crop Image"
          compress="20"
@@ -91,6 +91,7 @@ export default {
   },
   data() {
     return {
+      src: 'http://img1.vued.vanthink.cn/vued7553a09a5d5209ebd00a48264394b7f3.png',
       cropSrc: 'http://img1.vued.vanthink.cn/vued7553a09a5d5209ebd00a48264394b7f3.png',
       cropArgs: {
         toCropImgH: '?',
@@ -102,6 +103,9 @@ export default {
   },
 
   methods: {
+    cropLocalImageUploaded(res) {
+      this.src = res.data.src;
+    },
     crpoServerImageUploaded(res) {
       if (res.errcode === 0) {
         if (res.data.src) {

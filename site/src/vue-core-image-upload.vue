@@ -157,7 +157,7 @@
           this.tryAjaxUpload(() => {
             btn.value = btn.value.replace('...','');
             btn.disabled = false;
-          }, true, code);
+          }, code ? true: false, code);
         };
         if (this.crop === 'local') {
           const targetImage = cropBox.getCropImage();

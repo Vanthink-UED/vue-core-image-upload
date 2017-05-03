@@ -9,7 +9,7 @@
         <router-view></router-view>
       </div>
     </div>
-    
+
     <ft></ft>
   </div>
 </template>
@@ -27,7 +27,7 @@ export default {
     'nav-list': navList,
     'ft': ft,
   },
-  
+
   created() {
     this.$router.beforeEach((to, from, next) => {
       this.$Progress.start()
