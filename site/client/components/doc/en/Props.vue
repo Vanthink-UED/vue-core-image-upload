@@ -57,7 +57,7 @@
             <td>cropRatio</td>
             <td align="left">String</td>
             <td>'1:1'</td>
-            <td>The cropped image shape</td>
+            <td>The cropped image shape(set 'auto' not limit the crop shape)</td>
           </tr>
           <tr>
             <td>cropBtn</td>

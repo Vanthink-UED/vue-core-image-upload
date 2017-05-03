@@ -2,6 +2,7 @@
   <div class="components">
     <h3>裁剪图片</h3>
     <p>你可以通过设置 <code>crop</code>，来实现图片的裁剪。你可以指定图片裁剪的宽高，以及它的最大宽度和高度这些参数。</p>
+    <p>设置 <code>cropRatio</code>来限制裁剪图片的形状，需要字符串的格式(1:1 或者2:3这种比例形式)，当然你可以设置为 auto 则不限制裁剪框的形状。</p>
     <p class="warnning"> 设置图片裁剪后，批量上传将不再生效。</p>
     <p>图片裁剪完有两种选择，选择<strong>本地裁剪<code>local</code></strong>或者<strong>服务端裁剪 <code>server</code></strong>。</p>
     <h4>本地裁剪</h4>

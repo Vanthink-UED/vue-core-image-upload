@@ -57,7 +57,7 @@
             <td>cropRatio</td>
             <td align="left">String</td>
             <td>'1:1'</td>
-            <td>限制裁剪的形状</td>
+            <td>限制裁剪的形状(设置为auto表示不限制裁剪框形状)</td>
           </tr>
           <tr>
             <td>cropBtn</td>

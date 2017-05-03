@@ -7,6 +7,7 @@ a vue plugin for image upload and crop ( Support 📱 IE10+)
 
 [查看文档](http://vanthink-ued.github.io/vue-core-image-upload/index.html#/cn/get-started)
 
+
 [English Document](http://vanthink-ued.github.io/vue-core-image-upload/index.html#/en/home)
 
 if you use vue.js(<=2.0), you should go [here](https://github.com/Vanthink-UED/vue-core-image-upload/tree/v1.x).Or select

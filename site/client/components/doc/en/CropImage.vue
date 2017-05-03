@@ -3,6 +3,7 @@
     <h3>Crop Image</h3>
     <p>Set <code>crop</code> value to help you crop the image. </p>
     <p class="warnning"> if you setted the crop props, you can not upload multiple files.</p>
+    <p><code>cropRatio</code> can be setted for diffrent crop shape.But it must be a string like '2:3' or '1:1'. If you set it to 'auto', users can crop any shape images.</p>
     <p>You have two values to select，<strong>local crop:<code>local</code></strong>or<strong>server-side crop: <code>server</code></strong>.</p>
     <h4>Local Crop</h4>
     <p><code>crop="local"</code> The Browser will crop the image via canvas API and send the cropped image to the server.</p>

@@ -90,7 +90,7 @@ import resize from './lib/resize';
 import GIF_LOADING_SRC from './lib/loading-gif';
 import helper from './lib/helper';
 // set cropbox size in image
-const CROPBOX_PERCENT = 80;
+const CROPBOX_PERCENT = 75;
 export default {
   props: {
     formId: {
@@ -117,8 +117,15 @@ export default {
   methods: {
     setImage(src, w, h) {
       this.src = src;
-      this.ratioW = this.ratio.split(':')[0];
-      this.ratioH = this.ratio.split(':')[1];
+      if (this.ratio.indexOf(':') > 0) {
+        this.ratioW = this.ratio.split(':')[0];
+        this.ratioH = this.ratio.split(':')[1];
+        this.ratioVal = this.ratioW / this.ratioH;  
+      } else {
+        this.ratioW = 1;
+        this.ratioH = 1;
+        this.ratioVal = this.ratio;
+      }
       this.setLayout(w, h);
       this.setCropBox();
     },
@@ -208,7 +215,7 @@ export default {
       this.el = $el;
       this.container = $container;
       const move = function (ev) {
-        const newCropStyle = resize(ev, self.el, $container, coor, self.ratioW / self.ratioH, helper.isMobile);
+        const newCropStyle = resize(ev, self.el, $container, coor, self.ratioVal);
         if (newCropStyle) {
           self.cropCSS.width = newCropStyle.width;
           self.cropCSS.height = newCropStyle.height;
