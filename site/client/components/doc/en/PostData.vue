@@ -1,7 +1,8 @@
 <template>
 <div class="components">
   <h3>Send Data to Server</h3>
-  <p>Setting <code>data</code> attribute will send some data you bind to the server via ajax</p>
+  <p>Setting <code>data</code> attribute will send some data you bind to the server via ajax.
+    Of course you could pass data to server via header, just pass data to <code>header</code>.  </p>
   <h4>Exmaple:</h4>
   <p>You could type some text here and its text will be sended to the server when you upload your image.</p>
   <div class="m-form">
@@ -52,6 +53,7 @@ export default {
 };
 &lt;/script&gt;
 </code></pre>
+  <p class="warnning">Set <code>isXhr</code> equal false to cancel default ajax uploading.</p>
   <a href="">View code source</a>
 </div>
 </template>

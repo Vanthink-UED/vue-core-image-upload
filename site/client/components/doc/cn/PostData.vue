@@ -1,7 +1,8 @@
 <template>
 <div class="components">
   <h3>向服务端发送数据</h3>
-  <p>你可以设置<code>data</code> 来将一些附带的数据发送给服务端。</p>
+  <p>你可以设置<code>data</code> 来将一些附带的数据发送给服务端。
+    当然你也可以将一些数据包含在 header 中传递过去，你只需要绑定到 <code>header</code>即可。</p>
   <h4>Exmaple:</h4>
   <p>下面会将输入框的内容一并发送过去</p>
   <div class="m-form">
@@ -52,6 +53,7 @@ export default {
 };
 &lt;/script&gt;
 </code></pre>
+  <p class="warnning">你可以设置 <code>isXhr</code> 来取消向服务端上传。</p>
   <a href="">查看完整源码</a>
 </div>
 </template>
@@ -81,7 +83,6 @@ export default {
 
   methods: {
     imageuploaded(res) {
-
     }
   }
 
