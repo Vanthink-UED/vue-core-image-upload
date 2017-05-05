@@ -37,6 +37,17 @@ export default {
     type: String,
     default: '1:1'
   },
+  resize: {
+    type: [String, Boolean],
+    default: false,
+  },
+  ResizeBtn: {
+    type: Object,
+    default: return {
+      ok: 'Ok',
+      cancel: 'Cancel'
+    }
+  },
   maxFileSize:{
     type: Number,
     default: 1024 * 1024 * 100,

@@ -15,6 +15,10 @@
           <button type="button" v-on:click="doCrop" class="btn btn-upload">{{cropBtn.ok}}</button>
           <button type="button" v-on:click="cancel()" class="btn btn-cancel">{{cropBtn.cancel}}</button>
         </p>
+        <p class="btn-groups">
+          <button type="button" v-on:click="doCrop" class="btn btn-upload">{{ResizeBtn.ok}}</button>
+          <button type="button" v-on:click="cancel()" class="btn btn-cancel">{{ResizeBtn.cancel}}</button>
+        </p>
       </div>
   </div>
 </div>
@@ -209,12 +213,12 @@
           for (let i=0;i<this.files.length;i++) {
             data.append(this.name, this.files[i]);
           }
-          if (typeof this.data === 'object') {
-              for(let k in this.data) {
-                if(this.data[k] !== undefined) {
-                  data.append(k,this.data[k]);
-                }
-              }
+        }
+        if (typeof this.data === 'object') {
+          for(let k in this.data) {
+            if(this.data[k] !== undefined) {
+              data.append(k,this.data[k]);
+            }
           }
         }
         xhr('POST',this.url, this.headers, data, done, errorUpload, isBinary);
