@@ -10,6 +10,6 @@ module.exports = {
   // disable babelrc by default
   babel: {
     babelrc: false,
-    presets: ['vue-app'],
+    presets: ['vue-app','es2015','stage-2'],
   }
 }
