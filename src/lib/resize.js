@@ -32,12 +32,12 @@ export default function resize(e, el, container, coor, ratio) {
     CSSObj.width = (coor.w + resetX - coor.x);
     CSSObj.height = elOffsetWidth * ratioRemainder;
     if (dotBoxW > dotBoxH) {
-      if (elOffsetWidth >= dotBoxH) {
+      if (elOffsetWidth > dotBoxH) {
         CSSObj.height = dotBoxH;
         CSSObj.width = dotBoxH * ratio;
       }
     } else if (dotBoxW < dotBoxH) {
-      if (elOffsetWidth >= dotBoxW) {
+      if (elOffsetWidth > dotBoxW) {
         CSSObj.width = dotBoxW;
         CSSObj.height = dotBoxW * ratioRemainder;
       }
@@ -50,16 +50,16 @@ export default function resize(e, el, container, coor, ratio) {
     CSSObj.width = parseInt(el.style.height) * ratio;
     // 限制拖拉的范围在图片内
     if (dotBoxW > dotBoxH) {
-      if (elOffsetHeight >= dotBoxH) {
+      if (elOffsetHeight > dotBoxH) {
         CSSObj.height = dotBoxH;
         CSSObj.width = dotBoxH * ratio;
       }
     } else if (dotBoxW < dotBoxH) {
-      if (elOffsetWidth >= dotBoxW) {
+      if (elOffsetWidth > dotBoxW) {
         CSSObj.width = dotBoxW;
         CSSObj.height = dotBoxW * ratioRemainder;
       }
-    } else if (elOffsetWidth >= dotBoxW) {
+    } else if (elOffsetWidth > dotBoxW) {
       CSSObj.width = dotBoxW;
       CSSObj.height = dotBoxW * ratioRemainder;
     }
@@ -71,16 +71,16 @@ export default function resize(e, el, container, coor, ratio) {
     CSSObj.height = el.style.width;
     // limit the crop box area
     if (dotBoxW > dotBoxH) {
-      if (elOffsetHeight >= dotBoxH) {
+      if (elOffsetHeight > dotBoxH) {
         CSSObj.height = dotBoxH;
         CSSObj.width = dotBoxH;
       }
     } else if (dotBoxW < dotBoxH) {
-      if (elOffsetWidth >= dotBoxW) {
+      if (elOffsetWidth > dotBoxW) {
         CSSObj.width = dotBoxW;
         CSSObj.height = dotBoxW;
       }
-    } else if (elOffsetWidth >= dotBoxW) {
+    } else if (elOffsetWidth > dotBoxW) {
       CSSObj.width = el.style.height = dotBoxW;
     }
   }
