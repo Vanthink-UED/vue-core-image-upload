@@ -9,6 +9,7 @@
         @imageuploaded="imageUploded"
         :max-file-size="5242880"
         compress="50"
+        :data="params"
         url="http://101.198.151.190/api/upload.php" >
       </vue-core-image-upload>
     </div>
@@ -25,7 +26,7 @@
 
 <script>
 
-import VueCoreImageUpload from 'vue-core-image-upload'
+import VueCoreImageUpload from '../../../../src/vue-core-image-upload.vue'
 export default {
   components: {
     VueCoreImageUpload,
@@ -33,6 +34,10 @@ export default {
   data() {
     return {
       src: 'http://img1.vued.vanthink.cn/vued0a233185b6027244f9d43e653227439a.png',
+      params: {
+        auth: '123123',
+        arr: [123,123123]
+      }
     };
   },
 
