@@ -11,6 +11,7 @@ import EnEvents from '../components/doc/en/Events.vue';
 import CnCropImage from '../components/doc/cn/CropImage.vue';
 import EnCropImage from '../components/doc/en/CropImage.vue';
 import CnResizeImage from '../components/doc/cn/ResizeImage.vue';
+import EnResizeImage from '../components/doc/en/ResizeImage.vue';
 import CnMultipleFile from '../components/doc/cn/MultipleFile.vue';
 import EnMultipleFile from '../components/doc/en/MultipleFile.vue';
 import CnCompressImage from '../components/doc/cn/CompressImage.vue';
@@ -73,6 +74,10 @@ export default new Router({
     {
       path: '/cn/resize-image',
       component: CnResizeImage,
+    },
+    {
+      path: '/en/resize-image',
+      component: EnResizeImage,
     },
     {
       path: '/cn/multiple-file',

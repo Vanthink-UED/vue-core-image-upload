@@ -1,8 +1,8 @@
 <template>
   <div class="components">
-    <h3>调整图片</h3>
-    <p>你可以设置 <code> resize </code> 来进行图片的缩放。 </p>
-    <p>设置<code>resize="local"</code> 意味着图片的缩放将在本地进行。发给服务端的将会是大小调整完毕的后的图片。</p>
+    <h3>Resize</h3>
+    <p>Set <code> resize </code> props to help you to resize the imagey you want to upload. </p>
+    <p><code>resize="local"</code> means you can resize image in local browser via canvas and it will send server the resized image.</p>
     <div class="center">
       <div class="user">
           <img class="avatar" :src="src"/>
@@ -28,9 +28,8 @@
      text="Resize Image"
      @imageuploaded="resizeLocalImageUploaded"&gt;
   &lt;/vue-core-image-upload&gt;
-
       </code></pre>
-    <p>设置<code>resize="server"</code>同理，会上传原图片，只是会在服务端的参数自动添加裁剪的比例 <code>imgChangeRatio</code>。</p>
+    <p><code>resize="server"</code> means it will send the original image you upload，and it will send the server with data params <code>imgChangeRatio</code>. <code>imgChangeRatio</code> is the scaling ratio.</p>
     <a  href="https://github.com/Vanthink-UED/vue-core-image-upload/blob/master/site/client/components/doc/cn/ResizeImage.vue">View Code Source</a>
   </div>
 </template>
