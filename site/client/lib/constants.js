@@ -17,6 +17,10 @@ let routers = [
     cn_name: '响应事件'
   },
   {
+    name: 'Custom Component',
+    cn_name: '自定义组件'
+  },
+  {
     name: 'Crop Image',
     cn_name: '裁剪图片'
   },

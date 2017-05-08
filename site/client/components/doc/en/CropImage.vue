@@ -77,14 +77,13 @@
    text="Crop Image"
    @imageuploaded="crpoServerImageUploaded"&gt;
 &lt;/vue-core-image-upload&gt;
-
     </code></pre>
     <a  href="https://github.com/Vanthink-UED/vue-core-image-upload/blob/master/site/client/components/doc/en/CropImage.vue">View Code Source</a>
   </div>
 </template>
 
 <script>
-import VueCoreImageUpload from 'vue-core-image-upload';
+import VueCoreImageUpload from '../../../../src/vue-core-image-upload.vue';
 export default {
   components: {
     VueCoreImageUpload

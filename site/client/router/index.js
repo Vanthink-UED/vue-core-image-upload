@@ -8,6 +8,7 @@ import CnProps from '../components/doc/cn/Props.vue';
 import EnProps from '../components/doc/en/Props.vue';
 import CnEvents from '../components/doc/cn/Events.vue';
 import EnEvents from '../components/doc/en/Events.vue';
+import EnCustomComponent from '../components/doc/en/CustomComponent.vue';
 import CnCropImage from '../components/doc/cn/CropImage.vue';
 import EnCropImage from '../components/doc/en/CropImage.vue';
 import CnResizeImage from '../components/doc/cn/ResizeImage.vue';
@@ -62,6 +63,10 @@ export default new Router({
     {
       path: '/en/events',
       component: EnEvents,
+    },
+    {
+      path: '/en/custom-component',
+      component: EnCustomComponent,
     },
     {
       path: '/cn/crop-image',
