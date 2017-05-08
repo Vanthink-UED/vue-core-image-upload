@@ -7,16 +7,17 @@
     <div class="g-core-image-corp-container" v-bind:id="'vciu-modal-' + formID" v-show="hasImage">
       <div class="image-aside">
         <div class="g-crop-image-box">
-          <crop :form-id="formID" ref="cropBox" :ratio="cropRatio"></crop>
+          <crop :form-id="formID" ref="cropBox" :hide-crop="resize" :ratio="cropRatio"></crop>
         </div>
       </div>
       <div class="info-aside">
-        <p class="btn-groups">
+        <resize-bar v-if="resize" :min-progress="image.minProgress" ref="resizeBar" @resize="resizeImage"></resize-bar>
+        <p class="btn-groups" v-if="crop">
           <button type="button" v-on:click="doCrop" class="btn btn-upload">{{cropBtn.ok}}</button>
           <button type="button" v-on:click="cancel()" class="btn btn-cancel">{{cropBtn.cancel}}</button>
         </p>
-        <p class="btn-groups">
-          <button type="button" v-on:click="doCrop" class="btn btn-upload">{{ResizeBtn.ok}}</button>
+        <p class="btn-groups" v-if="resize">
+          <button type="button" v-on:click="doResize" class="btn btn-upload">{{ResizeBtn.ok}}</button>
           <button type="button" v-on:click="cancel()" class="btn btn-cancel">{{ResizeBtn.cancel}}</button>
         </p>
       </div>
@@ -33,10 +34,12 @@
   import canvasHelper from './lib/canvas-helper';
   import props from './props';
   import Crop from './crop.vue';
+  import ResizeBar from './resize-bar.vue';
 
   export default {
     components: {
       Crop,
+      ResizeBar
     },
     props: props,
     data() {
@@ -50,6 +53,7 @@
           src: GIF_LOADING_SRC,
           width:24,
           height:24,
+          minProgress: 0.05,
         },
       }
     },
@@ -61,7 +65,6 @@
         }
         return this.inputOfFile;
       }
-
     },
 
     methods: {
@@ -82,7 +85,6 @@
                 return this.__dispatch('errorhandle','TYPE ERROR');
             }
         }
-
         if (e.target.files[0].size > this.maxFileSize) {
             var formatSize;
             if (parseInt(this.maxFileSize / 1024 / 1024) > 0) {
@@ -97,8 +99,7 @@
         }
 
         this.files = e.target.files;
-
-        if(this.crop) {
+        if(this.crop || this.resize) {
           this.__showImage();
           return;
         }
@@ -132,37 +133,26 @@
         let self = this;
         pic.src = src;
         const cropBox = this.$refs.cropBox;
+        const resizeBar = this.$refs.resizeBar;
         pic.onload= function() {
+          self.image.minProgress = self.minWidth / pic.naturalWidth;
           self.imgChangeRatio = cropBox.setImage(src, pic.naturalWidth, pic.naturalHeight);
+          if (resizeBar) {
+            resizeBar.setRatio(self.imgChangeRatio);
+          }
+
         }
       },
 
-      doCrop(e) {
-        let btn = e.target;
-        btn.value = btn.value + '...';
-        btn.disabled = true;
-        if (typeof this.data !== 'object') {
-          this.data = {};
-        }
-        this.data["request"] = "crop";
+      resizeImage(progress) {
         const cropBox = this.$refs.cropBox;
-        const newCSSObj = cropBox.getCropData();
+        cropBox.resizeImage(progress);
+      },
 
-        for (const k of Object.keys(newCSSObj)) {
-          this.data[k] = newCSSObj[k];
-        }
-        if (this.maxWidth) {
-          this.data['maxWidth'] = this.maxWidth;
-        }
-        if (this.maxHeight) {
-          this.data['maxHeight'] = this.maxHeight;
-        }
-        const upload = (code) => {
-          this.tryAjaxUpload(() => {
-            btn.value = btn.value.replace('...','');
-            btn.disabled = false;
-          }, code ? true: false, code);
-        };
+      doCrop(e) {
+        this.__setData('crop');
+        const cropBox = this.$refs.cropBox;
+        const upload = this.__setUpload(e.target);
         if (this.crop === 'local') {
           const targetImage = cropBox.getCropImage();
           this.data.comprose = 100 - this.compress;
@@ -173,13 +163,62 @@
         upload();
 
       },
+
+      doResize(e) {
+        this.__setData('reszie');
+        const cropBox = this.$refs.cropBox;
+        const upload = this.__setUpload(e.target);
+        if (this.resize === 'local') {
+          const targetImage = cropBox.getCropImage();
+          this.data.comprose = 100 - this.compress;
+          return canvasHelper.resize(targetImage, this.data, (code) => {
+            upload(code);
+          })
+        }
+        upload();
+      },
+
+      __setData(type) {
+        if (typeof this.data !== 'object') {
+          this.data = {};
+        }
+        this.data["request"] = type;
+        const cropBox = this.$refs.cropBox;
+        const newCSSObj = cropBox.getCropData();
+        for (const k of Object.keys(newCSSObj)) {
+          this.data[k] = newCSSObj[k];
+        }
+        if (this.maxWidth) {
+          this.data['maxWidth'] = this.maxWidth;
+        }
+        if (this.maxHeight) {
+          this.data['maxHeight'] = this.maxHeight;
+        }
+        if (this.minWidth) {
+          this.data['minWidth'] = this.minWidth;
+        }
+      },
+
+      __setUpload(btn) {
+        btn.value = btn.value + '...';
+        btn.disabled = true;
+
+        const upload = (code) => {
+          this.tryAjaxUpload(() => {
+            btn.value = btn.value.replace('...','');
+            btn.disabled = false;
+          }, code ? true: false, code);
+        };
+        return upload;
+      },
+
       cancel() {
         this.hasImage = false;
         this.files = '';
         document.querySelector('#g-core-upload-input-' + this.formID).value = '';
       },
 
-      // use ajax upload  IE9+
+      // use ajax upload  IE10+
       tryAjaxUpload(callback, isBinary, base64Code) {
         const self = this;
         this. __dispatch('imageuploading',this.files[0]);
@@ -208,19 +247,23 @@
             filed: this.inputOfFile,
             base64Code: base64Code
           };
+          if (typeof this.data === 'object') {
+            data = Object.assign(this.data, data);
+          }
         } else {
           data = new FormData();
           for (let i=0;i<this.files.length;i++) {
             data.append(this.name, this.files[i]);
           }
-        }
-        if (typeof this.data === 'object') {
-          for(let k in this.data) {
-            if(this.data[k] !== undefined) {
-              data.append(k,this.data[k]);
+          if (typeof this.data === 'object') {
+            for(let k in this.data) {
+              if(this.data[k] !== undefined) {
+                data.append(k,this.data[k]);
+              }
             }
           }
         }
+
         xhr('POST',this.url, this.headers, data, done, errorUpload, isBinary);
       },
     },

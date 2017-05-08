@@ -43,9 +43,11 @@ export default {
   },
   ResizeBtn: {
     type: Object,
-    default: return {
-      ok: 'Ok',
-      cancel: 'Cancel'
+    default: function() {
+      return {
+        ok: 'Ok',
+        cancel: 'Cancel'
+      }
     }
   },
   maxFileSize:{
@@ -85,6 +87,10 @@ export default {
   multipleSize: {
     type: Number,
     default: 0
+  },
+  minWidth: {
+    type: Number,
+    default: 50,
   },
   compress: {
     type: [Number, String],

@@ -1,6 +1,7 @@
 /**
  * simple ajax handler
  **/
+
  //ADD sendAsBinary compatibilty to older browsers
  if (XMLHttpRequest.prototype.sendAsBinary === undefined) {
    XMLHttpRequest.prototype.sendAsBinary = function(string) {

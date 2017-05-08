@@ -8,7 +8,7 @@ export default function drag(e, el, coor) {
   const currentX = isMobile ? e.changedTouches[0]['clientX'] : e.clientX;
   const currentY = isMobile ? e.changedTouches[0]['clientY'] : e.clientY;
 
-  let left = currentX - el.parentElement.offsetLeft - document.getElementsByClassName('image-aside')[0].offsetLeft - coor.x;
+  let left = currentX - el.parentElement.offsetLeft - coor.x;
   let top = currentY - el.parentElement.offsetTop - document.getElementsByClassName('image-aside')[0].offsetTop - coor.y;
   if (left <= 0) {
     left = 0;
