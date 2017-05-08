@@ -7,11 +7,7 @@
 import helper from './helper';
 
 const isMobile = helper.isMobile;
-
 const W = document.body.offsetWidth;
-
-
-
 export default function resize(e, el, container, coor, ratio) {
   if (!el) {
     return ;
@@ -70,10 +66,10 @@ export default function resize(e, el, container, coor, ratio) {
   } else if(ratio == 'auto' && resetY <= (halfY + dotBoxH + topH) && resetX <= halfY + dotBoxW) {
     CSSObj.height = (coor.h + resetY - coor.y);
     CSSObj.width = (coor.w + resetX - coor.x);
-  } else if (resetX <= $halfX + dotBoxW) {
+  } else if (resetX <= halfX + dotBoxW) {
     CSSObj.width = (coor.w + resetX - coor.x);
     CSSObj.height = el.style.width;
-    // limit the copr box area
+    // limit the crop box area
     if (dotBoxW > dotBoxH) {
       if (elOffsetHeight >= dotBoxH) {
         CSSObj.height = dotBoxH;

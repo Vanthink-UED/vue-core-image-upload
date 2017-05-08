@@ -1,15 +1,15 @@
 <template>
 <div class="g-crop-image-principal">
   <div class="image-wrap" :style="{ width:width + 'px',height: height + 'px' }">
-    <img ref="crop-image" :src="src" :style="{ width:width + 'px',height: height + 'px' }">
+    <img ref="crop-image" :src="src" :style="{ width:'100%',height: '100%', }">
   </div>
-  <div class="image-mask">
+  <div class="image-mask" v-if="!hideCrop">
     <div class="mask top" :style="{ top:0, height: cropCSS.top + 'px', left: 0, width: '100%'}"></div>
     <div class="mask bottom" :style="{ bottom:0, top: (cropCSS.top + cropCSS.height) + 'px', left: 0, width: '100%'}"></div>
     <div class="mask left" :style="{top: cropCSS.top + 'px', height: cropCSS.height + 'px', left:0, width: cropCSS.left + 'px'}"></div>
     <div class="mask right" :style="{top: cropCSS.top + 'px', height: cropCSS.height + 'px', left: (cropCSS.left + cropCSS.width) + 'px', right: 0}"></div>
   </div>
-  <div class="crop-box" v-on:touchstart.self="drag" v-on:mousedown.self="drag" :style="{top: cropCSS.top + 'px', left: cropCSS.left + 'px', height: cropCSS.height + 'px',  width: cropCSS.width + 'px'}">
+  <div class="crop-box" v-if="!hideCrop" v-on:touchstart.self="drag" v-on:mousedown.self="drag" :style="{top: cropCSS.top + 'px', left: cropCSS.left + 'px', height: cropCSS.height + 'px',  width: cropCSS.width + 'px'}">
     <div class="reference-line v"></div>
     <div class="reference-line h"></div>
     <a class="g-resize" v-on:touchstart.self="resize" v-on:mousedown.self="resize"></a>
@@ -30,6 +30,7 @@
   background-color: rgba(255,255,255,.6);
 }
 .crop-box{
+  box-sizing: border-box;
   position: absolute;
   background: none;
   cursor: move;
@@ -71,7 +72,7 @@
 }
 .crop-box .g-resize{
   display: inline-block;
-  z-index: 90;
+  z-index: 1910;
   position: absolute;
   bottom: -8px;
   right: -8px;
@@ -100,6 +101,18 @@ export default {
     ratio: {
       type: String,
       default: '1:1'
+    },
+    minWidth: {
+      type: Number,
+      default: 50,
+    },
+    minHeight: {
+      type: Number,
+      default: 50,
+    },
+    hideCrop: {
+      type: [String, Boolean],
+      default: false,
     }
   },
 
@@ -120,7 +133,7 @@ export default {
       if (this.ratio.indexOf(':') > 0) {
         this.ratioW = this.ratio.split(':')[0];
         this.ratioH = this.ratio.split(':')[1];
-        this.ratioVal = this.ratioW / this.ratioH;  
+        this.ratioVal = this.ratioW / this.ratioH;
       } else {
         this.ratioW = 1;
         this.ratioH = 1;
@@ -128,32 +141,62 @@ export default {
       }
       this.setLayout(w, h);
       this.setCropBox();
+      this.natrualWidth = w;
+      this.natrualHeight = h;
+      return this.imgChangeRatio;
     },
+
+    resizeImage(progress) {
+      const w = this.natrualWidth * this.imgChangeRatio * progress;
+      const h = this.natrualHeight * this.imgChangeRatio * progress;
+      if (w <= this.minWidth || h < this.minHeight) {
+        return;
+      }
+      this._setStyle(w, h, w/h);
+      this.setCropBox();
+    },
+
     setLayout(w, h) {
       let H = window.innerHeight - 80,
           W = window.innerWidth - 60,
           width = w,
-          height = h;
+          height = h,
+          marginLeft = 0;
+
       // caculate the image ratio
       let R = width / height;
       let Rs = W / H;
-      let $container = this.$el;
       if (R > Rs) {
         width = W;
         height = W / R;
-        // I don't hope to use a state to change the container stye
-        $container.style.cssText = 'width:' + W + 'px;height:' + W / R + 'px;margin-top:' + (H - W / R) / 2 + 'px';
+        marginLeft =  (H - W / R) / 2;
       } else {
         width =  H * R,
         height = H;
-        $container.style.cssText = 'width:' + H * R + 'px;height:' + H + 'px;margin-left:' + (W - H * R) / 2 + 'px;';
+        marginLeft = (W - H * R) / 2;
       }
+      this.marginLeft = marginLeft;
+      this.marginTop = 0;
       this.imgChangeRatio = width / w;
-      this.width = width;
-      this.height = height;
+      this._setStyle(width, height, R, true);
+    },
+
+    _setStyle(w, h, r, isInit) {
+      const $container = this.$el;
+      if(!isInit) {
+        this.marginLeft = this.marginLeft + (this.width - w) / 2;
+        this.marginTop = this.marginTop + (this.height - h) / 2;
+      }
+      $container.style.cssText = 'width:' + w + 'px;height:' + h + 'px;margin-left:'
+      + this.marginLeft + 'px;' + 'margin-top:' + this.marginTop + 'px';
+      this.width = w;
+      this.height = h;
     },
 
     setCropBox() {
+      if (this.hideCrop) {
+        return;
+      }
       let $selectCropBox = this.__find('.crop-box');
       let $wrap = this.$el;
       let imageWidth = this.width,
@@ -181,6 +224,15 @@ export default {
 
     getCropData() {
       // keep compatible with old api
+      if (this.hideCrop) {
+        return {
+          imgChangeRatio: this.imgChangeRatio,
+          toCropImgX: 0,
+          toCropImgY: 0,
+          toCropImgW: this.natrualWidth,
+          toCropImgH: this.natrualHeight,
+        };
+      }
       return {
         toCropImgX: this.cropCSS.left / this.imgChangeRatio,
         toCropImgY: this.cropCSS.top / this.imgChangeRatio,

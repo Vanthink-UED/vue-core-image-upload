@@ -25,6 +25,7 @@ module.exports = function (method, url, headers, data, callback, err, isBinary) 
     binary = method;
     method = 'GET';
   }
+  console.log(data);
   method = method.toUpperCase();
   // Xhr.responseType 'json' is not supported in any of the vendors yet.
   r.onload = function () {
@@ -54,8 +55,19 @@ module.exports = function (method, url, headers, data, callback, err, isBinary) 
   if (method === 'GET' || method === 'DELETE') {
     data = null;
   } else if (isBinary) {
+    const keyData = data;
     const code = data.base64Code.replace('data:' + data.type + ';base64,', '');
-    data = ['--' + boundary, 'Content-Disposition: form-data; name="' + data.filed + '"; filename="' + data.filename + '"', 'Content-Type: ' + data.type, '', window.atob(code), '--' + boundary + '--'].join('\r\n');
+    data = ['--' + boundary, 'Content-Disposition: form-data; name="' + data.filed + '"; filename="' + data.filename + '"', 'Content-Type: ' + data.type, '', window.atob(code), ''].join('\r\n');
+    const keyArr = Object.keys(keyData);
+    if (keyArr.length > 4) {
+      for (const k of keyArr) {
+        if (['filed', 'filename', 'type', 'base64Code'].indexOf(k) == -1) {
+          data += ['--' + boundary, 'Content-Disposition: form-data; name="' + k + '";', '', ''].join('\r\n');
+          data += [typeof keyData[k] === 'object' ? JSON.stringify(keyData[k]) : keyData[k], ''].join('\r\n');
+        }
+      }
+    }
+    data += '--' + boundary + '--';
   }
   // Open the path, async
   r.open(method, url, true);

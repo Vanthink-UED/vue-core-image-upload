@@ -35,7 +35,7 @@
       <li><code>maxHeight</code>: The maximum height of the crop image</li>
     </ul>
     <h4>Code example</h4>
-    <p>上传图片后可以看到裁剪的参数</p>
+    <p>Click button to upload and you can view some post params.</p>
     <div class="center">
       <div class="user">
           <img class="avatar" :src="cropSrc"/>
@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import VueCoreImageUpload from 'vue-core-image-upload'
+import VueCoreImageUpload from 'vue-core-image-upload';
 export default {
   components: {
     VueCoreImageUpload

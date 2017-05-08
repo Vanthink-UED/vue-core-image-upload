@@ -21,6 +21,10 @@ let routers = [
     cn_name: '裁剪图片'
   },
   {
+    name: 'Resize Image',
+    cn_name: '调整图片'
+  },
+  {
     name: 'Multiple File',
     cn_name: '上传多文件'
   },

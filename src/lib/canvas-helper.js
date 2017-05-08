@@ -55,6 +55,21 @@ export default {
     }
   },
 
+  resize(image, options, callback) {
+    const checkNumber = function(num) {
+      return (typeof num === 'number');
+    };
+    if(checkNumber(options.toCropImgX) && checkNumber(options.toCropImgY) && options.toCropImgW > 0 && options.toCropImgH > 0) {
+      let w = options.toCropImgW  * options.imgChangeRatio;
+      let h = options.toCropImgH * options.imgChangeRatio;
+      const cvs = this._getCanvas(w, h);
+      const ctx = cvs.getContext('2d').drawImage(image, 0, 0, options.toCropImgW, options.toCropImgH, 0 , 0, w , h);
+      const mimeType = this._getImageType(image.src);
+      const data = cvs.toDataURL(mimeType, options.compress/100);
+      callback(data);
+    }
+  },
+
   _loadImage(data, callback) {
     const image = new Image();
     image.src = data;
