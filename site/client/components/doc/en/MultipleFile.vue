@@ -7,7 +7,7 @@
     <h4>演示</h4>
     <div class="center">
       <vue-core-image-upload
-        :class="['btn', 'btn-primary']"
+        class="btn btn-primary"
         :crop="false"
         @imageuploaded="imageUploded"
         :max-file-size="5242880"
@@ -33,7 +33,7 @@
     <p>Click the button and you will see the file name and size above the table</p>
     <h4>Code Example</h4>
     <pre v-highlightjs><code class="javascript">&lt;vue-core-image-upload
-:class="['btn', 'btn-primary']"
+class="btn btn-primary"
 :crop="false"
 @imageuploaded="imageUploded"
 :max-file-size="5242880"

@@ -3,12 +3,12 @@ module.exports = {
 
   setCssText: function(obj) {
     var cssArr = [];
-    for(let key in obj) {
-      let val = obj[key];
+    for(var key in obj) {
+      var val = obj[key];
       if (typeof val === 'number') {
         val = '' + val + 'px';
       }
-      cssArr.push(`${key}:${val};`)
+      cssArr.push(key + ': ' + val + ';');
     }
     return cssArr.join('');
   }

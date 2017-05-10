@@ -24,12 +24,11 @@ _.cssProcessors.forEach(processor => {
   } else {
     loaders = ['postcss-loader', processor.loader]
   }
-  base.module.loaders.push(
+  base.module.rules.push(
     {
       test: processor.test,
       loaders: ['style-loader', _.cssLoader].concat(loaders)
     }
   )
 })
-
 module.exports = base

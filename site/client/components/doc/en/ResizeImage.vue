@@ -9,7 +9,7 @@
       </div>
       <vue-core-image-upload
          crop-ratio="1:1"
-         :class="['btn', 'btn-primary']"
+         class="btn btn-primary"
          resize="local"
          url="http://101.198.151.190/api/upload.php"
          extensions="png,jpeg,jpg"
@@ -21,7 +21,7 @@
     <p>Code Example</p>
     <pre v-highlightjs><code class="HTML">&lt;vue-core-image-upload
      crop-ratio="1:1"
-     :class="['btn', 'btn-primary']"
+     class="btn btn-primary"
      resize="local"
      url="http://101.198.151.190/api/crop.php"
      extensions="png,gif,jpeg,jpg"

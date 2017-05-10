@@ -32,27 +32,18 @@ module.exports = {
     ]
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.vue$/,
-        loaders: ['vue-loader']
+        use: 'vue-loader',
       },
       {
         test: /\.js$/,
-        loaders: ['babel-loader'],
-        exclude: /node_modules/
+        use: {
+          loader: 'babel-loader'
+        },
+         exclude: /node_modules/
       },
-      {
-        test: /\.(ico|jpg|png|gif|eot|otf|webp|ttf|woff|woff2)(\?.*)?$/,
-        loader: 'file-loader',
-        query: {
-          name: 'static/media/[name].[hash:8].[ext]'
-        }
-      },
-      {
-        test: /\.svg$/,
-        loader: 'raw-loader'
-      }
     ]
   },
   plugins: [

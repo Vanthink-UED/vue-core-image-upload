@@ -16,7 +16,7 @@
     </div>
     <div class="center">
       <vue-core-image-upload
-        :class="['btn', 'btn-primary']"
+        class="btn btn-primary"
         :crop="false"
         @imagechanged="imagechanged"
         @imageuploading="imageuploading"

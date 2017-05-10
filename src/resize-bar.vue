@@ -92,7 +92,6 @@ export default {
       const move = function (ev) {
         const newCoor = drag(ev, self.el, coor);
         if (newCoor) {
-          console.log(self.minProgress);
           if((newCoor.left / width) < self.minProgress) {
             return;
           }

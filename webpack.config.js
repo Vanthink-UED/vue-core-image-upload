@@ -1,14 +1,24 @@
 const webpack = require( 'webpack' );
 const path = require('path');
+const fse = require('fs-extra');
+
+fse.copySync('./src', './dist');
 
 module.exports = {
   context: path.resolve(__dirname, './src'),
   entry: {
-    'index': './vue-core-image-upload.vue'
+    'index': './vue-core-image-upload.vue',
+    'dist/lib/canvas-helper': './lib/canvas-helper.js',
+    'dist/lib/helper': './lib/helper.js',
+    'dist/lib/drag': './lib/drag.js',
+    'dist/lib/resize': './lib/resize.js',
+    'dist/lib/xhr': './lib/xhr.js',
+    'dist/lib/loading-gif': './lib/loading-gif.js',
+
   },
   output: {
     path: path.resolve(__dirname),
-    filename: 'index.js',
+    filename: '[name].js',
     library: 'VueCoreImageUpload',
     libraryTarget: 'umd',
   },

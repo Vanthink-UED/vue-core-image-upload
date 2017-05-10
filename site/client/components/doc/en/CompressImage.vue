@@ -6,7 +6,7 @@
     <div class="center">
       <p><img width="300" :src="src" /></p>
       <vue-core-image-upload
-        :class="['btn', 'btn-primary']"
+        class="btn btn-primary"
         @imageuploaded="imageUploded"
         :max-file-size="5242880"
         compress="50"

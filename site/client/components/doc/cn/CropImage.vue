@@ -13,7 +13,7 @@
       </div>
       <vue-core-image-upload
          crop-ratio="1:1"
-         :class="['btn', 'btn-primary']"
+         class="btn btn-primary"
          crop="local"
          url="http://101.198.151.190/api/upload.php"
          extensions="png,jpeg,jpg"
@@ -43,7 +43,7 @@
       </div>
       <vue-core-image-upload
          crop-ratio="1:1"
-         :class="['btn', 'btn-primary']"
+         class="btn btn-primary"
          crop="server"
          url="http://101.198.151.190/api/crop.php"
          extensions="png,gif,jpeg,jpg"

@@ -68,7 +68,7 @@ _.cssProcessors.forEach(processor => {
   } else {
     loaders = ['postcss-loader', processor.loader]
   }
-  base.module.loaders.push({
+  base.module.rules.push({
     test: processor.test,
     loader: ExtractTextPlugin.extract({
       use: [_.cssLoader].concat(loaders),
@@ -88,5 +88,5 @@ base.stats = {
   chunkOrigins: false,
   modules: false
 }
-
+console.log(base.module.rules[4]);
 module.exports = base

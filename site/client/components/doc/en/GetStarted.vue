@@ -7,7 +7,7 @@
     <pre v-highlightjs><code class="javascript">&lt;template&gt;
 &lt;div class="center"&gt;
   &lt;vue-core-image-upload
-    :class="['btn', 'btn-primary']"
+    class="btn btn-primary"
     :crop="false"
     @imageuploaded="imageuploaded"
     :data="data"
@@ -45,7 +45,7 @@ export default {
    </p>
    <div class="center">
      <vue-core-image-upload
-       :class="['btn', 'btn-primary']"
+       class="btn btn-primary"
        :crop="false"
        @imageuploaded="imageuploaded"
        :data="data"

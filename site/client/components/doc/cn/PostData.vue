@@ -8,7 +8,7 @@
   <div class="m-form">
     <input type="text" v-model="data.text" placeholder="输入一些内容吧" class="form-control text" />
     <vue-core-image-upload
-      :class="['btn', 'btn-primary']"
+      class="btn btn-primary"
       :crop="false"
       :data="data"
       @imageuploaded="imageuploaded"
@@ -24,7 +24,7 @@
 &lt;div class="m-form"&gt;
   &lt;input type="text" v-model="data.text" placeholder="输入一些内容吧" class="form-control text" /&gt;
   &lt;vue-core-image-upload
-    :class="['btn', 'btn-primary']"
+    class="btn btn-primary"
     :crop="false"
     :data="data"
     @imageuploaded="imageuploaded"

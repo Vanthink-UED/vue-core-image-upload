@@ -4,7 +4,7 @@
     <p>Vue-core-image-upload supports many props to meet developers'needs.</p>
     <p>Code Example</p>
     <pre v-highlightjs><code class="html">&lt;vue-core-image-upload
-  :class="['btn', 'btn-primary']"
+  class="btn btn-primary"
   :crop="false"
   @imageuploaded="imageuploaded"
   :data="data"

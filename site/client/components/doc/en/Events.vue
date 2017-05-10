@@ -16,7 +16,7 @@
     </div>
     <div class="center">
       <vue-core-image-upload
-        :class="['btn', 'btn-primary']"
+        class="btn btn-primary"
         :crop="false"
         @imagechanged="imagechanged"
         @imageuploading="imageuploading"
@@ -47,7 +47,7 @@
     </div>
     <p>Code：</p>
     <pre v-highlightjs><code class="html">&lt;vue-core-image-upload
-  :class="['btn', 'btn-primary']"
+  class="btn btn-primary"
   :crop="false"
   @imagechanged="imagechanged"
   @imageuploading="imageuploading"
