@@ -1,0 +1,110 @@
+.g-core-image-upload-btn{
+  position: relative;
+  overflow: hidden;
+}
+.g-core-image-upload-form{
+  position: absolute;
+  left:0;
+  right: 0;
+  top:0;
+  bottom:0;
+  opacity: 0;
+}
+.g-core-image-upload-container{
+  position: absolute;
+  background: #111;
+  z-index: 900;
+}
+.g-core-image-upload-modal{
+  position: absolute;
+  left:0;
+  right:0;
+  width: 100%;
+  height: 100%;
+  border:1px solid #ccc;
+  z-index: 899;
+}
+.dropped{
+  border:4px solid #ea6153;
+}
+
+.g-core-image-corp-container{
+  z-index: 1900;
+  position:fixed;
+  left:0;
+  right:0;
+  top:0;
+  bottom: 0;
+  background: rgba(0,0,0,.9);
+  color:#f1f1f1;
+}
+.g-core-image-corp-container .image-aside{
+  position: absolute;
+  right: 30px;
+  left:30px;
+  top:60px;
+  bottom:20px;
+  text-align: center;
+}
+.g-core-image-corp-container .image-aside img{
+  max-width: 100%;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.g-core-image-corp-container .info-aside{
+  position: absolute;
+  left:0;
+  right: 0;
+  top:0;
+  height: 40px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background: #fefefe;
+  color:#777;
+}
+.g-core-image-corp-container .btn-groups{
+  text-align: right;
+  margin: 5px 0 0;
+}
+.g-core-image-corp-container .btn{
+  display: inline-block;
+  padding: 0 15px;
+  height: 32px;
+  margin-left: 15px;
+  background: #fff;
+  border:1px solid #ccc;
+  border-radius: 2px;
+  font-size: 13px;
+  color:#222;
+  line-height: 32px;
+  transition: all .1s ease-in;
+}
+.g-core-image-corp-container .btn:hover{
+  border:1px solid #777;
+  box-shadow: 0 1px 3px rgba(0,0,0,.05);
+}
+.g-core-image-corp-container .btn:active{
+  background: #ddd;
+}
+.g-core-image-corp-container .btn:disabled{
+  background: #eee !important;
+  border-color:#ccc;
+  cursor: not-allowed;
+}
+.g-core-image-corp-container .btn-upload{
+  background: #27ae60;
+  border-color:#27ae60;
+  color:#fff;
+}
+.g-core-image-corp-container .btn-upload:hover{
+  background: #2dc26c;
+  border-color:#27ae60;
+  box-shadow: 0 1px 3px rgba(0,0,0,.05);
+}
+.g-core-image-corp-container .g-crop-image-box,.g-core-image-corp-container .g-crop-image-box .g-crop-image-principal{
+  position: relative;
+}

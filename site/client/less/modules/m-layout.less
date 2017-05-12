@@ -1,7 +1,7 @@
 /** layout **/
 .container {
     position: relative;
-    width: 1170px;
+    max-width: 1140px;
     margin: 0 auto;
 }
 
@@ -40,6 +40,9 @@
     color: #fff;
 }
 
+.menu{
+  display: none;
+}
 .nav-list {
     float: right;
     z-index: 100;
@@ -50,6 +53,7 @@
     transition: all .25s ease;
     text-align: right;
 }
+
 
 
 .nav-list a {
@@ -103,6 +107,8 @@ aside{
 
 }
 
+
+
 .main{
     margin-left: 240px;
     max-width: 900px;
@@ -145,5 +151,61 @@ aside{
 
   &.active {
     color: @emerald;
+  }
+}
+
+@media all and (max-width: 764px) {
+  .nav{
+    height: 40px;
+    line-height: 40px;
+
+  }
+  .menu {
+    margin-left: 10px;
+    margin-top: 4px;
+    display: inline-block;
+    .svg-icon{
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .nav-logo {
+    display: none;
+  }
+  .nav-list{
+    margin-top: 0;
+  }
+
+
+  aside{
+    z-index: 9;
+    position: fixed;
+    left: -250px;
+    top: 40px;
+    bottom: 0;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 3px 4px 5px rgba(0,0,0,.25);
+    transition: left ease .25s;
+    &.active{
+      left: 0;
+    }
+    h4, ul {
+      background-color: #fff;
+    }
+
+  }
+  .main {
+    margin-left: 10px;
+    padding-top: 60px;
+  }
+
+  .ft .icon-list a{
+    width: 40px;
+    margin: 15px;
+    img{
+      width: 100%;
+    }
   }
 }

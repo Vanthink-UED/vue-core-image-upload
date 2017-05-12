@@ -31,6 +31,7 @@
   import Crop from './crop.vue';
   import ResizeBar from './resize-bar.vue';
 
+  let overflowVal = '';
   export default {
     components: {
       Crop,
@@ -98,7 +99,7 @@
           this.__showImage();
           return;
         }
-        this. __dispatch('imagechanged', this.files[0]);
+        this. __dispatch('imagechanged', this.files.length > 1 ? this.files : this.files[0]);
         if (this.compress && this.files[0]['type'] !== 'image/png' && this.files[0]['type'] !== 'image/gif') {
           canvasHelper.compress(this.files[0], 100 - this.compress, (code) => {
             this.tryAjaxUpload('', true, code);
@@ -112,15 +113,15 @@
         this.__readFiles();
       },
 
-       __readFiles() {
+      __readFiles() {
         let reader = new FileReader();
         let self = this;
         reader.onload = function(e) {
           let src = e.target.result;
+          overflowVal = document.body.style.overflow;
           document.body.style.overflow = 'hidden';
           self.__initImage(src);
         }
-
         reader.readAsDataURL(this.files[0]);
       },
 
@@ -205,6 +206,7 @@
 
       cancel() {
         this.hasImage = false;
+        document.body.style.overflow = overflowVal;
         this.files = '';
         document.querySelector('#g-core-upload-input-' + this.formID).value = '';
       },

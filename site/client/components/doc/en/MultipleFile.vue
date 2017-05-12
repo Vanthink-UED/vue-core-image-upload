@@ -4,7 +4,7 @@
     <p>Set <code>multiple</code> equal <code>true</code>, and you could select more than one file. And your server will recieved an array of files.</p>
     <h4>multiple-size</h4>
     <p><code>multiple-size</code>  is a number which limits your count of the files you selected.</p>
-    <h4>演示</h4>
+    <h4>Demo</h4>
     <div class="center">
       <vue-core-image-upload
         class="btn btn-primary"

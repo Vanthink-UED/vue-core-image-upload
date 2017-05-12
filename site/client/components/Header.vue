@@ -1,6 +1,9 @@
 <template>
   <div class="nav">
       <div class="container">
+          <div class="menu" @click="toggleMenu">
+            <svg class="svg-icon" viewBox="0 0 1024 1024"><g><path d="M810.667 725.333h-597.333c-47.061 0-85.333 38.272-85.333 85.333s38.272 85.333 85.333 85.333h597.333c47.061 0 85.333-38.272 85.333-85.333s-38.272-85.333-85.333-85.333z"></path><path d="M810.667 426.667h-597.333c-47.061 0-85.333 38.272-85.333 85.333s38.272 85.333 85.333 85.333h597.333c47.061 0 85.333-38.272 85.333-85.333s-38.272-85.333-85.333-85.333z"></path><path d="M810.667 128h-597.333c-47.061 0-85.333 38.272-85.333 85.333s38.272 85.333 85.333 85.333h597.333c47.061 0 85.333-38.272 85.333-85.333s-38.272-85.333-85.333-85.333z"></path></g></svg>
+          </div>
           <div class="nav-logo"></div>
           <div class="nav-list">
               <a href="https://github.com/Vanthink-UED/vue-core-image-upload/issues">Issues</a>
@@ -12,11 +15,10 @@
                 </svg>
               </a>
           </div>
+
       </div>
   </div>
 </template>
-
-<style></style>
 
 <script>
 import vueSelect from 'vue-select'
@@ -49,6 +51,17 @@ export default {
             value: 'en'
           }
         ]
+    }
+  },
+
+  methods: {
+    toggleMenu() {
+      const $aside = document.querySelector('aside');
+      if ($aside.className.indexOf('active') > -1) {
+        $aside.className = '';
+      } else {
+        $aside.className = 'active';
+      }
     }
   }
 

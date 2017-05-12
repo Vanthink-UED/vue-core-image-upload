@@ -19,10 +19,10 @@ const lan = vendor.getLocalData('lan') || 'cn';
 for(var item of routers) {
   item.url = '#/' + lan + '/' + item.url;
   if (lan !== 'en') {
-    item.name = item.cn_name;  
+    item.name = item.cn_name;
   }
 }
-  
+
 export default {
   data() {
     return {
@@ -31,12 +31,14 @@ export default {
     }
 
   },
-  
+
   methods: {
     setUrl(url) {
-      this.url = url;  
+      this.url = url;
+      const $aside = document.querySelector('aside');
+      $aside.className = '';
     },
-    
+
   }
 
 }
