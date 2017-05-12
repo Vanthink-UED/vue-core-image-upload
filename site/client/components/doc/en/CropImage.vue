@@ -14,7 +14,7 @@
       <vue-core-image-upload
          crop-ratio="1:1"
          class="btn btn-primary"
-         crop="local"
+         resize="local"
          url="http://101.198.151.190/api/upload.php"
          extensions="png,jpeg,jpg"
          text="Crop Image"
