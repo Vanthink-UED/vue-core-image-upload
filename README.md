@@ -56,7 +56,7 @@ new Vue({
 });
 ```
 
-[Demo](http://vanthink-ued.github.io/vue-core-image-upload/upload.html)
+[Demo](http://vanthink-ued.github.io/vue-core-image-upload/index.html)
 
 ### Props
 <table class="m-table bordered">
