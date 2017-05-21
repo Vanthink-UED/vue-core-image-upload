@@ -151,6 +151,7 @@
           this.data.comprose = 100 - this.compress;
           return canvasHelper.crop(targetImage, this.data, (code) => {
             upload(code);
+            this.__dispatch('imagechanged', code);
           })
         }
         upload();
@@ -166,6 +167,7 @@
           this.data.comprose = 100 - this.compress;
           return canvasHelper.resize(targetImage, this.data, (code) => {
             upload(code);
+            this.__dispatch('imagechanged', code);
           })
         }
         upload();
