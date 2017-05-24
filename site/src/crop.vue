@@ -1,7 +1,7 @@
 <template>
 <div class="image-aside">
   <div class="g-crop-image-box" >
-    <div class="g-crop-image-principal" v-on:touchstart.capture="drag" v-on:mousedown.capture="drag">
+    <div class="g-crop-image-principal" v-on:touchstart="drag" v-on:mousedown="drag">
       <div class="image-wrap"  :style="{ width: width + 'px',height: height + 'px', left: left+ 'px', top: top + 'px', backgroundImage: 'url(' + src + ')', cursor: isResize ? 'default' : 'move'}">
         <img ref="crop-image" style="width:0;height:0;" :src="src" />
       </div>
@@ -16,7 +16,6 @@
         <div class="reference-line h"></div>
         <a class="g-resize" v-on:touchstart.self="resize" v-on:mousedown.self="resize"></a>
       </div>
-
     </div>
     <resize-bar v-if="resize" ref="resizeBar" @resize="resizeImage"></resize-bar>
   </div>
@@ -26,6 +25,7 @@
 <style scoped>
 .g-crop-image-principal{
   overflow: hidden;
+  position: relative;
   background-color: #fff;
   background-image: -webkit-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef),-webkit-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef);
   background-image: -moz-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef),-moz-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef);

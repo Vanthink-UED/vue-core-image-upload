@@ -8,13 +8,15 @@
 <style scoped>
   .g-resize-bar{
     position: absolute;
+    bottom: 0px;
     margin: 17px auto;
     height: 6px;
     border-radius: 3px;
     width:200px;
     margin-left: -100px;
     left: 50%;
-    background-color: #ddd;
+    background-color: #a8f9ca;
+    box-shadow: 0 2px 3px -1px rgba(0,0,0,.3);
   }
   .g-resize-highlight{
     position: absolute;
@@ -34,17 +36,8 @@
     margin-left: -7px;
     background-color: #fff;
     border-radius: 7px;
-    box-shadow: 0 2px 4px -2px rgba(0,0,0,.5), 0 -2px 4px -2px rgba(0,0,0,.45);
+    box-shadow: 0 2px 3px -2px rgba(0,0,0,.6), 0 -2px 3px -2px rgba(0,0,0,.55);
     border-width: 0;
-  }
-
-  @media all and (max-width:480px) {
-    .g-resize-bar{
-      width:120px;
-      margin-left: auto;
-      left:10px;
-    }
-
   }
 </style>
 
@@ -68,29 +61,30 @@ export default {
   },
 
   methods: {
-    setRatio(num) {
-      this.progress = 100;
-      this.left = 100;
+    setProgress(num) {
+      this.left = num;
     },
 
     drag(e) {
       e.preventDefault();
+      e.stopPropagation();
       const $el = e.target;
       this.el = $el;
       const $container = this.$el.parentElement;
       const self = this;
       const isMobile = helper.isMobile;
-      const width = document.querySelector('.g-resize-bar').offsetWidth;
+      const width = 200;
       const coor = {
-        x: (isMobile ? e.touches[0]['clientX'] : e.clientX) - $el.offsetLeft - $el.parentElement.offsetLeft,
-        y: (isMobile ? e.touches[0]['clientY'] : e.clientY) - $el.offsetTop - $el.parentElement.offsetTop,
-        posX: isMobile ? e.touches[0]['clientX'] : e.clientX,
-        posy: isMobile ? e.touches[0]['clientY'] : e.clientY,
+        x: (isMobile ? e.touches[0]['clientX'] : e.clientX) - $el.offsetLeft,
+        y: (isMobile ? e.touches[0]['clientY'] : e.clientY) - $el.offsetTop,
         maxLeft: width,
         maxTop: parseInt($container.style.height) - parseInt($el.style.height),
+        minLeft: 0,
+        minTop: 0,
       };
       const move = function (ev) {
         const newCoor = drag(ev, self.el, coor);
+        console.log(newCoor);
         if (newCoor) {
           if((newCoor.left / width) < self.minProgress) {
             return;

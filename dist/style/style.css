@@ -27,7 +27,6 @@
 .dropped{
   border:4px solid #ea6153;
 }
-
 .g-core-image-corp-container{
   z-index: 1900;
   position:fixed;
@@ -104,7 +103,4 @@
   background: #2dc26c;
   border-color:#27ae60;
   box-shadow: 0 1px 3px rgba(0,0,0,.05);
-}
-.g-core-image-corp-container .g-crop-image-box,.g-core-image-corp-container .g-crop-image-box .g-crop-image-principal{
-  position: relative;
 }

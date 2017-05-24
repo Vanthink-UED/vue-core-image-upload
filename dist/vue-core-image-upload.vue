@@ -5,13 +5,8 @@
       <input v-bind:disabled="uploading" v-bind:id="'g-core-upload-input-' + formID" v-bind:name="name" v-bind:multiple="multiple" type="file" v-bind:accept="inputAccept" v-on:change="change" style="width: 100%; height: 100%;">
     </form>
     <div class="g-core-image-corp-container" v-bind:id="'vciu-modal-' + formID" v-show="hasImage">
-      <div class="image-aside">
-        <div class="g-crop-image-box">
-          <crop :form-id="formID" ref="cropBox" :hide-crop="resize" :ratio="cropRatio"></crop>
-        </div>
-      </div>
+      <crop ref="cropBox" :is-resize="resize && !crop" :ratio="cropRatio"></crop>
       <div class="info-aside">
-        <resize-bar v-if="resize" :min-progress="image.minProgress" ref="resizeBar" @resize="resizeImage"></resize-bar>
         <p class="btn-groups" v-if="crop">
           <button type="button" v-on:click="doCrop" class="btn btn-upload">{{cropBtn.ok}}</button>
           <button type="button" v-on:click="cancel" class="btn btn-cancel">{{cropBtn.cancel}}</button>
@@ -36,6 +31,7 @@
   import Crop from './crop.vue';
   import ResizeBar from './resize-bar.vue';
 
+  let overflowVal = '';
   export default {
     components: {
       Crop,
@@ -103,8 +99,8 @@
           this.__showImage();
           return;
         }
-        this. __dispatch('imagechanged', this.files[0]);
-        if (this.compress) {
+        this. __dispatch('imagechanged', this.files.length > 1 ? this.files : this.files[0]);
+        if (this.compress && this.files[0]['type'] !== 'image/png' && this.files[0]['type'] !== 'image/gif') {
           canvasHelper.compress(this.files[0], 100 - this.compress, (code) => {
             this.tryAjaxUpload('', true, code);
           });
@@ -117,11 +113,14 @@
         this.__readFiles();
       },
 
-       __readFiles() {
+      __readFiles() {
         let reader = new FileReader();
         let self = this;
+
         reader.onload = function(e) {
           let src = e.target.result;
+          overflowVal = document.body.style.overflow;
+          document.body.style.overflow = 'hidden';
           self.__initImage(src);
         }
         reader.readAsDataURL(this.files[0]);
@@ -133,14 +132,9 @@
         let self = this;
         pic.src = src;
         const cropBox = this.$refs.cropBox;
-        const resizeBar = this.$refs.resizeBar;
         pic.onload= function() {
           self.image.minProgress = self.minWidth / pic.naturalWidth;
           self.imgChangeRatio = cropBox.setImage(src, pic.naturalWidth, pic.naturalHeight);
-          if (resizeBar) {
-            resizeBar.setRatio(self.imgChangeRatio);
-          }
-
         }
       },
 
@@ -202,7 +196,6 @@
       __setUpload(btn) {
         btn.value = btn.value + '...';
         btn.disabled = true;
-
         const upload = (code) => {
           this.tryAjaxUpload(() => {
             btn.value = btn.value.replace('...','');
@@ -214,6 +207,7 @@
 
       cancel() {
         this.hasImage = false;
+        document.body.style.overflow = overflowVal;
         this.files = '';
         document.querySelector('#g-core-upload-input-' + this.formID).value = '';
       },
@@ -263,7 +257,6 @@
             }
           }
         }
-
         xhr('POST',this.url, this.headers, data, done, errorUpload, isBinary);
       },
     },

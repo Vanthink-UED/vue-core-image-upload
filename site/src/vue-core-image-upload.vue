@@ -116,6 +116,7 @@
       __readFiles() {
         let reader = new FileReader();
         let self = this;
+
         reader.onload = function(e) {
           let src = e.target.result;
           overflowVal = document.body.style.overflow;
