@@ -24,7 +24,7 @@
 </style>
 
 <script>
-  import xhr from './lib/xhr';
+  import xhr from 'core-image-xhr';
   import GIF_LOADING_SRC from './lib/loading-gif';
   import canvasHelper from './lib/canvas-helper';
   import props from './props';

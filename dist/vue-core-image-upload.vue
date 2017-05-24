@@ -24,7 +24,7 @@
 </style>
 
 <script>
-  import xhr from './lib/xhr';
+  import xhr from 'core-image-xhr';
   import GIF_LOADING_SRC from './lib/loading-gif';
   import canvasHelper from './lib/canvas-helper';
   import props from './props';
@@ -116,7 +116,6 @@
       __readFiles() {
         let reader = new FileReader();
         let self = this;
-
         reader.onload = function(e) {
           let src = e.target.result;
           overflowVal = document.body.style.overflow;
@@ -152,6 +151,7 @@
           this.data.comprose = 100 - this.compress;
           return canvasHelper.crop(targetImage, this.data, (code) => {
             upload(code);
+            this.__dispatch('imagechanged', code);
           })
         }
         upload();
@@ -167,6 +167,7 @@
           this.data.comprose = 100 - this.compress;
           return canvasHelper.resize(targetImage, this.data, (code) => {
             upload(code);
+            this.__dispatch('imagechanged', code);
           })
         }
         upload();
