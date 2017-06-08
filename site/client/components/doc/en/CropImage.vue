@@ -12,15 +12,15 @@
           <img class="avatar" :src="src"/>
       </div>
       <vue-core-image-upload
-         crop-ratio="1:1"
-         class="btn btn-primary"
-         crop="local"
-         url="http://101.198.151.190/api/upload.php"
-         extensions="png,jpeg,jpg"
-         text="Crop Image"
-         compress="20"
-         @imageuploaded="crpoServerImageUploaded">
-      </vue-core-image-upload>
+      crop="local"
+      resize="local"
+      @imageuploaded="crpoServerImageUploaded"
+      :data="imgsrc"
+      :max-file-size="10485760"
+      :cropBtn = "btnText"
+      text="上传图片"
+      url="/api_school/schools/1/upload/" >
+    </vue-core-image-upload>
     </div>
     <h4>Server-side crop</h4>
     <p><code>crop="server"</code>  means the bwowser will send the original image to the server and post the cropped data below to the server:</p>

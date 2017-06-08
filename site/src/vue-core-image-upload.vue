@@ -11,7 +11,7 @@
           <button type="button" v-on:click="doCrop" class="btn btn-upload">{{cropBtn.ok}}</button>
           <button type="button" v-on:click="cancel" class="btn btn-cancel">{{cropBtn.cancel}}</button>
         </p>
-        <p class="btn-groups" v-if="resize">
+        <p class="btn-groups" v-if="resize && !crop">
           <button type="button" v-on:click="doResize" class="btn btn-upload">{{ResizeBtn.ok}}</button>
           <button type="button" v-on:click="cancel" class="btn btn-cancel">{{ResizeBtn.cancel}}</button>
         </p>
@@ -116,7 +116,6 @@
       __readFiles() {
         let reader = new FileReader();
         let self = this;
-
         reader.onload = function(e) {
           let src = e.target.result;
           overflowVal = document.body.style.overflow;
@@ -152,6 +151,7 @@
           this.data.comprose = 100 - this.compress;
           return canvasHelper.crop(targetImage, this.data, (code) => {
             upload(code);
+            this.__dispatch('imagechanged', code);
           })
         }
         upload();
@@ -167,6 +167,7 @@
           this.data.comprose = 100 - this.compress;
           return canvasHelper.resize(targetImage, this.data, (code) => {
             upload(code);
+            this.__dispatch('imagechanged', code);
           })
         }
         upload();

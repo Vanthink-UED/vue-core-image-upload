@@ -70,6 +70,26 @@ export default {
     }
   },
 
+  rotate(src, degress, callback) {
+    this._loadImage(src, (image) => {
+      let w = image.naturalWidth;
+      let h = image.naturalHeight;
+      const canvasWidth = Math.max(w, h);
+      const cvs = this._getCanvas(canvasWidth, canvasWidth);
+      const ctx = cvs.getContext('2d').drawImage(image, (canvasWidth - w) / 2 , (canvasWidth - h) / 2);
+      ctx.clearRect(0, 0, canvasWidth, canvasWidth);
+      ctx.save();
+      ctx.translate(canvasWidth / 2, canvasWidth / 2);
+      ctx.rotate( degrees * (Math.PI / 180));
+      ctx.drawImage(image, -image.width/2, -image.width/2);
+      ctx.restore();
+      const mimeType = this._getImageType(image.src);
+      const data = cvs.toDataURL(mimeType, options.compress/100);
+      callback(data);
+    });
+
+  },
+
   _loadImage(data, callback) {
     const image = new Image();
     image.src = data;

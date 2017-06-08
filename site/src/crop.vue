@@ -18,6 +18,7 @@
       </div>
     </div>
     <resize-bar v-if="resize" ref="resizeBar" @resize="resizeImage"></resize-bar>
+    <rotate-bar @rotate="roateImage"></rotate-bar>
   </div>
 </div>
 </template>
@@ -131,6 +132,7 @@ import resize from './lib/resize';
 import GIF_LOADING_SRC from './lib/loading-gif';
 import helper from './lib/helper';
 import ResizeBar from './resize-bar.vue';
+import RotateBar from './rotate-bar';
 // set cropbox size in image
 const CROPBOX_PERCENT = 75;
 const isMobile = helper.isMobile;
@@ -139,6 +141,7 @@ const areaHeight = window.innerHeight - 110;
 export default {
   components: {
     ResizeBar,
+    RotateBar,
   },
   props: {
     ratio: {
@@ -215,6 +218,11 @@ export default {
       this.width = w;
       this.height = h;
       this.imgChangeRatio = this.width / this.natrualWidth;
+    },
+
+    rotateImage(src) {
+      console.log(src);
+      this.src = src;
     },
 
     setLayout(w, h) {
