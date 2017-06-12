@@ -18,7 +18,7 @@
       </div>
     </div>
     <resize-bar v-if="resize" ref="resizeBar" @resize="resizeImage"></resize-bar>
-    <rotate-bar @rotate="roateImage"></rotate-bar>
+    <rotate-bar @rotate="rotateImage"></rotate-bar>
   </div>
 </div>
 </template>
@@ -131,6 +131,7 @@ import drag from './lib/drag';
 import resize from './lib/resize';
 import GIF_LOADING_SRC from './lib/loading-gif';
 import helper from './lib/helper';
+import canvasHelper from './lib/canvas-helper';
 import ResizeBar from './resize-bar.vue';
 import RotateBar from './rotate-bar';
 // set cropbox size in image
@@ -220,9 +221,13 @@ export default {
       this.imgChangeRatio = this.width / this.natrualWidth;
     },
 
-    rotateImage(src) {
-      console.log(src);
-      this.src = src;
+    rotateImage(degress) {
+      console.log(degress);
+      const data = canvasHelper.rotate(this.src, degress, (data, w, h) => {
+        console.log(data);
+        this.setImage(data, w, h);
+      });
+      //this.src = src;
     },
 
     setLayout(w, h) {

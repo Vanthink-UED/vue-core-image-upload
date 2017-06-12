@@ -34,8 +34,6 @@
 </style>
 
 <script>
-import canvasHelper from './lib/canvas-helper';
-
 export default {
   data() {
       return {
@@ -45,13 +43,12 @@ export default {
 
   methods: {
     rotateRight() {
-      this.rotateDegree = (this.rotateDegree % 360) + 90;
+      this.$emit('rotate', 90);
     },
 
     rotateLeft() {
-      this.rotateDegree = (this.rotateDegree % 360) + 90;
+      this.$emit('rotate', -90);
     },
-
   }
 };
 
