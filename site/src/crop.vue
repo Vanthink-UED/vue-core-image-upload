@@ -181,6 +181,9 @@ export default {
   methods: {
     setImage(src, w, h) {
       this.src = src;
+      if (!this.originSrc) {
+          this.originSrc = this.src;
+      }
       if (this.ratio.indexOf(':') > 0) {
         this.ratioW = this.ratio.split(':')[0];
         this.ratioH = this.ratio.split(':')[1];
@@ -223,8 +226,8 @@ export default {
 
     rotateImage(degress) {
       console.log(degress);
-      const data = canvasHelper.rotate(this.src, degress, (data, w, h) => {
-        console.log(data);
+      const data = canvasHelper.rotate(this.originSrc, degress, (data, w, h) => {
+        // console.log(data);
         this.setImage(data, w, h);
       });
       //this.src = src;

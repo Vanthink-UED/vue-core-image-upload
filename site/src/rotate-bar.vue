@@ -43,11 +43,13 @@ export default {
 
   methods: {
     rotateRight() {
-      this.$emit('rotate', 90);
+      this.rotateDegree += 90;
+      this.$emit('rotate', this.rotateDegree);
     },
-
+    
     rotateLeft() {
-      this.$emit('rotate', -90);
+      this.rotateDegree -= 90;
+      this.$emit('rotate', this.rotateDegree);
     },
   }
 };

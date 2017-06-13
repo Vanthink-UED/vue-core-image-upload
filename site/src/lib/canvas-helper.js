@@ -17,7 +17,7 @@ export default {
     const reader = new FileReader();
     const self = this;
     reader.onload = function(event) {
-      let image = new Image();
+      const image = new Image();
       image.src = event.target.result;
       image.onload = function() {
         const mimeType = self._getImageType(src.type);
@@ -37,7 +37,7 @@ export default {
       return (typeof num === 'number');
     };
     // check crop options
-    if(checkNumber(options.toCropImgX) && checkNumber(options.toCropImgY) && options.toCropImgW > 0 && options.toCropImgH > 0) {
+    if (checkNumber(options.toCropImgX) && checkNumber(options.toCropImgY) && options.toCropImgW > 0 && options.toCropImgH > 0) {
       let w = options.toCropImgW;
       let h = options.toCropImgH;
       if(options.maxWidth && options.maxWidth < w) {
@@ -65,7 +65,7 @@ export default {
       const cvs = this._getCanvas(w, h);
       const ctx = cvs.getContext('2d').drawImage(image, 0, 0, options.toCropImgW, options.toCropImgH, 0 , 0, w , h);
       const mimeType = this._getImageType(image.src);
-      const data = cvs.toDataURL(mimeType, options.compress/100);
+      const data = cvs.toDataURL(mimeType, options.compress / 100);
       callback(data);
     }
   },
@@ -75,21 +75,34 @@ export default {
       let w = image.naturalWidth;
       let h = image.naturalHeight;
       const canvasWidth = Math.max(w, h);
-      const cvs = this._getCanvas(canvasWidth, canvasWidth);
-      const targetCvs = this._getCanvas(h, w);
-      const ctx = cvs.getContext('2d');
-      ctx.drawImage(image, (canvasWidth - w) / 2, (canvasWidth - h) / 2);
-      ctx.clearRect(0, 0, canvasWidth, canvasWidth);
+      let cvs = this._getCanvas(canvasWidth, canvasWidth);
+      let ctx = cvs.getContext('2d');
       ctx.save();
       ctx.translate(canvasWidth / 2, canvasWidth / 2);
       ctx.rotate(degrees * (Math.PI / 180));
-      cvs.width = h;
-      cvs.height = w;
-      ctx.drawImage(image, -((image.width - image.height) / 2), -((image.width - image.height) / 2));
+      const x = -canvasWidth / 2;
+      degrees = degrees % 360;
+      if (degrees === 0) {
+        return callback(src, w, h);
+      }
+      let y = ((canvasWidth - h) - canvasWidth / 2)
+      if ((degrees % 180) !== 0) {
+        const c = w;
+        w = h;
+        h = c;
+        if (degrees === -90 || degrees === 270) {
+          y = -canvasWidth / 2;
+        }
+      }
+      ctx.drawImage(image, x, y);
       ctx.restore();
+      //cvs.width = h;
+      //cvs.height = w;
       const mimeType = this._getImageType(image.src);
       const data = cvs.toDataURL(mimeType, 1);
-      callback(data, h, w);
+      callback(data, w, h);
+      cvs = null;
+      ctx = null;
     });
   },
 
@@ -98,10 +111,10 @@ export default {
     image.src = data;
     image.onload = function () {
       callback(image);
-    }
-    image.onerror = function() {
+    };
+    image.onerror = function () {
       console.log('Error: image error!');
-    }
+    };
   },
 
   _getCanvas(width, height) {
