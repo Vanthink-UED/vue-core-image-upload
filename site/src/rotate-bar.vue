@@ -46,7 +46,7 @@ export default {
       this.rotateDegree += 90;
       this.$emit('rotate', this.rotateDegree);
     },
-    
+
     rotateLeft() {
       this.rotateDegree -= 90;
       this.$emit('rotate', this.rotateDegree);

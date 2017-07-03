@@ -18,7 +18,7 @@
       </div>
     </div>
     <resize-bar v-if="resize" ref="resizeBar" @resize="resizeImage"></resize-bar>
-    <rotate-bar @rotate="rotateImage"></rotate-bar>
+    <rotate-bar v-if="isRotate" @rotate="rotateImage"></rotate-bar>
   </div>
 </div>
 </template>
@@ -160,6 +160,10 @@ export default {
     isResize: {
       type: [Boolean],
       default: false,
+    },
+    isRotate: {
+      type: [Boolean],
+      default: true,
     }
   },
 
@@ -225,9 +229,7 @@ export default {
     },
 
     rotateImage(degress) {
-      console.log(degress);
       const data = canvasHelper.rotate(this.originSrc, degress, (data, w, h) => {
-        // console.log(data);
         this.setImage(data, w, h);
       });
       //this.src = src;

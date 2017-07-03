@@ -35,6 +35,10 @@ export default {
     type: [String, Boolean],
     default: false,
   },
+  rotate: {
+    type: Boolean,
+    default: true,
+  },
   ResizeBtn: {
     type: Object,
     default: function() {
@@ -56,7 +60,7 @@ export default {
   },
   inputAccept:{
     type: String,
-    default: 'image/jpg,image/jpeg,image/png'
+    default: 'image/jpg,image/jpeg,image/png,image/gif'
   },
   isXhr: {
     type: Boolean,

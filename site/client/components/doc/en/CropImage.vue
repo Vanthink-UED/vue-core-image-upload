@@ -12,14 +12,12 @@
           <img class="avatar" :src="src"/>
       </div>
       <vue-core-image-upload
-      crop="local"
-      resize="local"
-      @imageuploaded="crpoServerImageUploaded"
-      :data="imgsrc"
-      :max-file-size="10485760"
-      :cropBtn = "btnText"
-      text="上传图片"
-      url="/api_school/schools/1/upload/" >
+        crop="local"
+        resize="local"
+        url="http://101.198.151.190/api/upload.php"
+        @imageuploaded="crpoServerImageUploaded"
+        :max-file-size="10485760"
+        text="上传图片" >
     </vue-core-image-upload>
     </div>
     <h4>Server-side crop</h4>
@@ -57,6 +55,7 @@
           <th>W</th>
           <th>X</th>
           <th>Y</th>
+          <th>Rotate Degree</th>
         </tr>
       </thead>
       <tbody>
@@ -65,6 +64,7 @@
           <td>{{cropArgs.toCropImgW}}</td>
           <td>{{cropArgs.toCropImgX}}</td>
           <td>{{cropArgs.toCropImgY}}</td>
+          <td>{{cropArgs.toRotateDegree}}</td>
         </tr>
       </tbody>
     </table>
@@ -97,7 +97,8 @@ export default {
         toCropImgH: '?',
         toCropImgW: '?',
         toCropImgX: '?',
-        toCropImgY: '?'
+        toCropImgY: '?',
+        toCropDegrees: '?',
       }
     };
   },
@@ -117,7 +118,8 @@ export default {
           toCropImgH: parseInt(res.data.post.toCropImgH),
           toCropImgW: parseInt(res.data.post.toCropImgW),
           toCropImgX: parseInt(res.data.post.toCropImgX),
-          toCropImgY: parseInt(res.data.post.toCropImgY)
+          toCropImgY: parseInt(res.data.post.toCropImgY),
+          toCropDegrees: parseInt(res.data.post.toCropDegrees),
         }
         this.cropSrc = 'http://img1.vued.vanthink.cn/vued41b900045d6d44f3b32e06049621b415.png';
       }

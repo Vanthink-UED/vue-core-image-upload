@@ -37,7 +37,10 @@ export default {
       return (typeof num === 'number');
     };
     // check crop options
-    if (checkNumber(options.toCropImgX) && checkNumber(options.toCropImgY) && options.toCropImgW > 0 && options.toCropImgH > 0) {
+    if (checkNumber(options.toCropImgX) &&
+        checkNumber(options.toCropImgY) &&
+        options.toCropImgW > 0 &&
+        options.toCropImgH > 0) {
       let w = options.toCropImgW;
       let h = options.toCropImgH;
       if(options.maxWidth && options.maxWidth < w) {
@@ -80,24 +83,30 @@ export default {
       ctx.save();
       ctx.translate(canvasWidth / 2, canvasWidth / 2);
       ctx.rotate(degrees * (Math.PI / 180));
-      const x = -canvasWidth / 2;
-      degrees = degrees % 360;
+      let x = 0;
+      degrees %= 360;
       if (degrees === 0) {
         return callback(src, w, h);
       }
-      let y = ((canvasWidth - h) - canvasWidth / 2)
+      let y = 0;
       if ((degrees % 180) !== 0) {
+
+        if (degrees === -90 || degrees === 270) {
+          x = -h;
+        } else {
+          y = -w;
+        }
         const c = w;
         w = h;
         h = c;
-        if (degrees === -90 || degrees === 270) {
-          y = -canvasWidth / 2;
-        }
+        cvs.width = w;
+        cvs.height = h;
+      } else {
+        x = -w;
+        y = -h;
       }
       ctx.drawImage(image, x, y);
       ctx.restore();
-      //cvs.width = h;
-      //cvs.height = w;
       const mimeType = this._getImageType(image.src);
       const data = cvs.toDataURL(mimeType, 1);
       callback(data, w, h);
