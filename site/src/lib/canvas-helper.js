@@ -83,35 +83,33 @@ export default {
       ctx.save();
       ctx.translate(canvasWidth / 2, canvasWidth / 2);
       ctx.rotate(degrees * (Math.PI / 180));
-      let x = 0;
+      let x = -canvasWidth / 2;
+      let y = -canvasWidth / 2;
       degrees %= 360;
       if (degrees === 0) {
         return callback(src, w, h);
       }
-      let y = 0;
       if ((degrees % 180) !== 0) {
-
         if (degrees === -90 || degrees === 270) {
-          x = -h;
+          x = -w + canvasWidth / 2;
         } else {
-          y = -w;
+          y = canvasWidth/2 - h;
         }
         const c = w;
         w = h;
         h = c;
-        cvs.width = w;
-        cvs.height = h;
       } else {
-        x = -w;
-        y = -h;
+        x = canvasWidth/2 - w;
+        y = canvasWidth/2 - h;
       }
+
       ctx.drawImage(image, x, y);
-      ctx.restore();
+      const cvs2 = this._getCanvas(w, h);
+      const ctx2 = cvs2.getContext('2d');
+      ctx2.drawImage(cvs, 0, 0, w, h, 0, 0, w, h);
       const mimeType = this._getImageType(image.src);
       const data = cvs.toDataURL(mimeType, 1);
       callback(data, w, h);
-      cvs = null;
-      ctx = null;
     });
   },
 

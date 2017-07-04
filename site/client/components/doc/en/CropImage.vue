@@ -17,6 +17,7 @@
         url="http://101.198.151.190/api/upload.php"
         @imageuploaded="crpoServerImageUploaded"
         :max-file-size="10485760"
+        :rotate="false"
         text="上传图片" >
     </vue-core-image-upload>
     </div>
