@@ -93,5 +93,9 @@ export default {
   compress: {
     type: [Number, String],
     default: 0,
+  },
+  credentials: {
+    type: [String, Boolean],
+    default: true,
   }
 }

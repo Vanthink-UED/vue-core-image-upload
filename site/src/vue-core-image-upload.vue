@@ -257,7 +257,7 @@
             }
           }
         }
-        xhr('POST',this.url, this.headers, data, done, errorUpload, isBinary);
+        xhr('POST',this.url, this.headers, data, done, errorUpload, isBinary, this.credentials);
       },
     },
 

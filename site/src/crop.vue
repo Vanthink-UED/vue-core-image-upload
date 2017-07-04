@@ -242,7 +242,6 @@ export default {
           height = h,
           marginLeft = 0,
           marginTop = 0;
-
       // caculate the image ratio
       let R = width / height;
       let Rs = W / H;

@@ -113,6 +113,12 @@
             <td>{auth: xxxxx}</td>
             <td>Set customed data when ajax posting server</td>
           </tr>
+          <tr>
+            <td>credentials</td>
+            <td align="left">Boolean</td>
+            <td>false</td>
+            <td>Specify XMLHttpRequest widthCredentials value</td>
+          </tr>
         </tbody>
       </table>
     </p>

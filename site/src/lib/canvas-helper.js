@@ -62,11 +62,11 @@ export default {
     const checkNumber = function(num) {
       return (typeof num === 'number');
     };
-    if(checkNumber(options.toCropImgX) && checkNumber(options.toCropImgY) && options.toCropImgW > 0 && options.toCropImgH > 0) {
-      let w = options.toCropImgW  * options.imgChangeRatio;
-      let h = options.toCropImgH * options.imgChangeRatio;
+    if (checkNumber(options.toCropImgX) && checkNumber(options.toCropImgY) && options.toCropImgW > 0 && options.toCropImgH > 0) {
+      const w = options.toCropImgW  * options.imgChangeRatio;
+      const h = options.toCropImgH * options.imgChangeRatio;
       const cvs = this._getCanvas(w, h);
-      const ctx = cvs.getContext('2d').drawImage(image, 0, 0, options.toCropImgW, options.toCropImgH, 0 , 0, w , h);
+      const ctx = cvs.getContext('2d').drawImage(image, 0, 0, options.toCropImgW, options.toCropImgH, 0, 0, w , h);
       const mimeType = this._getImageType(image.src);
       const data = cvs.toDataURL(mimeType, options.compress / 100);
       callback(data);
@@ -78,8 +78,8 @@ export default {
       let w = image.naturalWidth;
       let h = image.naturalHeight;
       const canvasWidth = Math.max(w, h);
-      let cvs = this._getCanvas(canvasWidth, canvasWidth);
-      let ctx = cvs.getContext('2d');
+      const cvs = this._getCanvas(canvasWidth, canvasWidth);
+      const ctx = cvs.getContext('2d');
       ctx.save();
       ctx.translate(canvasWidth / 2, canvasWidth / 2);
       ctx.rotate(degrees * (Math.PI / 180));
@@ -93,14 +93,14 @@ export default {
         if (degrees === -90 || degrees === 270) {
           x = -w + canvasWidth / 2;
         } else {
-          y = canvasWidth/2 - h;
+          y = canvasWidth / 2 - h;
         }
         const c = w;
         w = h;
         h = c;
       } else {
-        x = canvasWidth/2 - w;
-        y = canvasWidth/2 - h;
+        x = canvasWidth / 2 - w;
+        y = canvasWidth / 2 - h;
       }
 
       ctx.drawImage(image, x, y);
