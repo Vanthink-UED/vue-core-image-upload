@@ -5,13 +5,13 @@
       <input v-bind:disabled="uploading" v-bind:id="'g-core-upload-input-' + formID" v-bind:name="name" v-bind:multiple="multiple" type="file" v-bind:accept="inputAccept" v-on:change="change" style="width: 100%; height: 100%;">
     </form>
     <div class="g-core-image-corp-container" v-bind:id="'vciu-modal-' + formID" v-show="hasImage">
-      <crop ref="cropBox" :is-resize="resize && !crop" :ratio="cropRatio"></crop>
+      <crop ref="cropBox" :is-resize="resize && !crop" :ratio="cropRatio" :is-rotate="rotate"></crop>
       <div class="info-aside">
         <p class="btn-groups" v-if="crop">
           <button type="button" v-on:click="doCrop" class="btn btn-upload">{{cropBtn.ok}}</button>
           <button type="button" v-on:click="cancel" class="btn btn-cancel">{{cropBtn.cancel}}</button>
         </p>
-        <p class="btn-groups" v-if="resize">
+        <p class="btn-groups" v-if="resize && !crop">
           <button type="button" v-on:click="doResize" class="btn btn-upload">{{ResizeBtn.ok}}</button>
           <button type="button" v-on:click="cancel" class="btn btn-cancel">{{ResizeBtn.cancel}}</button>
         </p>
@@ -95,7 +95,7 @@
         }
 
         this.files = e.target.files;
-        if(this.crop || this.resize) {
+        if (this.crop || this.resize) {
           this.__showImage();
           return;
         }
@@ -155,7 +155,6 @@
           })
         }
         upload();
-
       },
 
       doResize(e) {
@@ -258,7 +257,7 @@
             }
           }
         }
-        xhr('POST',this.url, this.headers, data, done, errorUpload, isBinary);
+        xhr('POST',this.url, this.headers, data, done, errorUpload, isBinary, this.credentials);
       },
     },
 
