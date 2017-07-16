@@ -186,7 +186,7 @@ export default {
     setImage(src, w, h) {
       this.src = src;
       if (!this.originSrc) {
-          this.originSrc = this.src;
+        this.setOriginalSrc(this.src);
       }
       if (this.ratio.indexOf(':') > 0) {
         this.ratioW = this.ratio.split(':')[0];
@@ -208,6 +208,11 @@ export default {
       }
       return this.imgChangeRatio;
     },
+
+    setOriginalSrc(src) {
+      this.originSrc = src;
+    },
+
     resizeImage(progress) {
       let w,
           h;
@@ -366,13 +371,13 @@ export default {
       };
       this.el = $el;
       this.container = $container;
+      const maxCoor = this._getMaxCropAreaWidth();
       const move = function (ev) {
         const newCropStyle = resize(ev, self.el, $container, coor, self.ratioVal);
-        if (newCropStyle) {
+        if (newCropStyle && (newCropStyle.width <= maxCoor.maxWidth || newCropStyle.height <= maxCoor.maxHeight)) {
           self.cropCSS.width = newCropStyle.width;
           self.cropCSS.height = newCropStyle.height;
         }
-
       };
       const end = function (ev) {
         this.el = null;
@@ -389,6 +394,20 @@ export default {
       }
       document.addEventListener('mousemove', move, false);
       document.addEventListener('mouseup', end, false);
+    },
+
+    _getMaxCropAreaWidth() {
+      const $cropBox = this.__find('.crop-box');
+      if (this.width > this.height) {
+        return {
+          maxWidth: this.height * this.ratioW / this.ratioH,
+          maxHeight: this.height,
+        }
+      }
+      return {
+        maxWidth: this.width,
+        maxHeight: this.width * this.ratioH / this.ratioW,
+      };
     },
 
     drag(e) {

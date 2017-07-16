@@ -209,6 +209,8 @@
         this.hasImage = false;
         document.body.style.overflow = overflowVal;
         this.files = '';
+        const cropBox = this.$refs.cropBox;
+        cropBox.setOriginalSrc(null);
         document.querySelector('#g-core-upload-input-' + this.formID).value = '';
       },
 

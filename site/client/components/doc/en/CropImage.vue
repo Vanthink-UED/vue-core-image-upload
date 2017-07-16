@@ -12,6 +12,7 @@
           <img class="avatar" :src="src"/>
       </div>
       <vue-core-image-upload
+        crop-ratio="1:1"
         crop="local"
         resize="local"
         url="http://101.198.151.190/api/upload.php"

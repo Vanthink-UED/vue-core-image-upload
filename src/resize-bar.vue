@@ -1,7 +1,7 @@
 <template>
   <div class="g-resize-bar">
     <div class="g-resize-highlight" :style="{width: left + '%',}"></div>
-    <button type="button" class="circle-btn" @touchstart.self="drag" @mousedown.self="drag" :style="{left: left + '%',}"></button>
+    <button class="circle-btn" @touchstart.self="drag" @mousedown.self="drag" :style="{left: left + '%',}"></button>
   </div>
 </template>
 
