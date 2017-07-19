@@ -82,7 +82,7 @@
         if(extensionsArr.length>1) {
             var reg = new RegExp('^[' + extensionsArr.join('|') + ']+$','i');
             if (!reg.test(fileExt)) {
-                return this.__dispatch('errorhandle','图片格式错误！');
+                return this.__dispatch('errorhandle','TYPE ERROR');
             }
         }
         if (e.target.files[0].size > this.maxFileSize) {
@@ -95,7 +95,7 @@
                 formatSize = options.maxFileSize.toFixed(2) + 'Byte';
             }
             console.warn('FILE IS TOO LARGER MAX FILE IS ' + formatSize);
-            return this.__dispatch('errorhandle','图片不能大于' + formatSize);
+            return this.__dispatch('errorhandle','FILE IS TOO LARGER MAX FILE IS ' + formatSize);
         }
 
         this.files = e.target.files;
