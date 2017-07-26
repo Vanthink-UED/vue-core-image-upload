@@ -64,8 +64,8 @@
     },
 
     methods: {
-      __dispatch(name,res) {
-        this.$emit && this.$emit(name, res);
+      __dispatch(name,res, data) {
+        this.$emit && this.$emit(name, res, data);
       },
       __find(str) {
         let dq = document.querySelector('#vciu-modal-' + this.formID);
@@ -224,7 +224,7 @@
           }
           self.uploading = false;
           self.cancel();
-          self.__dispatch('imageuploaded',res);
+          self.__dispatch('imageuploaded',res, self.data);
         };
         const errorUpload = function(err) {
           self.__dispatch('errorhandle', err);

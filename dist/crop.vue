@@ -133,7 +133,7 @@ import GIF_LOADING_SRC from './lib/loading-gif';
 import helper from './lib/helper';
 import canvasHelper from './lib/canvas-helper';
 import ResizeBar from './resize-bar.vue';
-import RotateBar from './rotate-bar';
+import RotateBar from './rotate-bar.vue';
 // set cropbox size in image
 const CROPBOX_PERCENT = 75;
 const isMobile = helper.isMobile;
