@@ -113,6 +113,12 @@
             <td>{auth: xxxxx}</td>
             <td>设置附带发送给服务端的数据</td>
           </tr>
+          <tr>
+            <td>credentials</td>
+            <td align="left">Boolean</td>
+            <td>false</td>
+            <td>指定 XMLHttpRequest widthCredentials 的值，用于跨域的参数</td>
+          </tr>
         </tbody>
       </table>
     </p>

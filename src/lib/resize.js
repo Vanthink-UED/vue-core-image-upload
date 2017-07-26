@@ -14,16 +14,16 @@ export default function resize(e, el, container, coor, ratio) {
   }
   const H = document.body.offsetHeight;
   const ratioRemainder = 1 / ratio;
-  const dotBoxW = parseInt(window.getComputedStyle(container).width);
-  const dotBoxH = parseInt(window.getComputedStyle(container).height);
+  const dotBoxW = parseFloat(window.getComputedStyle(container).width);
+  const dotBoxH = parseFloat(window.getComputedStyle(container).height);
   const $topH = document.querySelector('.info-aside');
   const halfX = (W - dotBoxW) / 2;
-  const topH = parseInt(window.getComputedStyle($topH).height);
+  const topH = parseFloat(window.getComputedStyle($topH).height);
   const halfY = (H - dotBoxH - topH)/2;
   const resetX = isMobile ? e.changedTouches[0]['clientX'] : e.clientX;
   const resetY = isMobile ? e.changedTouches[0]['clientY'] : e.clientY;
-  const elOffsetWidth = parseInt(el.offsetWidth);
-  const elOffsetHeight = parseInt(el.offsetHeight);
+  const elOffsetWidth = el.offsetWidth;
+  const elOffsetHeight = el.offsetHeight;
   const CSSObj = {};
   if (ratio >= 1 && resetX <= halfX + dotBoxW) {
     if (elOffsetWidth >= dotBoxW) {
@@ -47,7 +47,7 @@ export default function resize(e, el, container, coor, ratio) {
     }
   } else if (ratio < 1 && resetY < (halfY + dotBoxH + topH)) {
     CSSObj.height = (coor.h + resetY - coor.y);
-    CSSObj.width = parseInt(el.style.height) * ratio;
+    CSSObj.width = elOffsetHeight * ratio;
     // 限制拖拉的范围在图片内
     if (dotBoxW > dotBoxH) {
       if (elOffsetHeight > dotBoxH) {

@@ -17,7 +17,7 @@ export default {
     const reader = new FileReader();
     const self = this;
     reader.onload = function(event) {
-      let image = new Image();
+      const image = new Image();
       image.src = event.target.result;
       image.onload = function() {
         const mimeType = self._getImageType(src.type);
@@ -37,7 +37,10 @@ export default {
       return (typeof num === 'number');
     };
     // check crop options
-    if(checkNumber(options.toCropImgX) && checkNumber(options.toCropImgY) && options.toCropImgW > 0 && options.toCropImgH > 0) {
+    if (checkNumber(options.toCropImgX) &&
+        checkNumber(options.toCropImgY) &&
+        options.toCropImgW > 0 &&
+        options.toCropImgH > 0) {
       let w = options.toCropImgW;
       let h = options.toCropImgH;
       if(options.maxWidth && options.maxWidth < w) {
@@ -54,12 +57,11 @@ export default {
       callback(data);
     }
   },
-  
+
   /**
   * init image for reset size and rotation
   **/
   init(src, callback) {
-    console.log(src);
       let image = new Image();
       image.src = src;
       var self = this;
@@ -84,7 +86,7 @@ export default {
         var mimeType = self._getImageType(image.src);
         var cvs = self._getCanvas(image.naturalHeight, image.naturalWidth);
         var ctx = cvs.getContext("2d");
-        if (direction == 1) { 
+        if (direction == 1) {
             ctx.rotate(90 * Math.PI / 180);
             ctx.translate(0, -cvs.width);
         } else {
@@ -101,15 +103,54 @@ export default {
     const checkNumber = function(num) {
       return (typeof num === 'number');
     };
-    if(checkNumber(options.toCropImgX) && checkNumber(options.toCropImgY) && options.toCropImgW > 0 && options.toCropImgH > 0) {
-      let w = options.toCropImgW  * options.imgChangeRatio;
-      let h = options.toCropImgH * options.imgChangeRatio;
+    if (checkNumber(options.toCropImgX) && checkNumber(options.toCropImgY) && options.toCropImgW > 0 && options.toCropImgH > 0) {
+      const w = options.toCropImgW  * options.imgChangeRatio;
+      const h = options.toCropImgH * options.imgChangeRatio;
       const cvs = this._getCanvas(w, h);
-      const ctx = cvs.getContext('2d').drawImage(image, 0, 0, options.toCropImgW, options.toCropImgH, 0 , 0, w , h);
+      const ctx = cvs.getContext('2d').drawImage(image, 0, 0, options.toCropImgW, options.toCropImgH, 0, 0, w , h);
       const mimeType = this._getImageType(image.src);
-      const data = cvs.toDataURL(mimeType, options.compress/100);
+      const data = cvs.toDataURL(mimeType, options.compress / 100);
       callback(data);
     }
+  },
+
+  rotate2(src, degrees, callback) {
+    this._loadImage(src, (image) => {
+      let w = image.naturalWidth;
+      let h = image.naturalHeight;
+      const canvasWidth = Math.max(w, h);
+      const cvs = this._getCanvas(canvasWidth, canvasWidth);
+      const ctx = cvs.getContext('2d');
+      ctx.save();
+      ctx.translate(canvasWidth / 2, canvasWidth / 2);
+      ctx.rotate(degrees * (Math.PI / 180));
+      let x = -canvasWidth / 2;
+      let y = -canvasWidth / 2;
+      degrees %= 360;
+      if (degrees === 0) {
+        return callback(src, w, h);
+      }
+      if ((degrees % 180) !== 0) {
+        if (degrees === -90 || degrees === 270) {
+          x = -w + canvasWidth / 2;
+        } else {
+          y = canvasWidth / 2 - h;
+        }
+        const c = w;
+        w = h;
+        h = c;
+      } else {
+        x = canvasWidth / 2 - w;
+        y = canvasWidth / 2 - h;
+      }
+      ctx.drawImage(image, x, y);
+      const cvs2 = this._getCanvas(w, h);
+      const ctx2 = cvs2.getContext('2d');
+      ctx2.drawImage(cvs, 0, 0, w, h, 0, 0, w, h);
+      const mimeType = this._getImageType(image.src);
+      const data = cvs.toDataURL(mimeType, 1);
+      callback(data, w, h);
+    });
   },
 
   _loadImage(data, callback) {
@@ -117,10 +158,10 @@ export default {
     image.src = data;
     image.onload = function () {
       callback(image);
-    }
-    image.onerror = function() {
+    };
+    image.onerror = function () {
       console.log('Error: image error!');
-    }
+    };
   },
 
   _getCanvas(width, height) {

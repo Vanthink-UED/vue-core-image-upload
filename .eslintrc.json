@@ -27,6 +27,8 @@
         "no-console": 0,
         "comma-dangle": 0,
         "no-extra-semi": 0,
+        "space-before-function-paren": 0,
+        "no-underscore-dangle": 0,
         "semi": ["error", "always"]
     }
 }

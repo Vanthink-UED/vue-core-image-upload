@@ -1,1 +1,5 @@
 site
+.eslintrc.json
+shots
+.babelrc
+webpack.config.js

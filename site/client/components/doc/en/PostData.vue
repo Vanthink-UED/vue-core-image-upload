@@ -82,8 +82,8 @@ export default {
   },
 
   methods: {
-    imageuploaded(res) {
-
+    imageuploaded(res, data) {
+      console.log(data);
     }
   }
 };

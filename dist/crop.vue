@@ -18,6 +18,7 @@
       </div>
     </div>
     <resize-bar v-if="resize" ref="resizeBar" @resize="resizeImage"></resize-bar>
+    <rotate-bar v-if="isRotate" @rotate="rotateImage"></rotate-bar>
   </div>
 </div>
 </template>
@@ -130,7 +131,9 @@ import drag from './lib/drag';
 import resize from './lib/resize';
 import GIF_LOADING_SRC from './lib/loading-gif';
 import helper from './lib/helper';
+import canvasHelper from './lib/canvas-helper';
 import ResizeBar from './resize-bar.vue';
+import RotateBar from './rotate-bar.vue';
 // set cropbox size in image
 const CROPBOX_PERCENT = 75;
 const isMobile = helper.isMobile;
@@ -139,6 +142,7 @@ const areaHeight = window.innerHeight - 110;
 export default {
   components: {
     ResizeBar,
+    RotateBar,
   },
   props: {
     ratio: {
@@ -156,6 +160,10 @@ export default {
     isResize: {
       type: [Boolean],
       default: false,
+    },
+    isRotate: {
+      type: [Boolean],
+      default: true,
     }
   },
 
@@ -177,6 +185,9 @@ export default {
   methods: {
     setImage(src, w, h) {
       this.src = src;
+      if (!this.originSrc) {
+        this.setOriginalSrc(this.src);
+      }
       if (this.ratio.indexOf(':') > 0) {
         this.ratioW = this.ratio.split(':')[0];
         this.ratioH = this.ratio.split(':')[1];
@@ -197,6 +208,11 @@ export default {
       }
       return this.imgChangeRatio;
     },
+
+    setOriginalSrc(src) {
+      this.originSrc = src;
+    },
+
     resizeImage(progress) {
       let w,
           h;
@@ -217,6 +233,13 @@ export default {
       this.imgChangeRatio = this.width / this.natrualWidth;
     },
 
+    rotateImage(degress) {
+      const data = canvasHelper.rotate2(this.originSrc, degress, (data, w, h) => {
+        this.setImage(data, w, h);
+      });
+      //this.src = src;
+    },
+
     setLayout(w, h) {
       let H = areaHeight,
           W = areaWidth,
@@ -224,7 +247,6 @@ export default {
           height = h,
           marginLeft = 0,
           marginTop = 0;
-
       // caculate the image ratio
       let R = width / height;
       let Rs = W / H;
@@ -349,13 +371,13 @@ export default {
       };
       this.el = $el;
       this.container = $container;
+      const maxCoor = this._getMaxCropAreaWidth();
       const move = function (ev) {
         const newCropStyle = resize(ev, self.el, $container, coor, self.ratioVal);
-        if (newCropStyle) {
+        if (newCropStyle && (newCropStyle.width <= maxCoor.maxWidth || newCropStyle.height <= maxCoor.maxHeight)) {
           self.cropCSS.width = newCropStyle.width;
           self.cropCSS.height = newCropStyle.height;
         }
-
       };
       const end = function (ev) {
         this.el = null;
@@ -372,6 +394,20 @@ export default {
       }
       document.addEventListener('mousemove', move, false);
       document.addEventListener('mouseup', end, false);
+    },
+
+    _getMaxCropAreaWidth() {
+      const $cropBox = this.__find('.crop-box');
+      if (this.width > this.height) {
+        return {
+          maxWidth: this.height * this.ratioW / this.ratioH,
+          maxHeight: this.height,
+        }
+      }
+      return {
+        maxWidth: this.width,
+        maxHeight: this.width * this.ratioH / this.ratioW,
+      };
     },
 
     drag(e) {

@@ -12,15 +12,15 @@
           <img class="avatar" :src="src"/>
       </div>
       <vue-core-image-upload
-         crop-ratio="1:1"
-         class="btn btn-primary"
-         crop="local"
-         url="http://101.198.151.190/api/upload.php"
-         extensions="png,jpeg,jpg"
-         text="Crop Image"
-         compress="20"
-         @imageuploaded="crpoServerImageUploaded">
-      </vue-core-image-upload>
+        crop-ratio="1:1"
+        crop="local"
+        resize="local"
+        :rotate="true"
+        url="http://101.198.151.190/api/upload.php"
+        @imageuploaded="crpoServerImageUploaded"
+        :max-file-size="10485760"
+        text="上传图片" >
+    </vue-core-image-upload>
     </div>
     <h4>Server-side crop</h4>
     <p><code>crop="server"</code>  means the bwowser will send the original image to the server and post the cropped data below to the server:</p>
@@ -57,6 +57,7 @@
           <th>W</th>
           <th>X</th>
           <th>Y</th>
+          <th>Rotate Degree</th>
         </tr>
       </thead>
       <tbody>
@@ -65,6 +66,7 @@
           <td>{{cropArgs.toCropImgW}}</td>
           <td>{{cropArgs.toCropImgX}}</td>
           <td>{{cropArgs.toCropImgY}}</td>
+          <td>{{cropArgs.toRotateDegree}}</td>
         </tr>
       </tbody>
     </table>
@@ -83,7 +85,7 @@
 </template>
 
 <script>
-import VueCoreImageUpload from '../../../../src/vue-core-image-upload';
+import VueCoreImageUpload from 'vue-core-image-upload';
 
 export default {
   components: {
@@ -97,7 +99,8 @@ export default {
         toCropImgH: '?',
         toCropImgW: '?',
         toCropImgX: '?',
-        toCropImgY: '?'
+        toCropImgY: '?',
+        toCropDegrees: '?',
       }
     };
   },
@@ -117,7 +120,8 @@ export default {
           toCropImgH: parseInt(res.data.post.toCropImgH),
           toCropImgW: parseInt(res.data.post.toCropImgW),
           toCropImgX: parseInt(res.data.post.toCropImgX),
-          toCropImgY: parseInt(res.data.post.toCropImgY)
+          toCropImgY: parseInt(res.data.post.toCropImgY),
+          toCropDegrees: parseInt(res.data.post.toCropDegrees),
         }
         this.cropSrc = 'http://img1.vued.vanthink.cn/vued41b900045d6d44f3b32e06049621b415.png';
       }

@@ -5,9 +5,9 @@
       <input v-bind:disabled="uploading" v-bind:id="'g-core-upload-input-' + formID" v-bind:name="name" v-bind:multiple="multiple" type="file" v-bind:accept="inputAccept" v-on:change="change" style="width: 100%; height: 100%;">
     </form>
     <div class="g-core-image-corp-container" v-bind:id="'vciu-modal-' + formID" v-show="hasImage">
-      <crop ref="cropBox" :is-resize="resize && !crop" :ratio="cropRatio"></crop>
+      <crop ref="cropBox" :is-resize="resize && !crop" :ratio="cropRatio" :is-rotate="rotate"></crop>
       <div class="info-aside">
-        <p class="btn-groups rotate-groups" v-if="crop">
+        <p class="btn-groups rotate-groups" style="display:none">
           <button type="button" v-on:click="doRotate" class="btn btn-rotate">↺</button>
           <button type="button" v-on:click="doReverseRotate" class="btn btn-reverserotate">↻</button>
         </p>
@@ -15,7 +15,7 @@
           <button type="button" v-on:click="doCrop" class="btn btn-upload">{{cropBtn.ok}}</button>
           <button type="button" v-on:click="cancel" class="btn btn-cancel">{{cropBtn.cancel}}</button>
         </p>
-        <p class="btn-groups" v-if="resize">
+        <p class="btn-groups" v-if="resize && !crop">
           <button type="button" v-on:click="doResize" class="btn btn-upload">{{ResizeBtn.ok}}</button>
           <button type="button" v-on:click="cancel" class="btn btn-cancel">{{ResizeBtn.cancel}}</button>
         </p>
@@ -68,8 +68,8 @@
     },
 
     methods: {
-      __dispatch(name,res) {
-        this.$emit && this.$emit(name, res);
+      __dispatch(name,res, data) {
+        this.$emit && this.$emit(name, res, data);
       },
       __find(str) {
         let dq = document.querySelector('#vciu-modal-' + this.formID);
@@ -99,7 +99,7 @@
         }
 
         this.files = e.target.files;
-        if(this.crop || this.resize) {
+        if (this.crop || this.resize) {
           this.__showImage();
           return;
         }
@@ -181,7 +181,6 @@
           })
         }
         upload();
-
       },
 
       doResize(e) {
@@ -236,6 +235,8 @@
         this.hasImage = false;
         document.body.style.overflow = overflowVal;
         this.files = '';
+        const cropBox = this.$refs.cropBox;
+        cropBox.setOriginalSrc(null);
         document.querySelector('#g-core-upload-input-' + this.formID).value = '';
       },
 
@@ -249,7 +250,7 @@
           }
           self.uploading = false;
           self.cancel();
-          self.__dispatch('imageuploaded',res);
+          self.__dispatch('imageuploaded',res, self.data);
         };
         const errorUpload = function(err) {
           self.__dispatch('errorhandle', err);
@@ -284,7 +285,7 @@
             }
           }
         }
-        xhr('POST',this.url, this.headers, data, done, errorUpload, isBinary);
+        xhr('POST',this.url, this.headers, data, done, errorUpload, isBinary, this.credentials);
       },
     },
 
