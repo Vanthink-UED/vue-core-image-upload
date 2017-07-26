@@ -234,7 +234,7 @@ export default {
     },
 
     rotateImage(degress) {
-      const data = canvasHelper.rotate(this.originSrc, degress, (data, w, h) => {
+      const data = canvasHelper.rotate2(this.originSrc, degress, (data, w, h) => {
         this.setImage(data, w, h);
       });
       //this.src = src;
@@ -275,7 +275,7 @@ export default {
         this.width = w;
         this.height = h;
       } else {
-        if (r >= 1) {
+        if (r >= this.cropCSS.width/this.cropCSS.height) {
           this.height = this.cropCSS.height;
           this.width = this.height * r;
         } else {

@@ -58,6 +58,47 @@ export default {
     }
   },
 
+  /**
+  * init image for reset size and rotation
+  **/
+  init(src, callback) {
+      let image = new Image();
+      image.src = src;
+      var self = this;
+      image.onload = function() {
+        var mimeType = self._getImageType(image.src);
+        var cvs = self._getCanvas(image.naturalWidth, image.naturalHeight);
+        var ctx = cvs.getContext("2d");
+        ctx.drawImage(image, 0, 0);
+        var newImageData = cvs.toDataURL(mimeType, 100);
+        callback(newImageData);
+      }
+  },
+
+  /**
+  * rotate image via canvas
+  **/
+  rotate(imageData, direction, callback) {
+      let image = new Image();
+      image.src = imageData.src;
+      var self = this;
+      image.onload = function() {
+        var mimeType = self._getImageType(image.src);
+        var cvs = self._getCanvas(image.naturalHeight, image.naturalWidth);
+        var ctx = cvs.getContext("2d");
+        if (direction == 1) {
+            ctx.rotate(90 * Math.PI / 180);
+            ctx.translate(0, -cvs.width);
+        } else {
+            ctx.rotate(-90 * Math.PI / 180);
+            ctx.translate(-cvs.height, 0);
+        }
+        ctx.drawImage(image, 0, 0);
+        var newImageData = cvs.toDataURL(mimeType, 100);
+        callback(newImageData);
+      }
+  },
+
   resize(image, options, callback) {
     const checkNumber = function(num) {
       return (typeof num === 'number');
@@ -73,7 +114,7 @@ export default {
     }
   },
 
-  rotate(src, degrees, callback) {
+  rotate2(src, degrees, callback) {
     this._loadImage(src, (image) => {
       let w = image.naturalWidth;
       let h = image.naturalHeight;
@@ -102,7 +143,6 @@ export default {
         x = canvasWidth / 2 - w;
         y = canvasWidth / 2 - h;
       }
-
       ctx.drawImage(image, x, y);
       const cvs2 = this._getCanvas(w, h);
       const ctx2 = cvs2.getContext('2d');

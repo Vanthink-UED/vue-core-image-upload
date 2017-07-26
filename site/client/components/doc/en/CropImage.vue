@@ -15,6 +15,7 @@
         crop-ratio="1:1"
         crop="local"
         resize="local"
+        :rotate="true"
         url="http://101.198.151.190/api/upload.php"
         @imageuploaded="crpoServerImageUploaded"
         :max-file-size="10485760"

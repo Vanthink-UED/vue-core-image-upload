@@ -37,7 +37,7 @@ export default {
   },
   rotate: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   ResizeBtn: {
     type: Object,
