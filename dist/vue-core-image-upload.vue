@@ -7,6 +7,10 @@
     <div class="g-core-image-corp-container" v-bind:id="'vciu-modal-' + formID" v-show="hasImage">
       <crop ref="cropBox" :is-resize="resize && !crop" :ratio="cropRatio"></crop>
       <div class="info-aside">
+        <p class="btn-groups rotate-groups" v-if="crop">
+          <button type="button" v-on:click="doRotate" class="btn btn-rotate">↺</button>
+          <button type="button" v-on:click="doReverseRotate" class="btn btn-reverserotate">↻</button>
+        </p>
         <p class="btn-groups" v-if="crop">
           <button type="button" v-on:click="doCrop" class="btn btn-upload">{{cropBtn.ok}}</button>
           <button type="button" v-on:click="cancel" class="btn btn-cancel">{{cropBtn.cancel}}</button>
@@ -133,13 +137,35 @@
         const cropBox = this.$refs.cropBox;
         pic.onload= function() {
           self.image.minProgress = self.minWidth / pic.naturalWidth;
-          self.imgChangeRatio = cropBox.setImage(src, pic.naturalWidth, pic.naturalHeight);
+          canvasHelper.init(src, (src) => {
+            self.imgChangeRatio = cropBox.setImage(src, pic.naturalWidth, pic.naturalHeight);
+          });
         }
       },
 
       resizeImage(progress) {
         const cropBox = this.$refs.cropBox;
         cropBox.resizeImage(progress);
+      },
+
+      doRotate(e) {
+        let self = this;
+        const cropBox = this.$refs.cropBox;
+        const targetImage = cropBox.getCropImage();
+        this.data.comprose = 100 - this.compress;
+        return canvasHelper.rotate(targetImage, 1, (src) => {
+            self.__initImage(src)
+          })
+      },
+
+      doReverseRotate(e) {
+        let self = this;
+        const cropBox = this.$refs.cropBox;
+        const targetImage = cropBox.getCropImage();
+        this.data.comprose = 100 - this.compress;
+        return canvasHelper.rotate(targetImage, -1, (src) => {
+            self.__initImage(src)
+          })
       },
 
       doCrop(e) {
@@ -159,7 +185,7 @@
       },
 
       doResize(e) {
-        this.__setData('reszie');
+        this.__setData('resize');
         const cropBox = this.$refs.cropBox;
         const upload = this.__setUpload(e.target);
         if (this.resize === 'local') {

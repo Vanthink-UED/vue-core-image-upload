@@ -253,7 +253,7 @@ export default {
         this.width = w;
         this.height = h;
       } else {
-        if (r >= 1) {
+        if (r >= this.cropCSS.width/this.cropCSS.height) {
           this.height = this.cropCSS.height;
           this.width = this.height * r;
         } else {
