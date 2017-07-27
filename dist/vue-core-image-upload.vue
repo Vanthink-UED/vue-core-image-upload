@@ -37,6 +37,7 @@
 
   let overflowVal = '';
   export default {
+    name:'vue-core-image-upload',
     components: {
       Crop,
       ResizeBar

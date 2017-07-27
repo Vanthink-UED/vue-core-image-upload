@@ -55,6 +55,17 @@ new Vue({
   }
 });
 ```
+NUXT
+``` js
+import Vue from 'vue';
+import VueCoreImageUpload from 'vue-core-image-upload/dist/ssr';
+
+Vue.use( VueCoreImageUpload );
+
+plugins: [
+  { src: '~plugins/vue-core-image-upload.js', ssr: false }
+]
+```
 
 [Demo](http://vanthink-ued.github.io/vue-core-image-upload/index.html)
 
