@@ -37,7 +37,6 @@
 
   let overflowVal = '';
   export default {
-    name:'vue-core-image-upload',
     components: {
       Crop,
       ResizeBar
@@ -266,7 +265,7 @@
         if (isBinary) {
           data = {
             type: this.files[0]['type'],
-            filename: this.files[0]['name'],
+            filename: encodeURI(this.files[0]['name']),
             filed: this.inputOfFile,
             base64Code: base64Code
           };
