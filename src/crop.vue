@@ -204,7 +204,7 @@ export default {
       if (this.isResize) {
         resizeBar.setProgress(100);
       } else {
-        resizeBar.setProgress(0);
+        resizeBar.setProgress(50);
       }
       return this.imgChangeRatio;
     },

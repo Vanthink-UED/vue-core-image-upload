@@ -88,7 +88,7 @@ export default {
           if((newCoor.left / width) < self.minProgress) {
             return;
           }
-          self.progress = newCoor.left / width;
+          self.progress = (newCoor.left-width/2) / width;
           self.left = newCoor.left / width * 100;
 
           self.$emit('resize', self.progress);
