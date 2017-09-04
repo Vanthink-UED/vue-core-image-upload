@@ -265,7 +265,7 @@
         if (isBinary) {
           data = {
             type: this.files[0]['type'],
-            filename: encodeURI(this.files[0]['name']),
+            filename: this.files[0]['name'],
             filed: this.inputOfFile,
             base64Code: base64Code
           };
