@@ -18,10 +18,9 @@ import CnPostData from '../components/doc/cn/PostData.vue';
 import EnPostData from '../components/doc/en/PostData.vue';
 import CnOthers from '../components/doc/cn/Others.vue';
 import EnOthers from '../components/doc/en/Others.vue';
+import CancelAutoUpload from '../components/doc/cn/CancelAutoUpload.vue';
 
-Vue.use(Router)
-
-
+Vue.use(Router);
 export default new Router({
   mode: 'hash',
   routes: [
@@ -100,6 +99,10 @@ export default new Router({
     {
       path: '/en/others',
       component: EnOthers,
-    }
+    },
+    {
+      path: '/cn/cancel-auto-upload',
+      component: CancelAutoUpload,
+    },
   ]
-})
+});
