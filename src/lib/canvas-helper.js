@@ -12,22 +12,26 @@ export default {
     }
     return mimeType;
   },
-
   compress (src, quality, callback) {
-    const reader = new FileReader();
-    const self = this;
-    reader.onload = function(event) {
-      const image = new Image();
-      image.src = event.target.result;
-      image.onload = function() {
-        const mimeType = self._getImageType(src.type);
-        const cvs = self._getCanvas(image.naturalWidth, image.naturalHeight);
-        const ctx = cvs.getContext("2d").drawImage(image, 0, 0);
-        const newImageData = cvs.toDataURL(mimeType, quality/100);
-        callback(newImageData);
-      }
-    };
-    reader.readAsDataURL(src);
+    for (var i = 0; i < src.length; i++) {
+      const reader = new FileReader();
+      const self = this;
+      (function (file) {
+        reader.onload = (function(event) {
+          const image = new Image();
+          image.src = event.target.result;
+          image.onload = function() {
+            const mimeType = self._getImageType(file.type);
+            const cvs = self._getCanvas(image.naturalWidth, image.naturalHeight);
+            const ctx = cvs.getContext("2d").drawImage(image, 0, 0);
+            const newImageData = cvs.toDataURL(mimeType, quality/100);
+            file['base64Code'] = newImageData;
+            callback(file);
+          }
+        })
+      })(src[i])
+      reader.readAsDataURL(src[i]);
+    }
   },
   /**
   * crop image via canvas and generate data
