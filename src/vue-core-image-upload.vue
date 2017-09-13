@@ -152,7 +152,7 @@
         let self = this;
         const cropBox = this.$refs.cropBox;
         const targetImage = cropBox.getCropImage();
-        this.data.comprose = 100 - this.compress;
+        this.data.compress = 100 - this.compress;
         return canvasHelper.rotate(targetImage, 1, (src) => {
             self.__initImage(src)
           })
@@ -162,7 +162,7 @@
         let self = this;
         const cropBox = this.$refs.cropBox;
         const targetImage = cropBox.getCropImage();
-        this.data.comprose = 100 - this.compress;
+        this.data.compress = 100 - this.compress;
         return canvasHelper.rotate(targetImage, -1, (src) => {
             self.__initImage(src)
           })
@@ -174,7 +174,7 @@
         const upload = this.__setUpload(e.target);
         if (this.crop === 'local') {
           const targetImage = cropBox.getCropImage();
-          this.data.comprose = 100 - this.compress;
+          this.data.compress = 100 - this.compress;
           return canvasHelper.crop(targetImage, this.data, (code) => {
             upload(code);
             this.__dispatch('imagechanged', code);
@@ -189,7 +189,7 @@
         const upload = this.__setUpload(e.target);
         if (this.resize === 'local') {
           const targetImage = cropBox.getCropImage();
-          this.data.comprose = 100 - this.compress;
+          this.data.compress = 100 - this.compress;
           return canvasHelper.resize(targetImage, this.data, (code) => {
             upload(code);
             this.__dispatch('imagechanged', code);
