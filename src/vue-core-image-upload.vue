@@ -104,8 +104,8 @@
           return;
         }
         this. __dispatch('imagechanged', this.files.length > 1 ? this.files : this.files[0]);
-        if (this.compress && this.files[0]['type'] !== 'image/png' && this.files[0]['type'] !== 'image/gif') {
-          canvasHelper.compress(this.files[0], 100 - this.compress, (code) => {
+        if (this.compress) {
+          canvasHelper.compress(this.files, 100 - this.compress, (code) => {
             this.tryAjaxUpload('', true, code);
           });
         } else {
@@ -264,10 +264,10 @@
         let data;
         if (isBinary) {
           data = {
-            type: this.files[0]['type'],
-            filename: encodeURI(this.files[0]['name']),
+            type: base64Code['type'],
+            filename: encodeURI(base64Code['name']),
             filed: this.inputOfFile,
-            base64Code: base64Code
+            base64Code: base64Code['base64Code']
           };
           if (typeof this.data === 'object') {
             data = Object.assign(this.data, data);
