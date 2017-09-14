@@ -1,7 +1,7 @@
 <template>
   <div class="g-core-image-upload-btn">
     <slot>{{text}}</slot>
-    <form class="g-core-image-upload-form" v-show="!hasImage" method="post" enctype="multipart/form-data" action="/api2/common_user/cropHeadUrl" style="display: block; cursor: pointer; position: absolute; left: 0px; top: 0px; width: 1242px; height: 61px; opacity: 0; margin: 0px; padding: 0px; overflow: hidden;">
+    <form class="g-core-image-upload-form" v-show="!hasImage" method="post" enctype="multipart/form-data" action="/api2/common_user/cropHeadUrl" style="display: block; cursor: pointer; position: absolute; left: 0px; top: 0px; opacity: 0; margin: 0px; padding: 0px; overflow: hidden;">
       <input v-bind:disabled="uploading" v-bind:id="'g-core-upload-input-' + formID" v-bind:name="name" v-bind:multiple="multiple" type="file" v-bind:accept="inputAccept" v-on:change="change" style="width: 100%; height: 100%;">
     </form>
     <div class="g-core-image-corp-container" v-bind:id="'vciu-modal-' + formID" v-show="hasImage">
