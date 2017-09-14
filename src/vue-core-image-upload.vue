@@ -263,11 +263,14 @@
         }
         let data;
         if (isBinary) {
+          var dataType = base64Code['type'] ? base64Code['type'] : this.files[0]['type'];
+          var dataName = base64Code['name'] ? encodeURI(base64Code['name']) : this.files[0]['name'];
+          var code = base64Code['base64Code'] ? base64Code['base64Code'] : base64Code;
           data = {
-            type: base64Code['type'],
-            filename: encodeURI(base64Code['name']),
+            type: dataType,
+            filename: dataName,
             filed: this.inputOfFile,
-            base64Code: base64Code['base64Code']
+            base64Code: code
           };
           if (typeof this.data === 'object') {
             data = Object.assign(this.data, data);
