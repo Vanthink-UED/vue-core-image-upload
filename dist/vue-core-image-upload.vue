@@ -1,8 +1,8 @@
 <template>
-  <div class="g-core-image-upload-btn">
+  <div class="g-core-image-upload-btn" ref="container">
     <slot>{{text}}</slot>
     <form class="g-core-image-upload-form" v-show="!hasImage" method="post" enctype="multipart/form-data" action="/api2/common_user/cropHeadUrl" style="display: block; cursor: pointer; position: absolute; left: 0px; top: 0px; width: 1242px; height: 61px; opacity: 0; margin: 0px; padding: 0px; overflow: hidden;">
-      <input v-bind:disabled="uploading" v-bind:id="'g-core-upload-input-' + formID" v-bind:name="name" v-bind:multiple="multiple" type="file" v-bind:accept="inputAccept" v-on:change="change" style="width: 100%; height: 100%;">
+      <input v-bind:disabled="uploading" v-bind:id="'g-core-upload-input-' + formID" v-bind:name="name" v-bind:multiple="multiple" type="file" v-bind:accept="inputAccept" v-on:change="change" v-on:dragover="dragover" v-on:dragenter="dragover" v-on:dragleave="dragleave" v-on:dragend="dragleave" v-on:drop="dragleave" style="width: 100%; height: 100%;">
     </form>
     <div class="g-core-image-corp-container" v-bind:id="'vciu-modal-' + formID" v-show="hasImage">
       <crop ref="cropBox" :is-resize="resize && !crop" :ratio="cropRatio" :is-rotate="rotate"></crop>
@@ -74,6 +74,14 @@
       __find(str) {
         let dq = document.querySelector('#vciu-modal-' + this.formID);
         return dq.querySelector(str);
+      },
+      dragover() {
+        let element = this.$refs.container;
+        element.classList.add('is-dragover');
+      },
+      dragleave() {
+        let element = this.$refs.container;
+        element.classList.remove('is-dragover');
       },
       change(e) {
         let fileVal = document.querySelector('#g-core-upload-input-' + this.formID).value.replace(/C:\\fakepath\\/i, "");
@@ -152,7 +160,7 @@
         let self = this;
         const cropBox = this.$refs.cropBox;
         const targetImage = cropBox.getCropImage();
-        this.data.comprose = 100 - this.compress;
+        this.data.compress = 100 - this.compress;
         return canvasHelper.rotate(targetImage, 1, (src) => {
             self.__initImage(src)
           })
@@ -162,7 +170,7 @@
         let self = this;
         const cropBox = this.$refs.cropBox;
         const targetImage = cropBox.getCropImage();
-        this.data.comprose = 100 - this.compress;
+        this.data.compress = 100 - this.compress;
         return canvasHelper.rotate(targetImage, -1, (src) => {
             self.__initImage(src)
           })
@@ -174,7 +182,7 @@
         const upload = this.__setUpload(e.target);
         if (this.crop === 'local') {
           const targetImage = cropBox.getCropImage();
-          this.data.comprose = 100 - this.compress;
+          this.data.compress = 100 - this.compress;
           return canvasHelper.crop(targetImage, this.data, (code) => {
             upload(code);
             this.__dispatch('imagechanged', code);
@@ -189,7 +197,7 @@
         const upload = this.__setUpload(e.target);
         if (this.resize === 'local') {
           const targetImage = cropBox.getCropImage();
-          this.data.comprose = 100 - this.compress;
+          this.data.compress = 100 - this.compress;
           return canvasHelper.resize(targetImage, this.data, (code) => {
             upload(code);
             this.__dispatch('imagechanged', code);
@@ -265,7 +273,7 @@
         if (isBinary) {
           data = {
             type: this.files[0]['type'],
-            filename: encodeURI(this.files[0]['name']),
+            filename: this.files[0]['name'],
             filed: this.inputOfFile,
             base64Code: base64Code
           };
