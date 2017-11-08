@@ -129,6 +129,18 @@ plugins: [
       <td>Limit the size of the file</td>
     </tr>
     <tr>
+      <td>maxFileSize</td>
+      <td align="left">Number</td>
+      <td>10485760(10M)</td>
+      <td>Limit the size of the file</td>
+    </tr>
+    <tr>
+      <td>multipleSize</td>
+      <td align="left">Number</td>
+      <td>5</td>
+      <td>Limit the count of the file</td>
+    </tr>
+    <tr>
       <td>maxWidth</td>
       <td align="left">Number</td>
       <td>150</td>
@@ -176,5 +188,3 @@ plugins: [
 ### Contributions
 
 Your contributions and suggestions are welcome 😄😄😄💐💐💐.
-
-
