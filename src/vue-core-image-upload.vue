@@ -105,6 +105,11 @@
             console.warn('FILE IS TOO LARGER MAX FILE IS ' + formatSize);
             return this.__dispatch('errorhandle','FILE IS TOO LARGER MAX FILE IS ' + formatSize);
         }
+        
+        if (this.multipleSize > 0 && e.target.files.length > this.multipleSize) {
+              console.warn('FILE NUM IS LARGER THAN ' + this.multipleSize);
+              return this.__dispatch('errorhandle', 'FILE NUM OVERLOAD');
+          }
 
         this.files = e.target.files;
         if (this.crop || this.resize) {
