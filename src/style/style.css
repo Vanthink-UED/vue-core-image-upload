@@ -13,6 +13,10 @@
   min-height: 61px;
   opacity: 0;
 }
+.g-core-image-upload-form input{
+    width: 100%;
+    height: 100%;
+}
 .g-core-image-upload-container{
   position: absolute;
   background: #111;
