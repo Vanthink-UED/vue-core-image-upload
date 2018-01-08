@@ -3,12 +3,12 @@ export default {
     type: String,
   },
   text: {
-    type:String,
-    default:  'Upload Image'
+    type: String,
+    default: 'Upload Image'
   },
   extensions: {
     type: String,
-    default:'png,jpg,jpeg,gif,svg,webp'
+    default: 'png,jpg,jpeg,gif,svg,webp'
   },
   inputOfFile: {
     type: String,
@@ -20,11 +20,11 @@ export default {
   },
   cropBtn: {
     type: Object,
-    default: function() {
+    default() {
       return {
         ok: 'Ok',
         cancel: 'Cancel',
-      }
+      };
     }
   },
   cropRatio: {
@@ -41,24 +41,24 @@ export default {
   },
   ResizeBtn: {
     type: Object,
-    default: function() {
+    default() {
       return {
         ok: 'Ok',
         cancel: 'Cancel'
-      }
+      };
     }
   },
-  maxFileSize:{
+  maxFileSize: {
     type: Number,
     default: 1024 * 1024 * 100,
   },
-  maxWidth:{
+  maxWidth: {
     type: Number,
   },
-  maxHeight:{
+  maxHeight: {
     type: Number,
   },
-  inputAccept:{
+  inputAccept: {
     type: String,
     default: 'image/jpg,image/jpeg,image/png,image/gif'
   },
@@ -68,13 +68,13 @@ export default {
   },
   headers: {
     type: Object,
-    default: function() {
+    default() {
       return {};
     }
   },
   data: {
     type: Object,
-    default: function() {
+    default() {
       return {};
     }
   },
@@ -98,4 +98,4 @@ export default {
     type: [String, Boolean],
     default: true,
   }
-}
+};

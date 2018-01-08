@@ -29,6 +29,7 @@
         "no-extra-semi": 0,
         "space-before-function-paren": 0,
         "no-underscore-dangle": 0,
-        "semi": ["error", "always"]
+        "semi": ["error", "always"],
+        "consistent-return": 0
     }
 }

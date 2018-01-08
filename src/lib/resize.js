@@ -1,4 +1,4 @@
-/** Reszie
+/** Reszie an element
  * @el  dom
  * @container  dom
  * @ratio  string '1:1' like this
@@ -8,9 +8,10 @@ import helper from './helper';
 
 const isMobile = helper.isMobile;
 const W = document.body.offsetWidth;
+
 export default function resize(e, el, container, coor, ratio) {
   if (!el) {
-    return ;
+    return null;
   }
   const H = document.body.offsetHeight;
   const ratioRemainder = 1 / ratio;
@@ -19,7 +20,7 @@ export default function resize(e, el, container, coor, ratio) {
   const $topH = document.querySelector('.info-aside');
   const halfX = (W - dotBoxW) / 2;
   const topH = parseFloat(window.getComputedStyle($topH).height);
-  const halfY = (H - dotBoxH - topH)/2;
+  const halfY = (H - dotBoxH - topH) / 2;
   const resetX = isMobile ? e.changedTouches[0]['clientX'] : e.clientX;
   const resetY = isMobile ? e.changedTouches[0]['clientY'] : e.clientY;
   const elOffsetWidth = el.offsetWidth;
@@ -42,7 +43,7 @@ export default function resize(e, el, container, coor, ratio) {
         CSSObj.height = dotBoxW * ratioRemainder;
       }
     } else if (elOffsetWidth >= dotBoxW) {
-      CSSObj.width = dotBoxW ;
+      CSSObj.width = dotBoxW;
       CSSObj.height = dotBoxW * ratioRemainder;
     }
   } else if (ratio < 1 && resetY < (halfY + dotBoxH + topH)) {
@@ -63,7 +64,7 @@ export default function resize(e, el, container, coor, ratio) {
       CSSObj.width = dotBoxW;
       CSSObj.height = dotBoxW * ratioRemainder;
     }
-  } else if(ratio == 'auto' && resetY <= (halfY + dotBoxH + topH) && resetX <= halfY + dotBoxW) {
+  } else if (ratio === 'auto' && resetY <= (halfY + dotBoxH + topH) && resetX <= halfY + dotBoxW) {
     CSSObj.height = (coor.h + resetY - coor.y);
     CSSObj.width = (coor.w + resetX - coor.x);
   } else if (resetX <= halfX + dotBoxW) {

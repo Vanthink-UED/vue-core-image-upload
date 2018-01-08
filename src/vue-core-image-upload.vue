@@ -3,33 +3,37 @@
     <slot>{{text}}</slot>
     <form class="g-core-image-upload-form" v-show="!hasImage" method="post" enctype="multipart/form-data" action="" style="">
       <input 
-        v-bind:disabled="uploading" 
-        v-bind:id="'g-core-upload-input-' + formID" 
-        v-bind:name="name" v-bind:multiple="multiple" 
+        :disabled="uploading" 
+        :name="name" 
+        :multiple="multiple" 
         type="file" 
-        v-bind:accept="inputAccept" 
-        v-on:change="change" 
-        v-on:dragover="dragover" 
-        v-on:dragenter="dragover" 
-        v-on:dragleave="dragleave" 
-        v-on:dragend="dragleave" 
-        v-on:drop="dragleave" 
-        style="width: 100%; height: 100%;">
+        :accept="inputAccept" 
+        @change="change" 
+        @dragover="dragover" 
+        @dragenter="dragover" 
+        @dragleave="dragleave" 
+        @dragend="dragleave" 
+        @drop="dragleave" />
     </form>
-    <div class="g-core-image-corp-container" v-bind:id="'vciu-modal-' + formID" v-show="hasImage">
-      <crop ref="cropBox" :is-resize="resize && !crop" :ratio="cropRatio" :is-rotate="rotate"></crop>
+    <div class="g-core-image-corp-container" v-show="hasImage">
+      <crop 
+        ref="cropBox" 
+        :is-resize="resize && !crop" 
+        :ratio="cropRatio" 
+        :is-rotate="rotate">
+      </crop>
       <div class="info-aside">
         <p class="btn-groups rotate-groups" style="display:none">
-          <button type="button" v-on:click="doRotate" class="btn btn-rotate">↺</button>
-          <button type="button" v-on:click="doReverseRotate" class="btn btn-reverserotate">↻</button>
+          <button type="button" @click="doRotate" class="btn btn-rotate">↺</button>
+          <button type="button" @click="doReverseRotate" class="btn btn-reverserotate">↻</button>
         </p>
         <p class="btn-groups" v-if="crop">
-          <button type="button" v-on:click="doCrop" class="btn btn-upload">{{cropBtn.ok}}</button>
-          <button type="button" v-on:click="cancel" class="btn btn-cancel">{{cropBtn.cancel}}</button>
+          <button type="button" @click="doCrop" class="btn btn-upload">{{cropBtn.ok}}</button>
+          <button type="button" @click="cancel" class="btn btn-cancel">{{cropBtn.cancel}}</button>
         </p>
         <p class="btn-groups" v-if="resize && !crop">
-          <button type="button" v-on:click="doResize" class="btn btn-upload">{{ResizeBtn.ok}}</button>
-          <button type="button" v-on:click="cancel" class="btn btn-cancel">{{ResizeBtn.cancel}}</button>
+          <button type="button" @click="doResize" class="btn btn-upload">{{ResizeBtn.ok}}</button>
+          <button type="button" @click="cancel" class="btn btn-cancel">{{ResizeBtn.cancel}}</button>
         </p>
       </div>
   </div>
@@ -41,8 +45,8 @@
 
 <script>
   import xhr from 'core-image-xhr';
+  import daycaca from 'daycaca';
   import GIF_LOADING_SRC from './lib/loading-gif';
-  import canvasHelper from './lib/canvas-helper';
   import props from './props';
   import Crop from './crop.vue';
   import ResizeBar from './resize-bar.vue';
@@ -130,7 +134,7 @@
         }
         this. __dispatch('imagechanged', this.files.length > 1 ? this.files : this.files[0]);
         if (this.compress && this.files[0]['type'] !== 'image/png' && this.files[0]['type'] !== 'image/gif') {
-          canvasHelper.compress(this.files[0], 100 - this.compress, (code) => {
+          daycaca.compress(this.files[0], 100 - this.compress, (code) => {
             this.tryAjaxUpload('', true, code);
           });
         } else {
@@ -162,7 +166,7 @@
         const cropBox = this.$refs.cropBox;
         pic.onload= function() {
           self.image.minProgress = self.minWidth / pic.naturalWidth;
-          canvasHelper.init(src, (src) => {
+          daycaca.init(src, (src) => {
             self.imgChangeRatio = cropBox.setImage(src, pic.naturalWidth, pic.naturalHeight);
           });
         }
@@ -178,7 +182,7 @@
         const cropBox = this.$refs.cropBox;
         const targetImage = cropBox.getCropImage();
         this.data.compress = 100 - this.compress;
-        return canvasHelper.rotate(targetImage, 1, (src) => {
+        return daycaca.rotate(targetImage, 1, (src) => {
             self.__initImage(src)
           })
       },
@@ -188,7 +192,7 @@
         const cropBox = this.$refs.cropBox;
         const targetImage = cropBox.getCropImage();
         this.data.compress = 100 - this.compress;
-        return canvasHelper.rotate(targetImage, -1, (src) => {
+        return daycaca.rotate(targetImage, -1, (src) => {
             self.__initImage(src)
           })
       },
@@ -200,7 +204,7 @@
         if (this.crop === 'local') {
           const targetImage = cropBox.getCropImage();
           this.data.compress = 100 - this.compress;
-          return canvasHelper.crop(targetImage, this.data, (code) => {
+          return daycaca.crop(targetImage, this.data, (code) => {
             upload(code);
             this.__dispatch('imagechanged', code);
           })
@@ -215,7 +219,7 @@
         if (this.resize === 'local') {
           const targetImage = cropBox.getCropImage();
           this.data.compress = 100 - this.compress;
-          return canvasHelper.resize(targetImage, this.data, (code) => {
+          return daycaca.resize(targetImage, this.data, (code) => {
             upload(code);
             this.__dispatch('imagechanged', code);
           })

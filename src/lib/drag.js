@@ -1,3 +1,6 @@
+/**
+ * return drag element coordinate
+*/
 import helper from './helper';
 
 const isMobile = helper.isMobile;

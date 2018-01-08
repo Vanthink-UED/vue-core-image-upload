@@ -2,22 +2,38 @@
   <div class="g-core-image-upload-btn" ref="container">
     <slot>{{text}}</slot>
     <form class="g-core-image-upload-form" v-show="!hasImage" method="post" enctype="multipart/form-data" action="" style="">
-      <input v-bind:disabled="uploading" v-bind:id="'g-core-upload-input-' + formID" v-bind:name="name" v-bind:multiple="multiple" type="file" v-bind:accept="inputAccept" v-on:change="change" v-on:dragover="dragover" v-on:dragenter="dragover" v-on:dragleave="dragleave" v-on:dragend="dragleave" v-on:drop="dragleave" style="width: 100%; height: 100%;">
+      <input 
+        :disabled="uploading" 
+        :name="name" 
+        :multiple="multiple" 
+        type="file" 
+        :accept="inputAccept" 
+        @change="change" 
+        @dragover="dragover" 
+        @dragenter="dragover" 
+        @dragleave="dragleave" 
+        @dragend="dragleave" 
+        @drop="dragleave" />
     </form>
-    <div class="g-core-image-corp-container" v-bind:id="'vciu-modal-' + formID" v-show="hasImage">
-      <crop ref="cropBox" :is-resize="resize && !crop" :ratio="cropRatio" :is-rotate="rotate"></crop>
+    <div class="g-core-image-corp-container" v-show="hasImage">
+      <crop 
+        ref="cropBox" 
+        :is-resize="resize && !crop" 
+        :ratio="cropRatio" 
+        :is-rotate="rotate">
+      </crop>
       <div class="info-aside">
         <p class="btn-groups rotate-groups" style="display:none">
-          <button type="button" v-on:click="doRotate" class="btn btn-rotate">↺</button>
-          <button type="button" v-on:click="doReverseRotate" class="btn btn-reverserotate">↻</button>
+          <button type="button" @click="doRotate" class="btn btn-rotate">↺</button>
+          <button type="button" @click="doReverseRotate" class="btn btn-reverserotate">↻</button>
         </p>
         <p class="btn-groups" v-if="crop">
-          <button type="button" v-on:click="doCrop" class="btn btn-upload">{{cropBtn.ok}}</button>
-          <button type="button" v-on:click="cancel" class="btn btn-cancel">{{cropBtn.cancel}}</button>
+          <button type="button" @click="doCrop" class="btn btn-upload">{{cropBtn.ok}}</button>
+          <button type="button" @click="cancel" class="btn btn-cancel">{{cropBtn.cancel}}</button>
         </p>
         <p class="btn-groups" v-if="resize && !crop">
-          <button type="button" v-on:click="doResize" class="btn btn-upload">{{ResizeBtn.ok}}</button>
-          <button type="button" v-on:click="cancel" class="btn btn-cancel">{{ResizeBtn.cancel}}</button>
+          <button type="button" @click="doResize" class="btn btn-upload">{{ResizeBtn.ok}}</button>
+          <button type="button" @click="cancel" class="btn btn-cancel">{{ResizeBtn.cancel}}</button>
         </p>
       </div>
   </div>

@@ -1,20 +1,17 @@
-const webpack = require( 'webpack' );
+const webpack = require( 'webpack');
 const path = require('path');
 const fse = require('fs-extra');
 
-fse.copySync('./src', './dist');
+fse.copySync('../src', '../dist');
 
 module.exports = {
-  context: path.resolve(__dirname, './src'),
+  context: path.resolve(__dirname, '../src'),
   entry: {
     'index': './vue-core-image-upload.vue',
-    'dist/lib/canvas-helper': './lib/canvas-helper.js',
     'dist/lib/helper': './lib/helper.js',
     'dist/lib/drag': './lib/drag.js',
     'dist/lib/resize': './lib/resize.js',
-    'dist/lib/xhr': './lib/xhr.js',
     'dist/lib/loading-gif': './lib/loading-gif.js',
-    'dist/props': './props',
     'dist/props': './props',
 
   },
@@ -26,6 +23,17 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        use: [{
+          loader: 'eslint-loader',
+          options: {
+            formatter: require('eslint-friendly-formatter')
+          },
+        }],
+        exclude: /dist/,
+        enforce: 'pre'
+      },
       {
         test: /\.js$/,
         use: [{
