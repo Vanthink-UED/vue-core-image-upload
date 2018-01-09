@@ -8,15 +8,15 @@ module.exports = {
   context: path.resolve(__dirname, '../src'),
   entry: {
     'index': './vue-core-image-upload.vue',
-    'dist/lib/helper': './lib/helper.js',
-    'dist/lib/drag': './lib/drag.js',
-    'dist/lib/resize': './lib/resize.js',
-    'dist/lib/loading-gif': './lib/loading-gif.js',
-    'dist/props': './props',
+    'lib/helper': './lib/helper.js',
+    'lib/drag': './lib/drag.js',
+    'lib/resize': './lib/resize.js',
+    'lib/loading-gif': './lib/loading-gif.js',
+    'props': './props',
 
   },
   output: {
-    path: path.resolve(__dirname),
+    path: path.resolve(__dirname, '../dist'),
     filename: '[name].js',
     library: 'VueCoreImageUpload',
     libraryTarget: 'umd',

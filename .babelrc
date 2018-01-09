@@ -1,9 +1,6 @@
 {
-  "presets": [
-    ["@babel/preset-env", {
-      "targets": {
-        "browsers": ["last 2 versions"]
-      }
-    }]
-  ]
+  "presets":[
+    "env"
+  ],
+  "plugins": ["transform-es2015-spread"]
 }

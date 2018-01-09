@@ -27,11 +27,11 @@
 </style>
 
 <script>
+import daycaca from 'daycaca';
 import drag from './lib/drag';
 import resize from './lib/resize';
 import GIF_LOADING_SRC from './lib/loading-gif';
 import helper from './lib/helper';
-import canvasHelper from './lib/canvas-helper';
 import ResizeBar from './resize-bar.vue';
 import RotateBar from './rotate-bar.vue';
 // set cropbox size in image
@@ -134,7 +134,7 @@ export default {
     },
 
     rotateImage(degress) {
-      const data = canvasHelper.rotate2(this.originSrc, degress, (data, w, h) => {
+      const data = daycaca.rotate2(this.originSrc, degress, (data, w, h) => {
         this.setImage(data, w, h);
       });
       //this.src = src;

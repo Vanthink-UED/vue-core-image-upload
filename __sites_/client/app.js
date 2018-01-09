@@ -18,7 +18,7 @@ Vue.use(VueProgressBar, {
 const app = new Vue({
   router,
   store,
-  ...App
+  App
 })
 
 export { app, router, store }

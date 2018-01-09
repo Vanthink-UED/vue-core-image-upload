@@ -45,8 +45,8 @@
 
 <script>
   import xhr from 'core-image-xhr';
+  import daycaca from 'daycaca';
   import GIF_LOADING_SRC from './lib/loading-gif';
-  import canvasHelper from './lib/canvas-helper';
   import props from './props';
   import Crop from './crop.vue';
   import ResizeBar from './resize-bar.vue';
@@ -134,7 +134,7 @@
         }
         this. __dispatch('imagechanged', this.files.length > 1 ? this.files : this.files[0]);
         if (this.compress && this.files[0]['type'] !== 'image/png' && this.files[0]['type'] !== 'image/gif') {
-          canvasHelper.compress(this.files[0], 100 - this.compress, (code) => {
+          daycaca.compress(this.files[0], 100 - this.compress, (code) => {
             this.tryAjaxUpload('', true, code);
           });
         } else {
@@ -166,7 +166,7 @@
         const cropBox = this.$refs.cropBox;
         pic.onload= function() {
           self.image.minProgress = self.minWidth / pic.naturalWidth;
-          canvasHelper.init(src, (src) => {
+          daycaca.init(src, (src) => {
             self.imgChangeRatio = cropBox.setImage(src, pic.naturalWidth, pic.naturalHeight);
           });
         }
@@ -182,7 +182,7 @@
         const cropBox = this.$refs.cropBox;
         const targetImage = cropBox.getCropImage();
         this.data.compress = 100 - this.compress;
-        return canvasHelper.rotate(targetImage, 1, (src) => {
+        return daycaca.rotate(targetImage, 1, (src) => {
             self.__initImage(src)
           })
       },
@@ -192,7 +192,7 @@
         const cropBox = this.$refs.cropBox;
         const targetImage = cropBox.getCropImage();
         this.data.compress = 100 - this.compress;
-        return canvasHelper.rotate(targetImage, -1, (src) => {
+        return daycaca.rotate(targetImage, -1, (src) => {
             self.__initImage(src)
           })
       },
@@ -204,7 +204,7 @@
         if (this.crop === 'local') {
           const targetImage = cropBox.getCropImage();
           this.data.compress = 100 - this.compress;
-          return canvasHelper.crop(targetImage, this.data, (code) => {
+          return daycaca.crop(targetImage, this.data, (code) => {
             upload(code);
             this.__dispatch('imagechanged', code);
           })
@@ -219,7 +219,7 @@
         if (this.resize === 'local') {
           const targetImage = cropBox.getCropImage();
           this.data.compress = 100 - this.compress;
-          return canvasHelper.resize(targetImage, this.data, (code) => {
+          return daycaca.resize(targetImage, this.data, (code) => {
             upload(code);
             this.__dispatch('imagechanged', code);
           })
