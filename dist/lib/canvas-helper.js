@@ -1,1 +1,174 @@
-!function(t,e){"object"==typeof exports&&"object"==typeof module?module.exports=e():"function"==typeof define&&define.amd?define([],e):"object"==typeof exports?exports.VueCoreImageUpload=e():t.VueCoreImageUpload=e()}(this,function(){return function(t){function e(r){if(a[r])return a[r].exports;var o=a[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,e),o.l=!0,o.exports}var a={};return e.m=t,e.c=a,e.i=function(t){return t},e.d=function(t,a,r){e.o(t,a)||Object.defineProperty(t,a,{configurable:!1,enumerable:!0,get:r})},e.n=function(t){var a=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(a,"a",a),a},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="",e(e.s=12)}({12:function(t,e,a){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.default={_getImageType:function(t){var e="image/jpeg",a=t.match(/(image\/[\w]+)\.*/)[0];return void 0!==a&&(e=a),e},compress:function(t,e,a){var r=new FileReader,o=this;r.onload=function(r){var n=new Image;n.src=r.target.result,n.onload=function(){var r=o._getImageType(t.type),g=o._getCanvas(n.naturalWidth,n.naturalHeight),i=(g.getContext("2d").drawImage(n,0,0),g.toDataURL(r,e/100));a(i)}},r.readAsDataURL(t)},crop:function(t,e,a){var r=function(t){return"number"==typeof t};if(r(e.toCropImgX)&&r(e.toCropImgY)&&e.toCropImgW>0&&e.toCropImgH>0){var o=e.toCropImgW,n=e.toCropImgH;e.maxWidth&&e.maxWidth<o&&(o=e.maxWidth,n=e.toCropImgH*o/e.toCropImgW),e.maxHeight&&e.maxHeight<n&&(n=e.maxHeight);var g=this._getCanvas(o,n),i=(g.getContext("2d").drawImage(t,e.toCropImgX,e.toCropImgY,e.toCropImgW,e.toCropImgH,0,0,o,n),this._getImageType(t.src));a(g.toDataURL(i,e.compress/100))}},init:function(t,e){var a=new Image;a.src=t;var r=this;a.onload=function(){var t=r._getImageType(a.src),o=r._getCanvas(a.naturalWidth,a.naturalHeight);o.getContext("2d").drawImage(a,0,0);var n=o.toDataURL(t,100);e(n)}},rotate:function(t,e,a){var r=new Image;r.src=t.src;var o=this;r.onload=function(){var t=o._getImageType(r.src),n=o._getCanvas(r.naturalHeight,r.naturalWidth),g=n.getContext("2d");1==e?(g.rotate(90*Math.PI/180),g.translate(0,-n.width)):(g.rotate(-90*Math.PI/180),g.translate(-n.height,0)),g.drawImage(r,0,0);var i=n.toDataURL(t,100);a(i)}},resize:function(t,e,a){var r=function(t){return"number"==typeof t};if(r(e.toCropImgX)&&r(e.toCropImgY)&&e.toCropImgW>0&&e.toCropImgH>0){var o=e.toCropImgW*e.imgChangeRatio,n=e.toCropImgH*e.imgChangeRatio,g=this._getCanvas(o,n),i=(g.getContext("2d").drawImage(t,0,0,e.toCropImgW,e.toCropImgH,0,0,o,n),this._getImageType(t.src));a(g.toDataURL(i,e.compress/100))}},rotate2:function(t,e,a){var r=this;this._loadImage(t,function(o){var n=o.naturalWidth,g=o.naturalHeight,i=Math.max(n,g),u=r._getCanvas(i,i),m=u.getContext("2d");m.save(),m.translate(i/2,i/2),m.rotate(e*(Math.PI/180));var c=-i/2,s=-i/2;if(0===(e%=360))return a(t,n,g);if(e%180!=0){-90===e||270===e?c=i/2-n:s=i/2-g;var p=n;n=g,g=p}else c=i/2-n,s=i/2-g;m.drawImage(o,c,s),r._getCanvas(n,g).getContext("2d").drawImage(u,0,0,n,g,0,0,n,g);var d=r._getImageType(o.src),f=u.toDataURL(d,1);a(f,n,g)})},_loadImage:function(t,e){var a=new Image;a.src=t,a.onload=function(){e(a)},a.onerror=function(){console.log("Error: image error!")}},_getCanvas:function(t,e){var a=document.createElement("canvas");return a.width=t,a.height=e,a}}}})});
+/**
+* compress image
+* reference https://github.com/brunobar79/J-I-C
+**/
+
+export default {
+  _getImageType(str) {
+    let mimeType = 'image/jpeg';
+    const outputType = str.match(/(image\/[\w]+)\.*/)[0];
+    if (typeof outputType !== 'undefined'){
+      mimeType = outputType;
+    }
+    return mimeType;
+  },
+
+  compress (src, quality, callback) {
+    const reader = new FileReader();
+    const self = this;
+    reader.onload = function(event) {
+      const image = new Image();
+      image.src = event.target.result;
+      image.onload = function() {
+        const mimeType = self._getImageType(src.type);
+        const cvs = self._getCanvas(image.naturalWidth, image.naturalHeight);
+        const ctx = cvs.getContext("2d").drawImage(image, 0, 0);
+        const newImageData = cvs.toDataURL(mimeType, quality/100);
+        callback(newImageData);
+      }
+    };
+    reader.readAsDataURL(src);
+  },
+  /**
+  * crop image via canvas and generate data
+  **/
+  crop(image, options, callback) {
+    const checkNumber = function(num) {
+      return (typeof num === 'number');
+    };
+    // check crop options
+    if (checkNumber(options.toCropImgX) &&
+        checkNumber(options.toCropImgY) &&
+        options.toCropImgW > 0 &&
+        options.toCropImgH > 0) {
+      let w = options.toCropImgW;
+      let h = options.toCropImgH;
+      if(options.maxWidth && options.maxWidth < w) {
+        w = options.maxWidth;
+        h = options.toCropImgH * w / options.toCropImgW;
+      }
+      if (options.maxHeight && options.maxHeight < h) {
+        h = options.maxHeight
+      }
+      const cvs = this._getCanvas(w, h);
+      const ctx = cvs.getContext('2d').drawImage(image, options.toCropImgX, options.toCropImgY, options.toCropImgW, options.toCropImgH, 0 , 0, w, h);
+      const mimeType = this._getImageType(image.src);
+      const data = cvs.toDataURL(mimeType, options.compress/100);
+      callback(data);
+    }
+  },
+
+  /**
+  * init image for reset size and rotation
+  **/
+  init(src, callback) {
+      let image = new Image();
+      image.src = src;
+      var self = this;
+      image.onload = function() {
+        var mimeType = self._getImageType(image.src);
+        var cvs = self._getCanvas(image.naturalWidth, image.naturalHeight);
+        var ctx = cvs.getContext("2d");
+        ctx.drawImage(image, 0, 0);
+        var newImageData = cvs.toDataURL(mimeType, 100);
+        callback(newImageData);
+      }
+  },
+
+  /**
+  * rotate image via canvas
+  **/
+  rotate(imageData, direction, callback) {
+      let image = new Image();
+      image.src = imageData.src;
+      var self = this;
+      image.onload = function() {
+        var mimeType = self._getImageType(image.src);
+        var cvs = self._getCanvas(image.naturalHeight, image.naturalWidth);
+        var ctx = cvs.getContext("2d");
+        if (direction == 1) {
+            ctx.rotate(90 * Math.PI / 180);
+            ctx.translate(0, -cvs.width);
+        } else {
+            ctx.rotate(-90 * Math.PI / 180);
+            ctx.translate(-cvs.height, 0);
+        }
+        ctx.drawImage(image, 0, 0);
+        var newImageData = cvs.toDataURL(mimeType, 100);
+        callback(newImageData);
+      }
+  },
+
+  resize(image, options, callback) {
+    const checkNumber = function(num) {
+      return (typeof num === 'number');
+    };
+    if (checkNumber(options.toCropImgX) && checkNumber(options.toCropImgY) && options.toCropImgW > 0 && options.toCropImgH > 0) {
+      const w = options.toCropImgW  * options.imgChangeRatio;
+      const h = options.toCropImgH * options.imgChangeRatio;
+      const cvs = this._getCanvas(w, h);
+      const ctx = cvs.getContext('2d').drawImage(image, 0, 0, options.toCropImgW, options.toCropImgH, 0, 0, w , h);
+      const mimeType = this._getImageType(image.src);
+      const data = cvs.toDataURL(mimeType, options.compress / 100);
+      callback(data);
+    }
+  },
+
+  rotate2(src, degrees, callback) {
+    this._loadImage(src, (image) => {
+      let w = image.naturalWidth;
+      let h = image.naturalHeight;
+      const canvasWidth = Math.max(w, h);
+      const cvs = this._getCanvas(canvasWidth, canvasWidth);
+      const ctx = cvs.getContext('2d');
+      ctx.save();
+      ctx.translate(canvasWidth / 2, canvasWidth / 2);
+      ctx.rotate(degrees * (Math.PI / 180));
+      let x = -canvasWidth / 2;
+      let y = -canvasWidth / 2;
+      degrees %= 360;
+      if (degrees === 0) {
+        return callback(src, w, h);
+      }
+      if ((degrees % 180) !== 0) {
+        if (degrees === -90 || degrees === 270) {
+          x = -w + canvasWidth / 2;
+        } else {
+          y = canvasWidth / 2 - h;
+        }
+        const c = w;
+        w = h;
+        h = c;
+      } else {
+        x = canvasWidth / 2 - w;
+        y = canvasWidth / 2 - h;
+      }
+      ctx.drawImage(image, x, y);
+      const cvs2 = this._getCanvas(w, h);
+      const ctx2 = cvs2.getContext('2d');
+      ctx2.drawImage(cvs, 0, 0, w, h, 0, 0, w, h);
+      const mimeType = this._getImageType(image.src);
+      const data = cvs.toDataURL(mimeType, 1);
+      callback(data, w, h);
+    });
+  },
+
+  _loadImage(data, callback) {
+    const image = new Image();
+    image.src = data;
+    image.onload = function () {
+      callback(image);
+    };
+    image.onerror = function () {
+      console.log('Error: image error!');
+    };
+  },
+
+  _getCanvas(width, height) {
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    return canvas;
+  },
+
+};
