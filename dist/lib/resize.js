@@ -1,1 +1,88 @@
-!function(e,t){"object"==typeof exports&&"object"==typeof module?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.VueCoreImageUpload=t():e.VueCoreImageUpload=t()}(this,function(){return function(e){function t(o){if(i[o])return i[o].exports;var n=i[o]={i:o,l:!1,exports:{}};return e[o].call(n.exports,n,n.exports,t),n.l=!0,n.exports}var i={};return t.m=e,t.c=i,t.i=function(e){return e},t.d=function(e,i,o){t.o(e,i)||Object.defineProperty(e,i,{configurable:!1,enumerable:!0,get:o})},t.n=function(e){var i=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(i,"a",i),i},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=23)}({0:function(e,t,i){"use strict";e.exports={isMobile:/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),setCssText:function(e){var t=[];for(var i in e){var o=e[i];"number"==typeof o&&(o+="px"),t.push(i+": "+o+";")}return t.join("")}}},23:function(e,t,i){"use strict";function o(e,t,i,o,n){if(t){var r=document.body.offsetHeight,d=1/n,f=parseFloat(window.getComputedStyle(i).width),c=parseFloat(window.getComputedStyle(i).height),s=document.querySelector(".info-aside"),a=(u-f)/2,l=parseFloat(window.getComputedStyle(s).height),p=(r-c-l)/2,g=h?e.changedTouches[0].clientX:e.clientX,w=h?e.changedTouches[0].clientY:e.clientY,y=t.offsetWidth,b=t.offsetHeight,x={};return n>=1&&g<=a+f?(y>=f&&(x.width=f),x.width=o.w+g-o.x,x.height=y*d,f>c?y>c&&(x.height=c,x.width=c*n):f<c?y>f&&(x.width=f,x.height=f*d):y>=f&&(x.width=f,x.height=f*d)):n<1&&w<p+c+l?(x.height=o.h+w-o.y,x.width=b*n,f>c?b>c&&(x.height=c,x.width=c*n):y>f&&(x.width=f,x.height=f*d)):"auto"==n&&w<=p+c+l&&g<=p+f?(x.height=o.h+w-o.y,x.width=o.w+g-o.x):g<=a+f&&(x.width=o.w+g-o.x,x.height=t.style.width,f>c?b>c&&(x.height=c,x.width=c):f<c?y>f&&(x.width=f,x.height=f):y>f&&(x.width=t.style.height=f)),x}}Object.defineProperty(t,"__esModule",{value:!0}),t.default=o;var n=i(0),r=function(e){return e&&e.__esModule?e:{default:e}}(n),h=r.default.isMobile,u=document.body.offsetWidth}})});
+/** Reszie
+ * @el  dom
+ * @container  dom
+ * @ratio  string '1:1' like this
+ * e events
+ **/
+import helper from './helper';
+
+const isMobile = helper.isMobile;
+const W = document.body.offsetWidth;
+export default function resize(e, el, container, coor, ratio) {
+  if (!el) {
+    return ;
+  }
+  const H = document.body.offsetHeight;
+  const ratioRemainder = 1 / ratio;
+  const dotBoxW = parseFloat(window.getComputedStyle(container).width);
+  const dotBoxH = parseFloat(window.getComputedStyle(container).height);
+  const $topH = document.querySelector('.info-aside');
+  const halfX = (W - dotBoxW) / 2;
+  const topH = parseFloat(window.getComputedStyle($topH).height);
+  const halfY = (H - dotBoxH - topH)/2;
+  const resetX = isMobile ? e.changedTouches[0]['clientX'] : e.clientX;
+  const resetY = isMobile ? e.changedTouches[0]['clientY'] : e.clientY;
+  const elOffsetWidth = el.offsetWidth;
+  const elOffsetHeight = el.offsetHeight;
+  const CSSObj = {};
+  if (ratio >= 1 && resetX <= halfX + dotBoxW) {
+    if (elOffsetWidth >= dotBoxW) {
+      CSSObj.width = dotBoxW;
+    }
+    CSSObj.width = (coor.w + resetX - coor.x);
+    CSSObj.height = elOffsetWidth * ratioRemainder;
+    if (dotBoxW > dotBoxH) {
+      if (elOffsetWidth > dotBoxH) {
+        CSSObj.height = dotBoxH;
+        CSSObj.width = dotBoxH * ratio;
+      }
+    } else if (dotBoxW < dotBoxH) {
+      if (elOffsetWidth > dotBoxW) {
+        CSSObj.width = dotBoxW;
+        CSSObj.height = dotBoxW * ratioRemainder;
+      }
+    } else if (elOffsetWidth >= dotBoxW) {
+      CSSObj.width = dotBoxW ;
+      CSSObj.height = dotBoxW * ratioRemainder;
+    }
+  } else if (ratio < 1 && resetY < (halfY + dotBoxH + topH)) {
+    CSSObj.height = (coor.h + resetY - coor.y);
+    CSSObj.width = elOffsetHeight * ratio;
+    // 限制拖拉的范围在图片内
+    if (dotBoxW > dotBoxH) {
+      if (elOffsetHeight > dotBoxH) {
+        CSSObj.height = dotBoxH;
+        CSSObj.width = dotBoxH * ratio;
+      }
+    } else if (dotBoxW < dotBoxH) {
+      if (elOffsetWidth > dotBoxW) {
+        CSSObj.width = dotBoxW;
+        CSSObj.height = dotBoxW * ratioRemainder;
+      }
+    } else if (elOffsetWidth > dotBoxW) {
+      CSSObj.width = dotBoxW;
+      CSSObj.height = dotBoxW * ratioRemainder;
+    }
+  } else if(ratio == 'auto' && resetY <= (halfY + dotBoxH + topH) && resetX <= halfY + dotBoxW) {
+    CSSObj.height = (coor.h + resetY - coor.y);
+    CSSObj.width = (coor.w + resetX - coor.x);
+  } else if (resetX <= halfX + dotBoxW) {
+    CSSObj.width = (coor.w + resetX - coor.x);
+    CSSObj.height = el.style.width;
+    // limit the crop box area
+    if (dotBoxW > dotBoxH) {
+      if (elOffsetHeight > dotBoxH) {
+        CSSObj.height = dotBoxH;
+        CSSObj.width = dotBoxH;
+      }
+    } else if (dotBoxW < dotBoxH) {
+      if (elOffsetWidth > dotBoxW) {
+        CSSObj.width = dotBoxW;
+        CSSObj.height = dotBoxW;
+      }
+    } else if (elOffsetWidth > dotBoxW) {
+      CSSObj.width = el.style.height = dotBoxW;
+    }
+  }
+  return CSSObj;
+};

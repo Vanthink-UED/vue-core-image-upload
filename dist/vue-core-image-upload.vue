@@ -182,6 +182,7 @@
       },
 
       doCrop(e) {
+          let self=this
         this.__setData('crop');
         const cropBox = this.$refs.cropBox;
         const upload = this.__setUpload(e.target);
@@ -190,13 +191,13 @@
           this.data.compress = 100 - this.compress;
           return canvasHelper.crop(targetImage, this.data, (code) => {
             upload(code);
-            this.__dispatch('imagechanged', code);
+            self.__dispatch('imagechanged', code);
           })
         }
         upload();
       },
 
-      doResize(e) {
+      doResize(e) {   let self=this
         this.__setData('resize');
         const cropBox = this.$refs.cropBox;
         const upload = this.__setUpload(e.target);
@@ -205,7 +206,7 @@
           this.data.compress = 100 - this.compress;
           return canvasHelper.resize(targetImage, this.data, (code) => {
             upload(code);
-            this.__dispatch('imagechanged', code);
+              self.__dispatch('imagechanged', code);
           })
         }
         upload();

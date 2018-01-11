@@ -5,6 +5,7 @@
   "main": "dist/vue-core-image-upload.vue",
   "dependencies": {
     "core-image-xhr": "^1.0.3",
+    "fs-extra": "^5.0.0",
     "vue": "^2.0.5"
   },
   "devDependencies": {

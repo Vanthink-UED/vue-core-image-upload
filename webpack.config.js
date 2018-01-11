@@ -14,8 +14,7 @@ module.exports = {
     'dist/lib/resize': './lib/resize.js',
     'dist/lib/xhr': './lib/xhr.js',
     'dist/lib/loading-gif': './lib/loading-gif.js',
-    'dist/props': './props',
-    'dist/props': './props',
+    'dist/props': './props'
 
   },
   output: {
