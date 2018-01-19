@@ -320,6 +320,10 @@
         }
         xhr('POST',this.url, this.headers, data, done, errorUpload, isBinary, this.credentials);
       },
+    },
+    
+    mounted() {
+      this.$input = this.__find('input');
     }
 
   };

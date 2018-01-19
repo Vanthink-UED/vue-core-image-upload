@@ -82,7 +82,8 @@ export default function resize(e, el, container, coor, ratio) {
         CSSObj.height = dotBoxW;
       }
     } else if (elOffsetWidth > dotBoxW) {
-      CSSObj.width = el.style.height = dotBoxW;
+      CSSObj.width = dotBoxW;
+      el.style.height = dotBoxW;
     }
   }
   return CSSObj;
