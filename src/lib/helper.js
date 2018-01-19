@@ -15,5 +15,10 @@ module.exports = {
       cssArr.push(key + ': ' + val + ';');
     });
     return cssArr.join('');
+  },
+
+  isFunction(fn) {
+    return typeof fn === 'function';
   }
+
 };

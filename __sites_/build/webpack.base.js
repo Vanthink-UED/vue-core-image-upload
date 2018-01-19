@@ -22,7 +22,8 @@ module.exports = {
     extensions: ['.js', '.vue', '.css', '.json'],
     alias: {
       root: path.join(__dirname, '../client'),
-      components: path.join(__dirname, '../client/components')
+      components: path.join(__dirname, '../client/components'),
+      vue: 'vue/dist/vue.js'
     },
     modules: [
       _.cwd('node_modules'),
@@ -42,8 +43,8 @@ module.exports = {
         use: {
           loader: 'babel-loader'
         },
-         exclude: /node_modules/
-      },
+        exclude: /node_modules/
+      }
     ]
   },
   plugins: [

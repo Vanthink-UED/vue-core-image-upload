@@ -13,12 +13,12 @@ Vue.use(VueProgressBar, {
   color: '#2ecc71',
   failedColor: 'red',
   height: '2px'
-});
+})
 
 const app = new Vue({
   router,
   store,
-  App
+  render: createEle => createEle(App)
 })
 
 export { app, router, store }

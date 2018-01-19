@@ -88,5 +88,4 @@ base.stats = {
   chunkOrigins: false,
   modules: false
 }
-console.log(base.module.rules[4]);
 module.exports = base

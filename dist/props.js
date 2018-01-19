@@ -1,1 +1,163 @@
-!function(e,t){"object"==typeof exports&&"object"==typeof module?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.VueCoreImageUpload=t():e.VueCoreImageUpload=t()}(this,function(){return function(e){function t(r){if(n[r])return n[r].exports;var u=n[r]={i:r,l:!1,exports:{}};return e[r].call(u.exports,u,u.exports,t),u.l=!0,u.exports}var n={};return t.m=e,t.c=n,t.i=function(e){return e},t.d=function(e,n,r){t.o(e,n)||Object.defineProperty(e,n,{configurable:!1,enumerable:!0,get:r})},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=23)}({23:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default={url:{type:String},text:{type:String,default:"Upload Image"},extensions:{type:String,default:"png,jpg,jpeg,gif,svg,webp"},inputOfFile:{type:String,default:"files"},crop:{type:[String,Boolean],default:""},cropBtn:{type:Object,default:function(){return{ok:"Ok",cancel:"Cancel"}}},cropRatio:{type:String,default:"1:1"},resize:{type:[String,Boolean],default:!1},rotate:{type:Boolean,default:!1},ResizeBtn:{type:Object,default:function(){return{ok:"Ok",cancel:"Cancel"}}},maxFileSize:{type:Number,default:104857600},maxWidth:{type:Number},maxHeight:{type:Number},inputAccept:{type:String,default:"image/jpg,image/jpeg,image/png,image/gif"},isXhr:{type:Boolean,default:!0},headers:{type:Object,default:function(){return{}}},data:{type:Object,default:function(){return{}}},multiple:{type:Boolean,default:!1},multipleSize:{type:Number,default:0},minWidth:{type:Number,default:50},compress:{type:[Number,String],default:0},credentials:{type:[String,Boolean],default:!0}}}})});
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["VueCoreImageUpload"] = factory();
+	else
+		root["VueCoreImageUpload"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			exports: {},
+/******/ 			id: moduleId,
+/******/ 			loaded: false
+/******/ 		};
+
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
+
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+
+
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ function(module, exports) {
+
+	export default {
+	  url: {
+	    type: String,
+	  },
+	  text: {
+	    type: String,
+	    default: 'Upload Image'
+	  },
+	  extensions: {
+	    type: String,
+	    default: 'png,jpg,jpeg,gif,svg,webp'
+	  },
+	  inputOfFile: {
+	    type: String,
+	    default: 'files'
+	  },
+	  crop: {
+	    type: [String, Boolean],
+	    default: ''
+	  },
+	  cropBtn: {
+	    type: Object,
+	    default() {
+	      return {
+	        ok: 'Ok',
+	        cancel: 'Cancel',
+	      };
+	    }
+	  },
+	  cropRatio: {
+	    type: String,
+	    default: '1:1'
+	  },
+	  resize: {
+	    type: [String, Boolean],
+	    default: false,
+	  },
+	  rotate: {
+	    type: Boolean,
+	    default: false,
+	  },
+	  ResizeBtn: {
+	    type: Object,
+	    default() {
+	      return {
+	        ok: 'Ok',
+	        cancel: 'Cancel'
+	      };
+	    }
+	  },
+	  maxFileSize: {
+	    type: Number,
+	    default: 1024 * 1024 * 100,
+	  },
+	  maxWidth: {
+	    type: Number,
+	  },
+	  maxHeight: {
+	    type: Number,
+	  },
+	  inputAccept: {
+	    type: String,
+	    default: 'image/jpg,image/jpeg,image/png,image/gif'
+	  },
+	  isXhr: {
+	    type: Boolean,
+	    default: true
+	  },
+	  headers: {
+	    type: Object,
+	    default() {
+	      return {};
+	    }
+	  },
+	  data: {
+	    type: Object,
+	    default() {
+	      return {};
+	    }
+	  },
+	  multiple: {
+	    type: Boolean,
+	    default: false
+	  },
+	  multipleSize: {
+	    type: Number,
+	    default: 0
+	  },
+	  minWidth: {
+	    type: Number,
+	    default: 50,
+	  },
+	  compress: {
+	    type: [Number, String],
+	    default: 0,
+	  },
+	  credentials: {
+	    type: [String, Boolean],
+	    default: true,
+	  }
+	};
+
+
+/***/ }
+/******/ ])
+});
+;

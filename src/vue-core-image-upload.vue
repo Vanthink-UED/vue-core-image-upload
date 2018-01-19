@@ -1,5 +1,5 @@
 <template>
-  <div class="g-core-image-upload-btn" ref="container">
+  <div class="g-core-image-upload-btn">
     <slot>{{text}}</slot>
     <form class="g-core-image-upload-form" v-show="!hasImage" method="post" enctype="multipart/form-data" action="" style="">
       <input 
@@ -36,8 +36,8 @@
           <button type="button" @click="cancel" class="btn btn-cancel">{{ResizeBtn.cancel}}</button>
         </p>
       </div>
+    </div>
   </div>
-</div>
 </template>
 
 <style src="./style/style.css">
@@ -51,6 +51,7 @@
   import Crop from './crop.vue';
   import ResizeBar from './resize-bar.vue';
 
+  // remember the overflow value
   let overflowVal = '';
   export default {
     components: {
@@ -64,7 +65,6 @@
         hasImage: false,
         options: this.props,
         uploading: false,
-        formID: (Math.random() * 10000 + '').split('.')[0],
         image:{
           src: GIF_LOADING_SRC,
           width:24,
@@ -87,20 +87,22 @@
       __dispatch(name,res, data) {
         this.$emit && this.$emit(name, res, data);
       },
-      __find(str) {
-        let dq = document.querySelector('#vciu-modal-' + this.formID);
-        return dq.querySelector(str);
+
+      __find(el) {
+        return this.$el.querySelector(el);
       },
+
       dragover() {
-        let element = this.$refs.container;
-        element.classList.add('is-dragover');
+        this.$el.classList.add('is-dragover');
       },
+
       dragleave() {
         let element = this.$refs.container;
-        element.classList.remove('is-dragover');
+        this.$el.classList.remove('is-dragover');
       },
+
       change(e) {
-        let fileVal = document.querySelector('#g-core-upload-input-' + this.formID).value.replace(/C:\\fakepath\\/i, "");
+        let fileVal = e.target.value.replace(/C:\\fakepath\\/i, "");
         let fileExt = fileVal.substring(fileVal.lastIndexOf(".") + 1);
         const extensionsArr = this.extensions.split(',');
         if(extensionsArr.length>1) {
@@ -132,7 +134,8 @@
           this.__showImage();
           return;
         }
-        this. __dispatch('imagechanged', this.files.length > 1 ? this.files : this.files[0]);
+        const file =  this.files.length > 1 ? this.files : this.files[0];
+        this. __dispatch('imagechanged', file);
         if (this.compress && this.files[0]['type'] !== 'image/png' && this.files[0]['type'] !== 'image/gif') {
           daycaca.compress(this.files[0], 100 - this.compress, (code) => {
             this.tryAjaxUpload('', true, code);
@@ -141,6 +144,7 @@
           this.tryAjaxUpload();
         }
       },
+
       __showImage() {
         this.hasImage = true;
         this.__readFiles();
@@ -266,7 +270,7 @@
         this.files = '';
         const cropBox = this.$refs.cropBox;
         cropBox.setOriginalSrc(null);
-        document.querySelector('#g-core-upload-input-' + this.formID).value = '';
+        this.$input.value = '';
       },
 
       // use ajax upload  IE10+
@@ -288,7 +292,7 @@
           if(this.crop) {
             this.hasImage = false;
           }
-          return typeof callback === 'function' && callback();
+          return done();
         }
         let data;
         if (isBinary) {
@@ -316,7 +320,7 @@
         }
         xhr('POST',this.url, this.headers, data, done, errorUpload, isBinary, this.credentials);
       },
-    },
+    }
 
   };
 
