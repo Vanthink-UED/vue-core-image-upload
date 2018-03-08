@@ -80,6 +80,7 @@ export default {
   },
   data() {
     return {
+      data: {},
       src: 'http://img1.vued.vanthink.cn/vued0a233185b6027244f9d43e653227439a.png',
     }
   },

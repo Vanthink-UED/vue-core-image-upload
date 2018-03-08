@@ -17,7 +17,6 @@
         <a class="g-resize" v-on:touchstart.self="resize" v-on:mousedown.self="resize"></a>
       </div>
     </div>
-    <resize-bar v-if="resize" ref="resizeBar" @resize="resizeImage"></resize-bar>
     <rotate-bar v-if="isRotate" @rotate="rotateImage"></rotate-bar>
   </div>
 </div>
@@ -134,6 +133,7 @@ import helper from './lib/helper';
 import canvasHelper from './lib/canvas-helper';
 import ResizeBar from './resize-bar.vue';
 import RotateBar from './rotate-bar.vue';
+
 // set cropbox size in image
 const CROPBOX_PERCENT = 75;
 const isMobile = helper.isMobile;
@@ -200,12 +200,6 @@ export default {
       this.natrualWidth = w;
       this.natrualHeight = h;
       this.setLayout(w, h);
-      const resizeBar = this.$refs.resizeBar;
-      if (this.isResize) {
-        resizeBar.setProgress(100);
-      } else {
-        resizeBar.setProgress(50);
-      }
       return this.imgChangeRatio;
     },
 
