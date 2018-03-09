@@ -2,7 +2,7 @@
 <div class="image-aside">
   <!-- <div class="g-crop-image-box" > -->
     <div class="g-crop-image-principal">
-      <div class="image-wrap"  :style="{ width: width + 'px',height: height + 'px', left: left+ 'px', top: top + 'px', backgroundImage: 'url(' + src + ')'}">
+      <div class="image-wrap"  :style="pos.wrap">
         <img ref="crop-image" style="width:0;height:0;" :src="src" />
       </div>
       <div class="g-wrap-model" v-on:touchstart="drag" v-on:mousedown="drag"  :style="{cursor: isResize ? 'default' : 'move'}"></div>
@@ -17,6 +17,9 @@
         <div class="reference-line v"></div>
         <div class="reference-line h"></div>
         <a class="g-resize" v-on:touchstart.self="resize" v-on:mousedown.self="resize"></a>
+        <div class="crop-view">
+          <div class="view" :style="pos.view"></div>
+        </div>
       </div>
     </div>
     <rotate-bar v-if="isRotate" @rotate="rotateImage"></rotate-bar>
@@ -42,9 +45,6 @@
   text-align: center;
 }
 .image-aside .image-wrap{
-  position: absolute;
-  left: 0;
-  top: 0;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -76,6 +76,8 @@
   outline-color: rgba(51,153,255,.75);
   outline: 1px solid #39f;
 }
+.crop-view {width: 100%;height: 100%;overflow: hidden;}
+.crop-view .view {background-size: cover;}
 .crop-box:after,
 .crop-box:before{
   content: '';
@@ -85,7 +87,7 @@
   left: 33.3333%;
   top: 0;
   width: 33.334%;
-  height: 100%;
+  height: 100%;z-index: 11;
   background-color: transparent;
   border-color: #eee;
   border-style: dashed;
@@ -174,9 +176,29 @@ export default {
       initHeight: 24,
       left: 0,
       top: 0,
+      cropLeft: 0,
+      cropTop: 0,
       cropCSS: {
 
       }
+    }
+  },
+  computed: {
+    pos() {
+      let wrap = { 
+        width: this.width + 'px',
+        height: this.height + 'px',
+        'transform': 'translate3d('+ this.left +'px,'+ this.top+'px,0)', 
+        backgroundImage: 'url(' + this.src + ')'
+      }
+      let view = { 
+        width: this.width + 'px',
+        height: this.height + 'px',
+        'transform': 'translate3d('+ this.cropLeft +'px,'+ this.cropTop+'px,0)', 
+        backgroundImage: 'url(' + this.src + ')'
+      }
+
+      return {wrap: wrap, view: view};
     }
   },
 
@@ -418,11 +440,15 @@ export default {
         minLeft: ($cropBox.offsetWidth + $cropBox.offsetLeft) - $el.offsetWidth,
         minTop: ($cropBox.offsetHeight + $cropBox.offsetTop) - $el.offsetHeight,
       };
+      let prevP =  Object.create(null);
       const move = function (ev) {
-        const newCropStyle = drag(ev, self.el, coor);
+        const newCropStyle = drag(ev, self, prevP, false);
         if (newCropStyle) {
+          prevP = newCropStyle;
           self.left = newCropStyle.left;
           self.top = newCropStyle.top;
+          self.cropLeft = self.left - $cropBox.offsetLeft;
+          self.cropTop = self.top - $cropBox.offsetTop;
         }
       };
       const stopMove = function (ev) {
@@ -454,11 +480,16 @@ export default {
         x: (isMobile ? e.touches[0]['clientX'] : e.clientX) - $el.offsetLeft,
         y: (isMobile ? e.touches[0]['clientY'] : e.clientY) - $el.offsetTop,
       };
+      let prevP = Object.create(null) ;      
       const move = function (ev) {
-        const newCropStyle = drag(ev, self.el, coor);
+        const newCropStyle = drag(ev, self, prevP, true);
         if (newCropStyle) {
+          prevP = newCropStyle;          
           self.cropCSS.left = newCropStyle.left;
           self.cropCSS.top = newCropStyle.top;
+
+          self.cropLeft = self.left - newCropStyle.left;
+          self.cropTop = self.top - newCropStyle.top;
         }
       };
       const stopMove = function (ev) {

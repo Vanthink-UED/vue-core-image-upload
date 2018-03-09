@@ -17,8 +17,8 @@
         <div class="reference-line v"></div>
         <div class="reference-line h"></div>
         <a class="g-resize" v-on:touchstart.self="resize" v-on:mousedown.self="resize"></a>
-        <div class="crop-view" :style="pos.view">
-        
+        <div class="crop-view">
+          <div class="view" :style="pos.view"></div>
         </div>
       </div>
     </div>
@@ -75,11 +75,9 @@
   height: 100px;
   outline-color: rgba(51,153,255,.75);
   outline: 1px solid #39f;
-  overflow: hidden;
 }
-.crop-view {
-  background-size: cover;  
-}
+.crop-view {width: 100%;height: 100%;overflow: hidden;}
+.crop-view .view {background-size: cover;}
 .crop-box:after,
 .crop-box:before{
   content: '';
@@ -89,7 +87,7 @@
   left: 33.3333%;
   top: 0;
   width: 33.334%;
-  height: 100%;
+  height: 100%;z-index: 11;
   background-color: transparent;
   border-color: #eee;
   border-style: dashed;

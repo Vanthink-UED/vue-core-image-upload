@@ -122,7 +122,6 @@ function drag(e, dom, coor, isCrop = false) {
   lastP.x = coor.x || currentX;
   lastP.y = coor.y || currentY;
   if(isCrop) {
-    console.log(isCrop)
     left = dom.cropCSS.left + (currentX - lastP.x);
     top = dom.cropCSS.top + (currentY - lastP.y);
   }else {
