@@ -2,7 +2,7 @@
 <div class="image-aside">
   <!-- <div class="g-crop-image-box" > -->
     <div class="g-crop-image-principal">
-      <div class="image-wrap"  :style="{ width: width + 'px',height: height + 'px', left: left+ 'px', top: top + 'px', backgroundImage: 'url(' + src + ')'}">
+      <div class="image-wrap"  :style="pos.wrap">
         <img ref="crop-image" style="width:0;height:0;" :src="src" />
       </div>
       <div class="g-wrap-model" v-on:touchstart="drag" v-on:mousedown="drag"  :style="{cursor: isResize ? 'default' : 'move'}"></div>
@@ -17,6 +17,9 @@
         <div class="reference-line v"></div>
         <div class="reference-line h"></div>
         <a class="g-resize" v-on:touchstart.self="resize" v-on:mousedown.self="resize"></a>
+        <div class="crop-view" :style="pos.view">
+        
+        </div>
       </div>
     </div>
     <rotate-bar v-if="isRotate" @rotate="rotateImage"></rotate-bar>
@@ -42,9 +45,6 @@
   text-align: center;
 }
 .image-aside .image-wrap{
-  position: absolute;
-  left: 0;
-  top: 0;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -75,6 +75,10 @@
   height: 100px;
   outline-color: rgba(51,153,255,.75);
   outline: 1px solid #39f;
+  overflow: hidden;
+}
+.crop-view {
+  background-size: cover;  
 }
 .crop-box:after,
 .crop-box:before{
@@ -174,9 +178,29 @@ export default {
       initHeight: 24,
       left: 0,
       top: 0,
+      cropLeft: 0,
+      cropTop: 0,
       cropCSS: {
 
       }
+    }
+  },
+  computed: {
+    pos() {
+      let wrap = { 
+        width: this.width + 'px',
+        height: this.height + 'px',
+        'transform': 'translate3d('+ this.left +'px,'+ this.top+'px,0)', 
+        backgroundImage: 'url(' + this.src + ')'
+      }
+      let view = { 
+        width: this.width + 'px',
+        height: this.height + 'px',
+        'transform': 'translate3d('+ this.cropLeft +'px,'+ this.cropTop+'px,0)', 
+        backgroundImage: 'url(' + this.src + ')'
+      }
+
+      return {wrap: wrap, view: view};
     }
   },
 
@@ -423,6 +447,8 @@ export default {
         if (newCropStyle) {
           self.left = newCropStyle.left;
           self.top = newCropStyle.top;
+          self.cropLeft = self.left - $cropBox.offsetLeft;
+          self.cropTop = self.top - $cropBox.offsetTop;
         }
       };
       const stopMove = function (ev) {
@@ -459,6 +485,9 @@ export default {
         if (newCropStyle) {
           self.cropCSS.left = newCropStyle.left;
           self.cropCSS.top = newCropStyle.top;
+
+          self.cropLeft = self.left - $el.offsetLeft;
+          self.cropTop = self.top - $el.offsetTop;
         }
       };
       const stopMove = function (ev) {
