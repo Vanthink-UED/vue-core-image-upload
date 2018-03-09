@@ -14,6 +14,7 @@
         <resize-bar v-if="resize" ref="resizeBar" @resize="resizeImage"></resize-bar>
 
         <p class="btn-groups" v-if="crop">
+          <button type="button" v-on:click="doPreview" class="btn btn-preview">{{cropBtn.preview || '预览'}}</button>
           <button type="button" v-on:click="doCrop" class="btn btn-upload">{{cropBtn.ok}}</button>
           <button type="button" v-on:click="cancel" class="btn btn-cancel">{{cropBtn.cancel}}</button>
         </p>
@@ -23,11 +24,15 @@
         </p>
       </div>
   </div>
+  <div class="g-model" v-show="model" @click="model = false">
+    <div class="model-show">
+      <img :src="modelSrc" alt="">
+    </div>
+  </div>
 </div>
 </template>
 
-<style src="./style/style.css">
-</style>
+<style src="./style/style.css"></style>
 
 <script>
   import xhr from 'core-image-xhr';
@@ -52,6 +57,8 @@
         hasImage: false,
         options: this.props,
         uploading: false,
+        model: false,
+        modelSrc: '',
         formID: (Math.random() * 10000 + '').split('.')[0],
         image:{
           src: GIF_LOADING_SRC,
@@ -193,9 +200,21 @@
         }
         upload();
       },
+      doPreview(e) {
+        let self = this;
+        const cropBox = this.$refs.cropBox;
+        self.__setData('crop');        
+        if (this.crop === 'local') {
+          const targetImage = cropBox.getCropImage();
+          this.data.comprose = 100 - this.compress;
+          return canvasHelper.crop(targetImage, this.data, code => {
+            self.modelSrc = code;
+            self.model = true;
+          })
+        }
+      },
 
       doResize(e) {
-        this.__setData('resize');
         const cropBox = this.$refs.cropBox;
         const upload = this.__setUpload(e.target);
         if (this.resize === 'local') {
@@ -203,7 +222,6 @@
           this.data.comprose = 100 - this.compress;
           return canvasHelper.resize(targetImage, this.data, (code) => {
             upload(code);
-            this.__dispatch('imagechanged', code);
           })
         }
         upload();

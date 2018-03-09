@@ -107,3 +107,31 @@
   border-color:#27ae60;
   box-shadow: 0 1px 3px rgba(0,0,0,.05);
 }
+.g-model {
+  position: fixed;
+  z-index: 1910;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.g-model .model-show {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.g-model .model-show img {
+  display: block;
+  margin: auto;
+  max-width: 80%;
+  user-select: none;
+  background-position: 0px 0px, 10px 10px;
+  background-size: 20px 20px;
+  background-image: linear-gradient(45deg, #eee 25%, transparent 25%, transparent 75%, #eee 75%, #eee 100%), linear-gradient(45deg, #eee 25%, white 25%, white 75%, #eee 75%, #eee 100%);
+}

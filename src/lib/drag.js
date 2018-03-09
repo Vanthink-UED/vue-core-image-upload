@@ -10,7 +10,8 @@ export default function drag(e, el, coor) {
 
   let left = currentX - coor.x;
   let top = currentY - coor.y;
-  if (left <= coor.minLeft) {
+  // 让拖拽框可以随处移动
+  /* if (left <= coor.minLeft) {
     left = coor.minLeft;
   }
   if (left >= coor.maxLeft) {
@@ -21,7 +22,7 @@ export default function drag(e, el, coor) {
   }
   if (top >= coor.maxTop) {
     top = coor.maxTop;
-  }
+  } */
   return {
     left,
     top

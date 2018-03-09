@@ -24,6 +24,7 @@ export default {
       return {
         ok: 'Ok',
         cancel: 'Cancel',
+        preview: 'Preview'
       }
     }
   },
