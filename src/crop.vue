@@ -1,6 +1,6 @@
 <template>
 <div class="image-aside">
-  <div class="g-crop-image-box" >
+  <!-- <div class="g-crop-image-box" > -->
     <div class="g-crop-image-principal" v-on:touchstart="drag" v-on:mousedown="drag">
       <div class="image-wrap"  :style="{ width: width + 'px',height: height + 'px', left: left+ 'px', top: top + 'px', backgroundImage: 'url(' + src + ')', cursor: isResize ? 'default' : 'move'}">
         <img ref="crop-image" style="width:0;height:0;" :src="src" />
@@ -18,15 +18,15 @@
       </div>
     </div>
     <rotate-bar v-if="isRotate" @rotate="rotateImage"></rotate-bar>
-  </div>
+ <!--  </div> -->
 </div>
 </template>
 
 <style scoped>
 .g-crop-image-principal{
   overflow: hidden;
-  position: relative;
-  background-color: #fff;
+  position: relative;top: 0;left: 0;right: 0;bottom: 0;height: 100%;
+  background-color: rgba(0,0,0,0.5);
   background-image: -webkit-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef),-webkit-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef);
   background-image: -moz-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef),-moz-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef);
   background-image: -o-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef),-o-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef);
@@ -76,7 +76,8 @@
   cursor: move;
   width:100px;
   height: 100px;
-  border:1px solid rgba(255,255,255, .95);
+  outline-color: rgba(51,153,255,.75);
+  outline: 1px solid #39f;
 }
 .crop-box:after,
 .crop-box:before{
@@ -89,8 +90,8 @@
   width: 33.334%;
   height: 100%;
   background-color: transparent;
-  border-color: rgba(255,255,255,.7);
-  border-style: solid;
+  border-color: #eee;
+  border-style: dashed;
   border-width: 0;
 }
 .crop-box:active::before,
@@ -262,8 +263,8 @@ export default {
         this.marginLeft = this.marginLeft + (this.width - w) / 2;
         this.marginTop = this.marginTop + (this.height - h) / 2;
       }
-      $container.style.cssText = 'width:' + w + 'px;height:' + h + 'px;margin-left:'
-      + ml + 'px;' + 'margin-top:' + mt + 'px';
+      /* $container.style.cssText = 'width:' + w + 'px;height:' + h + 'px;margin-left:'
+      + ml + 'px;' + 'margin-top:' + mt + 'px'; */
       this.setCropBox(w, h);
       if (this.isResize) {
         this.width = w;
