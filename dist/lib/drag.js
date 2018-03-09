@@ -111,15 +111,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 const isMobile = __WEBPACK_IMPORTED_MODULE_0__helper___default.a.isMobile;
-function drag(e, el, coor) {
-  if (!el) {
+function drag(e, dom, coor, isCrop = false) {
+  if (!dom.el) {
     return;
   }
   const currentX = isMobile ? e.changedTouches[0]['clientX'] : e.clientX;
   const currentY = isMobile ? e.changedTouches[0]['clientY'] : e.clientY;
 
-  let left = currentX - coor.x;
-  let top = currentY - coor.y;
+  let lastP = {},left,top;
+  lastP.x = coor.x || currentX;
+  lastP.y = coor.y || currentY;
+  if(isCrop) {
+    console.log(isCrop)
+    left = dom.cropCSS.left + (currentX - lastP.x);
+    top = dom.cropCSS.top + (currentY - lastP.y);
+  }else {
+    left = dom.left + (currentX - lastP.x);
+    top = dom.top + (currentY - lastP.y);
+  }
+ /*  
+  left = dom.left + (currentX - lastP.x);
+  top = dom.top + (currentY - lastP.y); */
   // 让拖拽框可以随处移动
   /* if (left <= coor.minLeft) {
     left = coor.minLeft;
@@ -135,7 +147,9 @@ function drag(e, el, coor) {
   } */
   return {
     left,
-    top
+    top,
+    x: currentX,
+    y: currentY
   };
 };
 

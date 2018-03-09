@@ -442,9 +442,11 @@ export default {
         minLeft: ($cropBox.offsetWidth + $cropBox.offsetLeft) - $el.offsetWidth,
         minTop: ($cropBox.offsetHeight + $cropBox.offsetTop) - $el.offsetHeight,
       };
+      let prevP =  Object.create(null);
       const move = function (ev) {
-        const newCropStyle = drag(ev, self.el, coor);
+        const newCropStyle = drag(ev, self, prevP, false);
         if (newCropStyle) {
+          prevP = newCropStyle;
           self.left = newCropStyle.left;
           self.top = newCropStyle.top;
           self.cropLeft = self.left - $cropBox.offsetLeft;
@@ -480,14 +482,16 @@ export default {
         x: (isMobile ? e.touches[0]['clientX'] : e.clientX) - $el.offsetLeft,
         y: (isMobile ? e.touches[0]['clientY'] : e.clientY) - $el.offsetTop,
       };
+      let prevP = Object.create(null) ;      
       const move = function (ev) {
-        const newCropStyle = drag(ev, self.el, coor);
+        const newCropStyle = drag(ev, self, prevP, true);
         if (newCropStyle) {
+          prevP = newCropStyle;          
           self.cropCSS.left = newCropStyle.left;
           self.cropCSS.top = newCropStyle.top;
 
-          self.cropLeft = self.left - $el.offsetLeft;
-          self.cropTop = self.top - $el.offsetTop;
+          self.cropLeft = self.left - newCropStyle.left;
+          self.cropTop = self.top - newCropStyle.top;
         }
       };
       const stopMove = function (ev) {
