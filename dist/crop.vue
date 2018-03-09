@@ -1,16 +1,18 @@
 <template>
 <div class="image-aside">
   <!-- <div class="g-crop-image-box" > -->
-    <div class="g-crop-image-principal" v-on:touchstart="drag" v-on:mousedown="drag" :style="{cursor: isResize ? 'default' : 'move'}">
+    <div class="g-crop-image-principal">
       <div class="image-wrap"  :style="{ width: width + 'px',height: height + 'px', left: left+ 'px', top: top + 'px', backgroundImage: 'url(' + src + ')'}">
         <img ref="crop-image" style="width:0;height:0;" :src="src" />
       </div>
-      <div class="image-mask" v-if="!isResize">
+      <div class="g-wrap-model" v-on:touchstart="drag" v-on:mousedown="drag"  :style="{cursor: isResize ? 'default' : 'move'}"></div>
+      
+      <!-- <div class="image-mask" v-if="!isResize">
         <div class="mask top" :style="{ top:0, height: cropCSS.top + 'px', left: 0, width: '100%'}"></div>
         <div class="mask bottom" :style="{ bottom:0, top: (cropCSS.top + cropCSS.height) + 'px', left: 0, width: '100%'}"></div>
         <div class="mask left" :style="{top: cropCSS.top + 'px', height: cropCSS.height + 'px', left:0, width: cropCSS.left + 'px'}"></div>
         <div class="mask right" :style="{top: cropCSS.top + 'px', height: cropCSS.height + 'px', left: (cropCSS.left + cropCSS.width) + 'px', right: 0}"></div>
-      </div>
+      </div> -->
       <div class="crop-box" v-if="!isResize" @touchstart.prevent="cropMove"  @mousedown.prevent="cropMove" :style="{top: cropCSS.top + 'px', left: cropCSS.left + 'px', height: cropCSS.height + 'px',  width: cropCSS.width + 'px'}">
         <div class="reference-line v"></div>
         <div class="reference-line h"></div>
@@ -27,13 +29,8 @@
   overflow: hidden;
   position: relative;top: 0;left: 0;right: 0;bottom: 0;height: 100%;
   background-color: rgba(0,0,0,0.5);
-  background-image: -webkit-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef),-webkit-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef);
-  background-image: -moz-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef),-moz-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef);
-  background-image: -o-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef),-o-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef);
-  background-image: linear-gradient(to top right, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef),linear-gradient(to top right, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef);
-  background-position: 0 0,10px 10px;
-  -webkit-background-size: 21px 21px;
-  background-size: 21px 21px;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEXMzMz////TjRV2AAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABFJREFUCJlj+M/AgBVhF/0PAH6/D/HkDxOGAAAAAElFTkSuQmCC');
+  
 }
 .image-aside{
   overflow: hidden;
@@ -448,9 +445,8 @@ export default {
     },
     cropMove(e) {
       e.preventDefault();      
-      const $el = this.__find('.image-wrap');
+      const $el = this.__find('.crop-box');
       this.el = $el;
-      const $cropBox = this.__find('.crop-box');
       const $container = e.currentTarget;
       const self = this;
       const isMobile = helper.isMobile;
@@ -483,6 +479,7 @@ export default {
       document.addEventListener('mousemove', move, false);
       document.addEventListener('mouseup', stopMove, false);
     }
+    
   },
 
 }
