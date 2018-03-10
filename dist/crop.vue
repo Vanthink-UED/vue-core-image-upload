@@ -242,8 +242,18 @@ export default {
       }
       this.left += (this.width - w) / 2;
       this.top += (this.height - h) / 2;
+      this.cropLeft = this.left - this.cropCSS.left;
+      this.cropTop = this.top - this.cropCSS.top;
+
+      //  self.cropCSS.left = newCropStyle.left;
+      //     self.cropCSS.top = newCropStyle.top;
+
+      //     self.cropLeft = self.left - this.cropCSS.left;
+      //     self.cropTop = self.top - this.cropCSS.top;
+      //this.cropTop  += (this.height - h) / 2;
       this.width = w;
       this.height = h;
+      
       this.imgChangeRatio = this.width / this.natrualWidth;
     },
 
