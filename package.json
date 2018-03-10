@@ -1,6 +1,6 @@
 {
-  "name": "vue-core-image-upload",
-  "version": "2.3.10",
+  "name": "vue-core-image-upload-mgr",
+  "version": "1.0.0",
   "description": "a vue plgin for image upload and crop",
   "main": "dist/vue-core-image-upload.vue",
   "dependencies": {
@@ -51,7 +51,7 @@
     "crop",
     "image"
   ],
-  "author": "JackPu",
+  "author": "DJH",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Vanthink-UED/vue.core.image.upload/issues"
