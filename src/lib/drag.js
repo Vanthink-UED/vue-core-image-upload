@@ -1,7 +1,7 @@
 import helper from './helper';
 
 const isMobile = helper.isMobile;
-function drag(e, dom, coor, isCrop = false) {
+export default function drag(e, dom, coor, isCrop = false) {
   if (!dom.el) {
     return;
   }
