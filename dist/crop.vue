@@ -233,7 +233,8 @@ export default {
       if (this.isResize) {
         w = this.natrualWidth * this.imgChangeRatio * progress;
         h = this.natrualHeight * this.imgChangeRatio * progress;
-      } else {
+      } 
+      else {
         w = this.initWidth + progress * (this.natrualWidth - this.initWidth);
         h = this.initHeight + progress * (this.natrualHeight - this.initHeight);
       }
@@ -310,7 +311,11 @@ export default {
         this.initHeight = this.height;
         this.left = (w - this.width) / 2;
         this.top = (h - this.height) / 2;
+        this.cropLeft = this.left - this.cropCSS.left;
+        this.cropTop = this.top - this.cropCSS.top;
+        
       }
+      
       this.imgChangeRatio = this.width / this.natrualWidth;
     },
 
@@ -344,6 +349,7 @@ export default {
         CSSObj.top = (imageHeight - CSSObj.height) / 2,
         $selectCropBox.style.cssText = helper.setCssText(CSSObj);
       };
+
       this.cropCSS = CSSObj;
 
     },
