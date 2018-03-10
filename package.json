@@ -1,6 +1,6 @@
 {
   "name": "vue-core-image-upload-mgr",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "a vue plgin for image upload and crop",
   "main": "dist/vue-core-image-upload.vue",
   "dependencies": {
