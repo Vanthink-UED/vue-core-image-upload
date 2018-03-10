@@ -14,6 +14,7 @@
         <div class="mask right" :style="{top: cropCSS.top + 'px', height: cropCSS.height + 'px', left: (cropCSS.left + cropCSS.width) + 'px', right: 0}"></div>
       </div> -->
       <div class="crop-box" v-if="!isResize" @touchstart.prevent="cropMove"  @mousedown.prevent="cropMove" :style="{top: cropCSS.top + 'px', left: cropCSS.left + 'px', height: cropCSS.height + 'px',  width: cropCSS.width + 'px'}">
+        <span class="info">{{cropCSS.width}} x {{cropCSS.height}}</span>
         <div class="reference-line v"></div>
         <div class="reference-line h"></div>
         <a class="g-resize" v-on:touchstart.self="resize" v-on:mousedown.self="resize"></a>
@@ -75,6 +76,17 @@
   height: 100px;
   outline-color: rgba(51,153,255,.75);
   outline: 1px solid #39f;
+}
+.crop-box .info {
+    position: absolute;
+    left: 0px;
+    top: -22px;
+    min-width: 65px;
+    text-align: center;
+    color: white;
+    line-height: 20px;
+    background: #333;
+    font-size: 12px;
 }
 .crop-view {width: 100%;height: 100%;overflow: hidden;}
 .crop-view .view {background-size: cover;}
@@ -309,8 +321,10 @@ export default {
         }
         this.initWidth = this.width;
         this.initHeight = this.height;
-        this.left = (w - this.width) / 2;
-        this.top = (h - this.height) / 2;
+        // this.left = (w - this.width) / 2;
+        // this.top = (h - this.height) / 2;
+        this.left = ($container.offsetWidth - this.width) / 2;
+        this.top = ($container.offsetHeight-this.height) / 2;
         this.cropLeft = this.left - this.cropCSS.left;
         this.cropTop = this.top - this.cropCSS.top;
         
@@ -324,6 +338,7 @@ export default {
         return;
       }
       let $selectCropBox = this.__find('.crop-box');
+      const $container = this.$el.querySelector('.g-crop-image-principal');      
       let $wrap = this.$el;
       let imageWidth = w,
           imageHeight = h,
@@ -338,15 +353,15 @@ export default {
         width: baseCropWidth,
         height: (baseCropWidth / ratioW) * ratioH,
       }
-      CSSObj.left = (imageWidth - baseCropWidth) / 2;
-      CSSObj.top = (imageHeight - CSSObj.height) / 2;
+      CSSObj.left = ($container.offsetWidth  - baseCropWidth) / 2;
+      CSSObj.top = ($container.offsetHeight  - CSSObj.height) / 2;
       $selectCropBox.style.cssText = helper.setCssText(CSSObj);
       if (CSSObj.height > imageHeight) {
         const baseCropHeight = (imageHeight / 100) * CROPBOX_PERCENT
         CSSObj.height = baseCropHeight;
         CSSObj.width = (CSSObj.height * ratioW) / ratioH;
-        CSSObj.left = (imageWidth - CSSObj.width) / 2,
-        CSSObj.top = (imageHeight - CSSObj.height) / 2,
+        CSSObj.left = ($container.offsetWidth - CSSObj.width) / 2,
+        CSSObj.top = ($container.offsetHeight - CSSObj.height) / 2,
         $selectCropBox.style.cssText = helper.setCssText(CSSObj);
       };
 

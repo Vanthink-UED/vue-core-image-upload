@@ -107,6 +107,17 @@
   border-color:#27ae60;
   box-shadow: 0 1px 3px rgba(0,0,0,.05);
 }
+.g-core-image-corp-container .btn-preview {
+  background: #65d0dc;
+  border-color: #65d0dc;
+  color: #fff;
+}
+
+.g-core-image-corp-container .btn-preview:hover {
+  background: #65d0dc;
+  border-color: #65d0dc;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
+}
 .g-wrap-model {position: absolute; top: 0;left: 0;right: 0;bottom: 0;background: rgba(0,0,0, 0.5);}
 .g-model {
   position: fixed;
