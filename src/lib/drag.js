@@ -1,16 +1,28 @@
 import helper from './helper';
 
 const isMobile = helper.isMobile;
-export default function drag(e, el, coor) {
-  if (!el) {
+export default function drag(e, dom, coor, isCrop = false) {
+  if (!dom.el) {
     return;
   }
   const currentX = isMobile ? e.changedTouches[0]['clientX'] : e.clientX;
   const currentY = isMobile ? e.changedTouches[0]['clientY'] : e.clientY;
 
-  let left = currentX - coor.x;
-  let top = currentY - coor.y;
-  if (left <= coor.minLeft) {
+  let lastP = {}, left, top;
+  lastP.x = coor.x || currentX;
+  lastP.y = coor.y || currentY;
+  if (isCrop) {
+    left = dom.cropCSS.left + (currentX - lastP.x);
+    top = dom.cropCSS.top + (currentY - lastP.y);
+  } else {
+    left = dom.left + (currentX - lastP.x);
+    top = dom.top + (currentY - lastP.y);
+  }
+  /*  
+   left = dom.left + (currentX - lastP.x);
+   top = dom.top + (currentY - lastP.y); */
+  // 让拖拽框可以随处移动
+  /* if (left <= coor.minLeft) {
     left = coor.minLeft;
   }
   if (left >= coor.maxLeft) {
@@ -21,9 +33,11 @@ export default function drag(e, el, coor) {
   }
   if (top >= coor.maxTop) {
     top = coor.maxTop;
-  }
+  } */
   return {
     left,
-    top
+    top,
+    x: currentX,
+    y: currentY
   };
 };

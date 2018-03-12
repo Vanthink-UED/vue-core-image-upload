@@ -1,3 +1,20 @@
+## Vue-Core-Image-Upload-Mgr
+本项目从`vue-core-image-upload` fork而来，在项目原来的基础之上做了一些优化增加了一些功能：
+- 添加了预览功能，和预览样式
+- 优化了裁剪背景更容易识别
+- 增加了裁剪框可移动的功能
+- 优化了裁剪框的样式
+- 将resize组件迁移至btn头部
+- 增加了裁剪框大小样式显示
+效果预览：
+<img width="360" src="./shots/preview-mgr.png" />
+
+npm包测试：
+
+```
+npm install vue-core-image-mgr
+```
+
 ## Vue-Core-Image-Upload
 
 [![npm](https://img.shields.io/npm/v/vue-core-image-upload.svg?maxAge=2592000)]()

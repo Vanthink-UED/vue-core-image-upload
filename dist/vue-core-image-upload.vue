@@ -1,8 +1,8 @@
 <template>
-  <div class="g-core-image-upload-btn" ref="container">
+  <div class="g-core-image-upload-btn">
     <slot>{{text}}</slot>
-    <form class="g-core-image-upload-form" v-show="!hasImage" method="post" enctype="multipart/form-data" action="" style="">
-      <input v-bind:disabled="uploading" v-bind:id="'g-core-upload-input-' + formID" v-bind:name="name" v-bind:multiple="multiple" type="file" v-bind:accept="inputAccept" v-on:change="change" v-on:dragover="dragover" v-on:dragenter="dragover" v-on:dragleave="dragleave" v-on:dragend="dragleave" v-on:drop="dragleave" style="width: 100%; height: 100%;">
+    <form class="g-core-image-upload-form" v-show="!hasImage" method="post" enctype="multipart/form-data" action="/api2/common_user/cropHeadUrl" style="display: block; cursor: pointer; position: absolute; left: 0px; top: 0px; width: 1242px; height: 61px; opacity: 0; margin: 0px; padding: 0px; overflow: hidden;">
+      <input v-bind:disabled="uploading" v-bind:id="'g-core-upload-input-' + formID" v-bind:name="name" v-bind:multiple="multiple" type="file" v-bind:accept="inputAccept" v-on:change="change" style="width: 100%; height: 100%;">
     </form>
     <div class="g-core-image-corp-container" v-bind:id="'vciu-modal-' + formID" v-show="hasImage">
       <crop ref="cropBox" :is-resize="resize && !crop" :ratio="cropRatio" :is-rotate="rotate"></crop>
@@ -11,7 +11,10 @@
           <button type="button" v-on:click="doRotate" class="btn btn-rotate">↺</button>
           <button type="button" v-on:click="doReverseRotate" class="btn btn-reverserotate">↻</button>
         </p>
+        <resize-bar v-if="resize" ref="resizeBar" @resize="resizeImage"></resize-bar>
+
         <p class="btn-groups" v-if="crop">
+          <button type="button" v-on:click="doPreview" class="btn btn-preview">{{cropBtn.preview || '预览'}}</button>
           <button type="button" v-on:click="doCrop" class="btn btn-upload">{{cropBtn.ok}}</button>
           <button type="button" v-on:click="cancel" class="btn btn-cancel">{{cropBtn.cancel}}</button>
         </p>
@@ -21,11 +24,15 @@
         </p>
       </div>
   </div>
+  <div class="g-model" v-show="model" @click="model = false">
+    <div class="model-show">
+      <img :src="modelSrc" alt="图片预览" :style="{height: cropCSS.height + 'px',  width: cropCSS.width + 'px'}">
+    </div>
+  </div>
 </div>
 </template>
 
-<style src="./style/style.css">
-</style>
+<style src="./style/style.css"></style>
 
 <script>
   import xhr from 'core-image-xhr';
@@ -34,6 +41,8 @@
   import props from './props';
   import Crop from './crop.vue';
   import ResizeBar from './resize-bar.vue';
+  import resize from './lib/resize';
+
 
   let overflowVal = '';
   export default {
@@ -48,6 +57,8 @@
         hasImage: false,
         options: this.props,
         uploading: false,
+        model: false,
+        modelSrc: '',
         formID: (Math.random() * 10000 + '').split('.')[0],
         image:{
           src: GIF_LOADING_SRC,
@@ -55,6 +66,7 @@
           height:24,
           minProgress: 0.05,
         },
+        cropCSS: {}
       }
     },
 
@@ -74,14 +86,6 @@
       __find(str) {
         let dq = document.querySelector('#vciu-modal-' + this.formID);
         return dq.querySelector(str);
-      },
-      dragover() {
-        let element = this.$refs.container;
-        element.classList.add('is-dragover');
-      },
-      dragleave() {
-        let element = this.$refs.container;
-        element.classList.remove('is-dragover');
       },
       change(e) {
         let fileVal = document.querySelector('#g-core-upload-input-' + this.formID).value.replace(/C:\\fakepath\\/i, "");
@@ -105,11 +109,6 @@
             console.warn('FILE IS TOO LARGER MAX FILE IS ' + formatSize);
             return this.__dispatch('errorhandle','FILE IS TOO LARGER MAX FILE IS ' + formatSize);
         }
-
-        if (this.multipleSize > 0 && e.target.files.length > this.multipleSize) {
-              console.warn('FILE NUM IS LARGER THAN ' + this.multipleSize);
-              return this.__dispatch('errorhandle', 'FILE NUM OVERLOAD');
-          }
 
         this.files = e.target.files;
         if (this.crop || this.resize) {
@@ -148,10 +147,17 @@
         let self = this;
         pic.src = src;
         const cropBox = this.$refs.cropBox;
+        const resizeBar = this.$refs.resizeBar;
+        
         pic.onload= function() {
           self.image.minProgress = self.minWidth / pic.naturalWidth;
           canvasHelper.init(src, (src) => {
             self.imgChangeRatio = cropBox.setImage(src, pic.naturalWidth, pic.naturalHeight);
+            if (self.resize) {
+              resizeBar.setProgress(50);
+            } else {
+              resizeBar.setProgress(100);
+            }
           });
         }
       },
@@ -165,7 +171,7 @@
         let self = this;
         const cropBox = this.$refs.cropBox;
         const targetImage = cropBox.getCropImage();
-        this.data.compress = 100 - this.compress;
+        this.data.comprose = 100 - this.compress;
         return canvasHelper.rotate(targetImage, 1, (src) => {
             self.__initImage(src)
           })
@@ -175,7 +181,7 @@
         let self = this;
         const cropBox = this.$refs.cropBox;
         const targetImage = cropBox.getCropImage();
-        this.data.compress = 100 - this.compress;
+        this.data.comprose = 100 - this.compress;
         return canvasHelper.rotate(targetImage, -1, (src) => {
             self.__initImage(src)
           })
@@ -187,7 +193,7 @@
         const upload = this.__setUpload(e.target);
         if (this.crop === 'local') {
           const targetImage = cropBox.getCropImage();
-          this.data.compress = 100 - this.compress;
+          this.data.comprose = 100 - this.compress;
           return canvasHelper.crop(targetImage, this.data, (code) => {
             upload(code);
             this.__dispatch('imagechanged', code);
@@ -195,17 +201,29 @@
         }
         upload();
       },
+      doPreview(e) {
+        let self = this;
+        const cropBox = this.$refs.cropBox;
+        self.__setData('crop');        
+        if (this.crop === 'local') {
+          const targetImage = cropBox.getCropImage();
+          this.cropCSS = cropBox.getCropStyle();
+          this.data.comprose = 100 - this.compress;
+          return canvasHelper.crop(targetImage, this.data, code => {
+            self.modelSrc = code;
+            self.model = true;
+          })
+        }
+      },
 
       doResize(e) {
-        this.__setData('resize');
         const cropBox = this.$refs.cropBox;
         const upload = this.__setUpload(e.target);
         if (this.resize === 'local') {
           const targetImage = cropBox.getCropImage();
-          this.data.compress = 100 - this.compress;
+          this.data.comprose = 100 - this.compress;
           return canvasHelper.resize(targetImage, this.data, (code) => {
             upload(code);
-            this.__dispatch('imagechanged', code);
           })
         }
         upload();
@@ -278,7 +296,7 @@
         if (isBinary) {
           data = {
             type: this.files[0]['type'],
-            filename: this.files[0]['name'],
+            filename: encodeURI(this.files[0]['name']),
             filed: this.inputOfFile,
             base64Code: base64Code
           };
@@ -299,7 +317,7 @@
           }
         }
         xhr('POST',this.url, this.headers, data, done, errorUpload, isBinary, this.credentials);
-      },
+      }
     },
 
   };

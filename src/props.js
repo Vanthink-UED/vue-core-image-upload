@@ -24,6 +24,7 @@ export default {
       return {
         ok: 'Ok',
         cancel: 'Cancel',
+        preview: 'Preview'
       }
     }
   },
@@ -33,7 +34,7 @@ export default {
   },
   resize: {
     type: [String, Boolean],
-    default: false,
+    default: true,
   },
   rotate: {
     type: Boolean,

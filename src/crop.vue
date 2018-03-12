@@ -1,40 +1,41 @@
 <template>
 <div class="image-aside">
-  <div class="g-crop-image-box" >
-    <div class="g-crop-image-principal" v-on:touchstart="drag" v-on:mousedown="drag">
-      <div class="image-wrap"  :style="{ width: width + 'px',height: height + 'px', left: left+ 'px', top: top + 'px', backgroundImage: 'url(' + src + ')', cursor: isResize ? 'default' : 'move'}">
+  <!-- <div class="g-crop-image-box" > -->
+    <div class="g-crop-image-principal">
+      <div class="image-wrap"  :style="pos.wrap">
         <img ref="crop-image" style="width:0;height:0;" :src="src" />
       </div>
-      <div class="image-mask" v-if="!isResize">
+      <div class="g-wrap-model" v-on:touchstart="drag" v-on:mousedown="drag"  :style="{cursor: isResize ? 'default' : 'move'}"></div>
+      
+      <!-- <div class="image-mask" v-if="!isResize">
         <div class="mask top" :style="{ top:0, height: cropCSS.top + 'px', left: 0, width: '100%'}"></div>
         <div class="mask bottom" :style="{ bottom:0, top: (cropCSS.top + cropCSS.height) + 'px', left: 0, width: '100%'}"></div>
         <div class="mask left" :style="{top: cropCSS.top + 'px', height: cropCSS.height + 'px', left:0, width: cropCSS.left + 'px'}"></div>
         <div class="mask right" :style="{top: cropCSS.top + 'px', height: cropCSS.height + 'px', left: (cropCSS.left + cropCSS.width) + 'px', right: 0}"></div>
-      </div>
-      <div class="crop-box" v-if="!isResize" :style="{top: cropCSS.top + 'px', left: cropCSS.left + 'px', height: cropCSS.height + 'px',  width: cropCSS.width + 'px'}">
+      </div> -->
+      <div class="crop-box" v-if="!isResize" @touchstart.prevent="cropMove"  @mousedown.prevent="cropMove" :style="{top: cropCSS.top + 'px', left: cropCSS.left + 'px', height: cropCSS.height + 'px',  width: cropCSS.width + 'px'}">
+        <span class="info">{{cropCSS.width | toInt}} x {{cropCSS.height |toInt}}</span>
         <div class="reference-line v"></div>
         <div class="reference-line h"></div>
         <a class="g-resize" v-on:touchstart.self="resize" v-on:mousedown.self="resize"></a>
+        <div class="crop-view">
+          <div class="view" :style="pos.view"></div>
+        </div>
       </div>
     </div>
-    <resize-bar v-if="resize" ref="resizeBar" @resize="resizeImage"></resize-bar>
     <rotate-bar v-if="isRotate" @rotate="rotateImage"></rotate-bar>
-  </div>
+ <!--  </div> -->
+ 
 </div>
 </template>
 
 <style scoped>
 .g-crop-image-principal{
   overflow: hidden;
-  position: relative;
-  background-color: #fff;
-  background-image: -webkit-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef),-webkit-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef);
-  background-image: -moz-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef),-moz-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef);
-  background-image: -o-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef),-o-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef);
-  background-image: linear-gradient(to top right, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef),linear-gradient(to top right, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef);
-  background-position: 0 0,10px 10px;
-  -webkit-background-size: 21px 21px;
-  background-size: 21px 21px;
+  position: relative;top: 0;left: 0;right: 0;bottom: 0;height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEXMzMz////TjRV2AAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABFJREFUCJlj+M/AgBVhF/0PAH6/D/HkDxOGAAAAAElFTkSuQmCC');
+  
 }
 .image-aside{
   overflow: hidden;
@@ -46,9 +47,6 @@
   text-align: center;
 }
 .image-aside .image-wrap{
-  position: absolute;
-  left: 0;
-  top: 0;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -77,8 +75,22 @@
   cursor: move;
   width:100px;
   height: 100px;
-  border:1px solid rgba(255,255,255, .95);
+  outline-color: rgba(51,153,255,.75);
+  outline: 1px solid #39f;
 }
+.crop-box .info {
+    position: absolute;
+    left: 0px;
+    top: -22px;
+    min-width: 65px;
+    text-align: center;
+    color: white;
+    line-height: 20px;
+    background: #333;
+    font-size: 12px;
+}
+.crop-view {width: 100%;height: 100%;overflow: hidden;}
+.crop-view .view {background-size: cover;}
 .crop-box:after,
 .crop-box:before{
   content: '';
@@ -88,10 +100,10 @@
   left: 33.3333%;
   top: 0;
   width: 33.334%;
-  height: 100%;
+  height: 100%;z-index: 11;
   background-color: transparent;
-  border-color: rgba(255,255,255,.7);
-  border-style: solid;
+  border-color: #eee;
+  border-style: dashed;
   border-width: 0;
 }
 .crop-box:active::before,
@@ -134,6 +146,7 @@ import helper from './lib/helper';
 import canvasHelper from './lib/canvas-helper';
 import ResizeBar from './resize-bar.vue';
 import RotateBar from './rotate-bar.vue';
+
 // set cropbox size in image
 const CROPBOX_PERCENT = 75;
 const isMobile = helper.isMobile;
@@ -176,9 +189,34 @@ export default {
       initHeight: 24,
       left: 0,
       top: 0,
+      cropLeft: 0,
+      cropTop: 0,
       cropCSS: {
 
       }
+    }
+  },
+  computed: {
+    pos() {
+      let wrap = { 
+        width: this.width + 'px',
+        height: this.height + 'px',
+        'transform': 'translate3d('+ this.left +'px,'+ this.top+'px,0)', 
+        backgroundImage: 'url(' + this.src + ')'
+      }
+      let view = { 
+        width: this.width + 'px',
+        height: this.height + 'px',
+        'transform': 'translate3d('+ this.cropLeft +'px,'+ this.cropTop+'px,0)', 
+        backgroundImage: 'url(' + this.src + ')'
+      }
+
+      return {wrap: wrap, view: view};
+    }
+  },
+  filters: {
+    toInt(val) {
+      return Math.floor(val);
     }
   },
 
@@ -200,12 +238,6 @@ export default {
       this.natrualWidth = w;
       this.natrualHeight = h;
       this.setLayout(w, h);
-      const resizeBar = this.$refs.resizeBar;
-      if (this.isResize) {
-        resizeBar.setProgress(100);
-      } else {
-        resizeBar.setProgress(50);
-      }
       return this.imgChangeRatio;
     },
 
@@ -219,7 +251,8 @@ export default {
       if (this.isResize) {
         w = this.natrualWidth * this.imgChangeRatio * progress;
         h = this.natrualHeight * this.imgChangeRatio * progress;
-      } else {
+      } 
+      else {
         w = this.initWidth + progress * (this.natrualWidth - this.initWidth);
         h = this.initHeight + progress * (this.natrualHeight - this.initHeight);
       }
@@ -228,8 +261,18 @@ export default {
       }
       this.left += (this.width - w) / 2;
       this.top += (this.height - h) / 2;
+      this.cropLeft = this.left - this.cropCSS.left;
+      this.cropTop = this.top - this.cropCSS.top;
+
+      //  self.cropCSS.left = newCropStyle.left;
+      //     self.cropCSS.top = newCropStyle.top;
+
+      //     self.cropLeft = self.left - this.cropCSS.left;
+      //     self.cropTop = self.top - this.cropCSS.top;
+      //this.cropTop  += (this.height - h) / 2;
       this.width = w;
       this.height = h;
+      
       this.imgChangeRatio = this.width / this.natrualWidth;
     },
 
@@ -268,8 +311,8 @@ export default {
         this.marginLeft = this.marginLeft + (this.width - w) / 2;
         this.marginTop = this.marginTop + (this.height - h) / 2;
       }
-      $container.style.cssText = 'width:' + w + 'px;height:' + h + 'px;margin-left:'
-      + ml + 'px;' + 'margin-top:' + mt + 'px';
+      /* $container.style.cssText = 'width:' + w + 'px;height:' + h + 'px;margin-left:'
+      + ml + 'px;' + 'margin-top:' + mt + 'px'; */
       this.setCropBox(w, h);
       if (this.isResize) {
         this.width = w;
@@ -284,9 +327,15 @@ export default {
         }
         this.initWidth = this.width;
         this.initHeight = this.height;
-        this.left = (w - this.width) / 2;
-        this.top = (h - this.height) / 2;
+        // this.left = (w - this.width) / 2;
+        // this.top = (h - this.height) / 2;
+        this.left = ($container.offsetWidth - this.width) / 2;
+        this.top = ($container.offsetHeight-this.height) / 2;
+        this.cropLeft = this.left - this.cropCSS.left;
+        this.cropTop = this.top - this.cropCSS.top;
+        
       }
+      
       this.imgChangeRatio = this.width / this.natrualWidth;
     },
 
@@ -295,6 +344,7 @@ export default {
         return;
       }
       let $selectCropBox = this.__find('.crop-box');
+      const $container = this.$el.querySelector('.g-crop-image-principal');      
       let $wrap = this.$el;
       let imageWidth = w,
           imageHeight = h,
@@ -309,17 +359,18 @@ export default {
         width: baseCropWidth,
         height: (baseCropWidth / ratioW) * ratioH,
       }
-      CSSObj.left = (imageWidth - baseCropWidth) / 2;
-      CSSObj.top = (imageHeight - CSSObj.height) / 2;
+      CSSObj.left = ($container.offsetWidth  - baseCropWidth) / 2;
+      CSSObj.top = ($container.offsetHeight  - CSSObj.height) / 2;
       $selectCropBox.style.cssText = helper.setCssText(CSSObj);
       if (CSSObj.height > imageHeight) {
         const baseCropHeight = (imageHeight / 100) * CROPBOX_PERCENT
         CSSObj.height = baseCropHeight;
         CSSObj.width = (CSSObj.height * ratioW) / ratioH;
-        CSSObj.left = (imageWidth - CSSObj.width) / 2,
-        CSSObj.top = (imageHeight - CSSObj.height) / 2,
+        CSSObj.left = ($container.offsetWidth - CSSObj.width) / 2,
+        CSSObj.top = ($container.offsetHeight - CSSObj.height) / 2,
         $selectCropBox.style.cssText = helper.setCssText(CSSObj);
       };
+
       this.cropCSS = CSSObj;
 
     },
@@ -345,6 +396,9 @@ export default {
 
     getCropImage() {
       return this.$refs['crop-image'];
+    },
+    getCropStyle() {
+      return this.cropCSS
     },
 
     __find(str) {
@@ -426,11 +480,15 @@ export default {
         minLeft: ($cropBox.offsetWidth + $cropBox.offsetLeft) - $el.offsetWidth,
         minTop: ($cropBox.offsetHeight + $cropBox.offsetTop) - $el.offsetHeight,
       };
+      let prevP =  Object.create(null);
       const move = function (ev) {
-        const newCropStyle = drag(ev, self.el, coor);
+        const newCropStyle = drag(ev, self, prevP, false);
         if (newCropStyle) {
+          prevP = newCropStyle;
           self.left = newCropStyle.left;
           self.top = newCropStyle.top;
+          self.cropLeft = self.left - $cropBox.offsetLeft;
+          self.cropTop = self.top - $cropBox.offsetTop;
         }
       };
       const stopMove = function (ev) {
@@ -451,6 +509,48 @@ export default {
       document.addEventListener('mousemove', move, false);
       document.addEventListener('mouseup', stopMove, false);
     },
+    cropMove(e) {
+      e.preventDefault();      
+      const $el = this.__find('.crop-box');
+      this.el = $el;
+      const $container = e.currentTarget;
+      const self = this;
+      const isMobile = helper.isMobile;
+      const coor = {
+        x: (isMobile ? e.touches[0]['clientX'] : e.clientX) - $el.offsetLeft,
+        y: (isMobile ? e.touches[0]['clientY'] : e.clientY) - $el.offsetTop,
+      };
+      let prevP = Object.create(null) ;      
+      const move = function (ev) {
+        const newCropStyle = drag(ev, self, prevP, true);
+        if (newCropStyle) {
+          prevP = newCropStyle;          
+          self.cropCSS.left = newCropStyle.left;
+          self.cropCSS.top = newCropStyle.top;
+
+          self.cropLeft = self.left - newCropStyle.left;
+          self.cropTop = self.top - newCropStyle.top;
+        }
+      };
+      const stopMove = function (ev) {
+        self.el = null;
+        if (isMobile) {
+          document.removeEventListener('touchmove', move, false);
+          document.removeEventListener('touchend', stopMove, false);
+          return;
+        }
+        document.removeEventListener('mousemove', move, false);
+        document.removeEventListener('mouseup', stopMove, false);
+      };
+      if (isMobile) {
+        document.addEventListener('touchmove', move, false);
+        document.addEventListener('touchend', stopMove, false);
+        return;
+      }
+      document.addEventListener('mousemove', move, false);
+      document.addEventListener('mouseup', stopMove, false);
+    }
+    
   },
 
 }
