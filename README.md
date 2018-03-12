@@ -8,10 +8,13 @@
 - 增加了裁剪框大小样式显示
 效果预览：
 <img width="360" src="./shots/preview-mgr.png" />
+
 npm包测试：
+
 ```
 npm install vue-core-image-mgr
 ```
+
 ## Vue-Core-Image-Upload
 
 [![npm](https://img.shields.io/npm/v/vue-core-image-upload.svg?maxAge=2592000)]()
