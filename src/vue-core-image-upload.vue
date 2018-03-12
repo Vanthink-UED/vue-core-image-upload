@@ -26,7 +26,7 @@
   </div>
   <div class="g-model" v-show="model" @click="model = false">
     <div class="model-show">
-      <img :src="modelSrc" alt="">
+      <img :src="modelSrc" alt="图片预览" :style="{height: cropCSS.height + 'px',  width: cropCSS.width + 'px'}">
     </div>
   </div>
 </div>
@@ -66,6 +66,7 @@
           height:24,
           minProgress: 0.05,
         },
+        cropCSS: {}
       }
     },
 
@@ -206,6 +207,7 @@
         self.__setData('crop');        
         if (this.crop === 'local') {
           const targetImage = cropBox.getCropImage();
+          this.cropCSS = cropBox.getCropStyle();
           this.data.comprose = 100 - this.compress;
           return canvasHelper.crop(targetImage, this.data, code => {
             self.modelSrc = code;

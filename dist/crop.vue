@@ -14,7 +14,7 @@
         <div class="mask right" :style="{top: cropCSS.top + 'px', height: cropCSS.height + 'px', left: (cropCSS.left + cropCSS.width) + 'px', right: 0}"></div>
       </div> -->
       <div class="crop-box" v-if="!isResize" @touchstart.prevent="cropMove"  @mousedown.prevent="cropMove" :style="{top: cropCSS.top + 'px', left: cropCSS.left + 'px', height: cropCSS.height + 'px',  width: cropCSS.width + 'px'}">
-        <span class="info">{{cropCSS.width}} x {{cropCSS.height}}</span>
+        <span class="info">{{cropCSS.width | toInt}} x {{cropCSS.height |toInt}}</span>
         <div class="reference-line v"></div>
         <div class="reference-line h"></div>
         <a class="g-resize" v-on:touchstart.self="resize" v-on:mousedown.self="resize"></a>
@@ -25,6 +25,7 @@
     </div>
     <rotate-bar v-if="isRotate" @rotate="rotateImage"></rotate-bar>
  <!--  </div> -->
+ 
 </div>
 </template>
 
@@ -213,6 +214,11 @@ export default {
       return {wrap: wrap, view: view};
     }
   },
+  filters: {
+    toInt(val) {
+      return Math.floor(val);
+    }
+  },
 
   methods: {
     setImage(src, w, h) {
@@ -390,6 +396,9 @@ export default {
 
     getCropImage() {
       return this.$refs['crop-image'];
+    },
+    getCropStyle() {
+      return this.cropCSS
     },
 
     __find(str) {
