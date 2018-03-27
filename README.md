@@ -1,5 +1,5 @@
 ## Vue-Core-Image-Upload
-
+[![Build Status](https://travis-ci.org/Vanthink-UED/vue-core-image-upload.svg?branch=master)](https://travis-ci.org/Vanthink-UED/vue-core-image-upload)
 [![npm](https://img.shields.io/npm/v/vue-core-image-upload.svg?maxAge=2592000)]()
 
 
