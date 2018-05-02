@@ -50,7 +50,7 @@ export default {
        @imageuploaded="imageuploaded"
        :data="data"
        :max-file-size="5242880"
-       url="http://101.198.151.190/api/upload.php" >
+       url="http://api.jackpu.com/upload" >
      </vue-core-image-upload>
    </div>
     <p>如果我们要使用上传插件，我们首先需要引入我们的组件然后并在<code>components</code>中声明。

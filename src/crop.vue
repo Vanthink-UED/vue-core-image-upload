@@ -229,17 +229,17 @@ export default {
       if (this.isResize) {
         return {
           imgChangeRatio: this.imgChangeRatio,
-          toCropImgX: 0,
-          toCropImgY: 0,
-          toCropImgW: this.natrualWidth,
-          toCropImgH: this.natrualHeight,
+          x: 0,
+          y: 0,
+          w: this.natrualWidth,
+          h: this.natrualHeight,
         };
       }
       return {
-        toCropImgX: (this.cropCSS.left - this.left) / this.imgChangeRatio,
-        toCropImgY: (this.cropCSS.top - this.top) / this.imgChangeRatio,
-        toCropImgW: this.cropCSS.width / this.imgChangeRatio,
-        toCropImgH: this.cropCSS.height / this.imgChangeRatio,
+        x: (this.cropCSS.left - this.left) / this.imgChangeRatio,
+        y: (this.cropCSS.top - this.top) / this.imgChangeRatio,
+        w: this.cropCSS.width / this.imgChangeRatio,
+        h: this.cropCSS.height / this.imgChangeRatio,
       };
     },
 

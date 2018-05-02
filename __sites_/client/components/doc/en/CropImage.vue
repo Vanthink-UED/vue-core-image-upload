@@ -46,6 +46,7 @@
          crop="server"
          url="http://101.198.151.190/api/crop.php"
          extensions="png,gif,jpeg,jpg"
+         :headers="header"
          text="Crop Image"
          @imageuploaded="crpoServerImageUploaded">
       </vue-core-image-upload>
@@ -101,6 +102,9 @@ export default {
         toCropImgX: '?',
         toCropImgY: '?',
         toCropDegrees: '?',
+      },
+      header: {
+        jssis: '123123'
       }
     };
   },

@@ -2,7 +2,10 @@ const webpack = require( 'webpack');
 const path = require('path');
 const fse = require('fs-extra');
 
-fse.copySync('../src', '../dist');
+const srcPath = path.resolve(__dirname, '../src');
+const distPath = path.resolve(__dirname, '../dist');
+
+fse.copySync(srcPath, distPath);
 
 module.exports = {
   context: path.resolve(__dirname, '../src'),

@@ -15,7 +15,7 @@
          crop-ratio="1:1"
          class="btn btn-primary"
          crop="local"
-         url="http://101.198.151.190/api/upload.php"
+         url="http://api.jackpu.com/upload"
          extensions="png,jpeg,jpg"
          text="Crop Image"
          compress="20"

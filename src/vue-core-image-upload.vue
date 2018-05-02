@@ -51,6 +51,7 @@
   import Crop from './crop.vue';
   import ResizeBar from './resize-bar.vue';
 
+console.log(daycaca)
   // remember the overflow value
   let overflowVal = '';
   export default {
@@ -136,8 +137,10 @@
         }
         const file =  this.files.length > 1 ? this.files : this.files[0];
         this. __dispatch('imagechanged', file);
+        console.log(file)
         if (this.compress && this.files[0]['type'] !== 'image/png' && this.files[0]['type'] !== 'image/gif') {
-          daycaca.compress(this.files[0], 100 - this.compress, (code) => {
+          daycaca.compress(file, 100 - this.compress, (code) => {
+            console.log(code)
             this.tryAjaxUpload('', true, code);
           });
         } else {
@@ -318,10 +321,11 @@
             }
           }
         }
+        console.log(this.url)
+        console.log(this.headers)
         xhr('POST',this.url, this.headers, data, done, errorUpload, isBinary, this.credentials);
       },
     },
-    
     mounted() {
       this.$input = this.__find('input');
     }

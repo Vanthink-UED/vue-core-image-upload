@@ -8,9 +8,9 @@
         class="btn btn-primary"
         @imageuploaded="imageUploded"
         :max-file-size="5242880"
-        compress="50"
+        compress="70"
         :data="params"
-        url="http://101.198.151.190/api/upload.php" >
+        url="http://localhost:8090/upload" >
       </vue-core-image-upload>
     </div>
     <h4>代码示例</h4>
@@ -19,7 +19,7 @@
   @imageuploaded="imageUploded"
   :max-file-size="5242880"
   compress="50"   // 设置压缩比例
-  url="http://101.198.151.190/api/upload.php" &gt;
+  url="http://localhost:8090/upload" &gt;
 &lt;/vue-core-image-upload&gt;</code></pre>
   </div>
 </template>
