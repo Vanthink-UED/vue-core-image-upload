@@ -1,7 +1,7 @@
 <template>
 <div class="image-aside">
   <div class="g-crop-image-box" >
-    <div class="g-crop-image-principal" @touchstart="drag" @:mousedown="drag">
+    <div class="g-crop-image-principal" @touchstart="drag" @mousedown="drag">
       <div class="image-wrap"  :style="{ width: width + 'px',height: height + 'px', left: left+ 'px', top: top + 'px', backgroundImage: 'url(' + src + ')', cursor: isResize ? 'default' : 'move'}">
         <img ref="crop-image" style="width:0;height:0;" :src="src" />
       </div>
