@@ -18,7 +18,7 @@
 &lt;/template&gt;
 
 &lt;script&gt;
-import VueCoreImageUpload from '../../../../src/vue-core-image-upload.vue'
+import VueCoreImageUpload from 'core/vue-core-image-upload.vue'
 
 export default {
   components: {
