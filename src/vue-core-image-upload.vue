@@ -135,10 +135,8 @@
         }
         const file =  this.files.length > 1 ? this.files : this.files[0];
         this. __dispatch('imagechanged', file);
-        console.log(file)
         if (this.compress && this.files[0]['type'] !== 'image/png' && this.files[0]['type'] !== 'image/gif') {
           daycaca.compress(file, 100 - this.compress, (code) => {
-            console.log(code)
             this.tryAjaxUpload('', true, code);
           });
         } else {
@@ -206,7 +204,6 @@
         this.__setData('crop');
         const cropBox = this.$refs.cropBox;
         const upload = this.__setUpload(e.target);
-        if (this.isXhr)
         if (this.crop === 'local') {
           const targetImage = cropBox.getCropImage();
           this.data.compress = 100 - this.compress;
@@ -294,6 +291,7 @@
           if(this.crop) {
             this.hasImage = false;
           }
+          console.log(base64Code)
           return done({
             src: base64Code
           });
@@ -322,8 +320,6 @@
             }
           }
         }
-        console.log(this.url)
-        console.log(this.headers)
         xhr('POST',this.url, this.headers, data, done, errorUpload, isBinary, this.credentials);
       },
     },

@@ -16,7 +16,7 @@
         crop="local"
         resize="local"
         :rotate="true"
-        url="http://101.198.151.190/api/upload.php"
+        url="http://api.jackpu.com/upload"
         @imageuploaded="crpoServerImageUploaded"
         :max-file-size="10485760"
         text="上传图片" >
@@ -44,11 +44,11 @@
          crop-ratio="1:1"
          class="btn btn-primary"
          crop="server"
-         url="http://101.198.151.190/api/crop.php"
+         url="http://api.jackpu.cn/upload"
          extensions="png,gif,jpeg,jpg"
          :headers="header"
          text="Crop Image"
-         @imageuploaded="crpoServerImageUploaded">
+         @imageuploaded="cropLocalImageUploaded">
       </vue-core-image-upload>
     </div>
     <table class="m-table bordered" style="width:100%;">
@@ -111,7 +111,7 @@ export default {
 
   methods: {
     cropLocalImageUploaded(res) {
-      this.src = res.data.src;
+      this.src = res.src;
     },
     crpoServerImageUploaded(res) {
       if (res.errcode === 0) {

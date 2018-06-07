@@ -16,7 +16,7 @@
          class="btn btn-primary"
          crop="local"
          :isXhr="xhr"
-         url="http://localhost:8090/upload"
+         url="http://api.jackpu.com/upload"
          extensions="png,jpeg,jpg"
          text="Crop Image"
          compress="20"
@@ -107,7 +107,7 @@ export default {
 
   methods: {
     cropLocalImageUploaded(res) {
-      this.src = res.data.src;
+      this.src = res.src;
     },
     crpoServerImageUploaded(res) {
       if (res.errcode === 0) {

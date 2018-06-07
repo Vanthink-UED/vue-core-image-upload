@@ -49,9 +49,9 @@
           </tr>
           <tr>
             <td>crop</td>
-            <td align="left">Boolean</td>
-            <td>'server'</td>
-            <td>Crop image option</td>
+            <td align="left">Boolean | String</td>
+            <td>false</td>
+            <td>If you set `false` , it will disabled the crop function. And we support two mode when you crop images: 'local' and 'server' </td>
           </tr>
           <tr>
             <td>cropRatio</td>

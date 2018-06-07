@@ -49,9 +49,9 @@
           </tr>
           <tr>
             <td>crop</td>
-            <td align="left">Boolean</td>
-            <td>true</td>
-            <td>是否需要裁剪</td>
+            <td align="left">Boolean | String</td>
+            <td>false</td>
+            <td>false 为默认取消裁剪，本地裁剪需要设置 'local' 服务端裁剪则设置为 'server'</td>
           </tr>
           <tr>
             <td>cropRatio</td>
@@ -99,7 +99,7 @@
             <td>isXhr</td>
             <td align="left">Boolean</td>
             <td>true</td>
-            <td>是否需要调用系统内自己的上传功能</td>
+            <td>是否需要调用系统内自己的上传功能(会走 ajax 上传)</td>
           </tr>
           <tr>
             <td>headers</td>
