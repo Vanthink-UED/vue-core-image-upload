@@ -67,7 +67,7 @@ export default {
 
 
 <script>
-import VueCoreImageUpload from '../../../../../src/vue-core-image-upload'
+import VueCoreImageUpload from 'core/vue-core-image-upload'
 export default {
   components: {
     VueCoreImageUpload,

@@ -2,24 +2,24 @@
   <div class="g-core-image-upload-btn">
     <slot>{{text}}</slot>
     <form class="g-core-image-upload-form" v-show="!hasImage" method="post" enctype="multipart/form-data" action="" style="">
-      <input 
-        :disabled="uploading" 
-        :name="name" 
-        :multiple="multiple" 
-        type="file" 
-        :accept="inputAccept" 
-        @change="change" 
-        @dragover="dragover" 
-        @dragenter="dragover" 
-        @dragleave="dragleave" 
-        @dragend="dragleave" 
+      <input
+        :disabled="uploading"
+        :name="name"
+        :multiple="multiple"
+        type="file"
+        :accept="inputAccept"
+        @change="change"
+        @dragover="dragover"
+        @dragenter="dragover"
+        @dragleave="dragleave"
+        @dragend="dragleave"
         @drop="dragleave" />
     </form>
     <div class="g-core-image-corp-container" v-show="hasImage">
-      <crop 
-        ref="cropBox" 
-        :is-resize="resize && !crop" 
-        :ratio="cropRatio" 
+      <crop
+        ref="cropBox"
+        :is-resize="resize && !crop"
+        :ratio="cropRatio"
         :is-rotate="rotate">
       </crop>
       <div class="info-aside">
@@ -50,8 +50,6 @@
   import props from './props';
   import Crop from './crop.vue';
   import ResizeBar from './resize-bar.vue';
-
-console.log(daycaca)
   // remember the overflow value
   let overflowVal = '';
   export default {

@@ -23,6 +23,7 @@ module.exports = {
     alias: {
       root: path.join(__dirname, '../client'),
       components: path.join(__dirname, '../client/components'),
+      core: path.join(__dirname, '../../src'),
       vue: 'vue/dist/vue.js'
     },
     modules: [
