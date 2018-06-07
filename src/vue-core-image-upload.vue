@@ -208,6 +208,7 @@ console.log(daycaca)
         this.__setData('crop');
         const cropBox = this.$refs.cropBox;
         const upload = this.__setUpload(e.target);
+        if (this.isXhr)
         if (this.crop === 'local') {
           const targetImage = cropBox.getCropImage();
           this.data.compress = 100 - this.compress;
@@ -295,7 +296,9 @@ console.log(daycaca)
           if(this.crop) {
             this.hasImage = false;
           }
-          return done();
+          return done({
+            src: base64Code
+          });
         }
         let data;
         if (isBinary) {

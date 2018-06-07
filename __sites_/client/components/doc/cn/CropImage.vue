@@ -15,11 +15,12 @@
          crop-ratio="1:1"
          class="btn btn-primary"
          crop="local"
-         url="http://api.jackpu.com/upload"
+         :isXhr="xhr"
+         url="http://localhost:8090/upload"
          extensions="png,jpeg,jpg"
          text="Crop Image"
          compress="20"
-         @imageuploaded="crpoServerImageUploaded">
+         @imageuploaded="cropLocalImageUploaded">
       </vue-core-image-upload>
     </div>
     <h4>服务端裁剪</h4>
@@ -92,6 +93,7 @@ export default {
   },
   data() {
     return {
+      xhr: false,
       src: 'http://img1.vued.vanthink.cn/vued7553a09a5d5209ebd00a48264394b7f3.png',
       cropSrc: 'http://img1.vued.vanthink.cn/vued7553a09a5d5209ebd00a48264394b7f3.png',
       cropArgs: {
