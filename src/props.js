@@ -58,6 +58,12 @@ export default {
   maxHeight: {
     type: Number,
   },
+  fixedWidth: {
+    type: Number
+  },
+  fixedHeight: {
+    type: Number
+  },
   inputAccept: {
     type: String,
     default: 'image/jpg,image/jpeg,image/png,image/gif'

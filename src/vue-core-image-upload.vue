@@ -249,6 +249,15 @@
         if (this.minWidth) {
           this.data['minWidth'] = this.minWidth;
         }
+        if (this.minHeight) {
+          this.data['minHeight'] = this.minHeight;
+        }
+        if (this.fixedWidth) {
+          this.data['fixedWidth'] = this.fixedWidth;
+        }
+        if (this.fixedHeight) {
+          this.data['fixedHeight'] = this.fixedHeight;
+        }
       },
 
       __setUpload(btn) {
