@@ -154,7 +154,7 @@ plugins: [
     </tr>
     <tr>
       <td>inputAccept</td>
-      <td align="left">string</td>
+      <td align="left">String</td>
       <td>'image/*' / 'image/jpg,image/jpeg,image/png'</td>
       <td>the input[file] accept</td>
     </tr>
