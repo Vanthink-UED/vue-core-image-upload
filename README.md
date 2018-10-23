@@ -56,12 +56,15 @@ new Vue({
 });
 ```
 NUXT
+Create plugins/vue-core-image-upload.js and add:
+
 ``` js
-import Vue from 'vue';
-import VueCoreImageUpload from 'vue-core-image-upload/dist/ssr';
+import VueCoreImageUpload from 'vue-core-image-upload';
+Vue.component('vue-core-image-upload', VueCoreImageUpload);
+```
 
-Vue.use( VueCoreImageUpload );
-
+On nuxt.config.js
+```
 plugins: [
   { src: '~plugins/vue-core-image-upload.js', ssr: false }
 ]
