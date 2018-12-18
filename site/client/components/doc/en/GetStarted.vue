@@ -45,13 +45,17 @@ export default {
    </p>
    <div class="center">
      <vue-core-image-upload
-       class="btn btn-primary"
-       :crop="false"
-       @imageuploaded="imageuploaded"
-       :data="data"
-       :max-file-size="5242880"
-       url="http://101.198.151.190/api/upload.php" >
-     </vue-core-image-upload>
+          class="postImg"
+          :crop="false"
+          @imageuploaded="imageuploaded"
+          @imageuploading="imageuploading"
+          :data='data'
+          inputOfFile="FeedBack"
+          compress="50"
+          :max-file-size="10485760"
+          :credentials="false"
+          url="https://v3.imacco.com/Upload/api/UploadImg" >
+      </vue-core-image-upload>
    </div>
     <p>First of all , we need to include out plugin in <code>components</code> . Then we must define the <code>url</code> as your server api ,then we bind a function to
       <code>@imageuploaded</code> for handling the server response.
