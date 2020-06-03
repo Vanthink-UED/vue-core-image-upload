@@ -87,8 +87,8 @@
         let fileVal = document.querySelector('#g-core-upload-input-' + this.formID).value.replace(/C:\\fakepath\\/i, "");
         let fileExt = fileVal.substring(fileVal.lastIndexOf(".") + 1);
         const extensionsArr = this.extensions.split(',');
-        if(extensionsArr.length>1) {
-            var reg = new RegExp('^[' + extensionsArr.join('|') + ']+$','i');
+        if(extensionsArr.length) {
+            var reg = new RegExp('^(?:' + extensionsArr.join('|') + ')$','i');
             if (!reg.test(fileExt)) {
                 return this.__dispatch('errorhandle','TYPE ERROR');
             }
