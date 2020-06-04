@@ -87,13 +87,14 @@
         let fileVal = document.querySelector('#g-core-upload-input-' + this.formID).value.replace(/C:\\fakepath\\/i, "");
         let fileExt = fileVal.substring(fileVal.lastIndexOf(".") + 1);
         const extensionsArr = this.extensions.split(',');
-        if(extensionsArr.length>1) {
-            var reg = new RegExp('^[' + extensionsArr.join('|') + ']+$','i');
+        if(extensionsArr.length) {
+            var reg = new RegExp('^(?:' + extensionsArr.join('|') + ')$','i');
             if (!reg.test(fileExt)) {
                 return this.__dispatch('errorhandle','TYPE ERROR');
             }
         }
-        if (e.target.files[0].size > this.maxFileSize) {
+
+        if (Array.prototype.slice.call(e.target.files).some(file => file.size > this.maxFileSize)) {
             var formatSize;
             if (parseInt(this.maxFileSize / 1024 / 1024) > 0) {
                 formatSize = (this.maxFileSize / 1024 / 1024).toFixed(2) + 'MB';
@@ -109,7 +110,7 @@
         if (this.multipleSize > 0 && e.target.files.length > this.multipleSize) {
               console.warn('FILE NUM IS LARGER THAN ' + this.multipleSize);
               return this.__dispatch('errorhandle', 'FILE NUM OVERLOAD');
-          }
+        }
 
         this.files = e.target.files;
         if (this.crop || this.resize) {
