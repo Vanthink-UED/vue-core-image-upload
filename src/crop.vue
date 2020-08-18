@@ -374,7 +374,7 @@ export default {
       const maxCoor = this._getMaxCropAreaWidth();
       const move = function (ev) {
         const newCropStyle = resize(ev, self.el, $container, coor, self.ratioVal);
-        if (newCropStyle && (newCropStyle.width <= maxCoor.maxWidth || newCropStyle.height <= maxCoor.maxHeight)) {
+        if (newCropStyle && newCropStyle.width <= maxCoor.maxWidth && newCropStyle.height <= maxCoor.maxHeight) {
           self.cropCSS.width = newCropStyle.width;
           self.cropCSS.height = newCropStyle.height;
         }
@@ -397,16 +397,22 @@ export default {
     },
 
     _getMaxCropAreaWidth() {
+      const $image = this.__find('.image-wrap');
       const $cropBox = this.__find('.crop-box');
-      if (this.width > this.height) {
-        return {
-          maxWidth: this.height * this.ratioW / this.ratioH,
-          maxHeight: this.height,
-        }
-      }
+
+      const imageLeft = parseFloat($image.style.left);
+      const imageTop = parseFloat($image.style.top);
+      const imageWidth = parseFloat($image.style.width);
+      const imageHeight = parseFloat($image.style.height);
+      const cropBoxLeft = parseFloat($cropBox.style.left);
+      const cropBoxTop = parseFloat($cropBox.style.top);
+
+      const maxWidth = imageWidth - (cropBoxLeft - imageLeft);
+      const maxHeight = imageHeight - (cropBoxTop - imageTop);
+
       return {
-        maxWidth: this.width,
-        maxHeight: this.width * this.ratioH / this.ratioW,
+        maxWidth,
+        maxHeight,
       };
     },
 
