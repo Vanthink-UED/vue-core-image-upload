@@ -234,9 +234,9 @@
       },
 
       __setUpload(btn) {
-        btn.value = btn.value + '...';
-        btn.disabled = true;
         const upload = (code) => {
+          btn.value = btn.value + '...';
+          btn.disabled = true;
           this.tryAjaxUpload(() => {
             btn.value = btn.value.replace('...','');
             btn.disabled = false;
