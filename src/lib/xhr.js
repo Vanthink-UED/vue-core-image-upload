@@ -12,7 +12,7 @@
    };
  }
 
-module.exports = function (method, url, headers, data, callback, err, isBinary) {
+export default function (method, url, headers, data, callback, err, isBinary) {
 
   const r = new XMLHttpRequest();
   const error = err || function () {
