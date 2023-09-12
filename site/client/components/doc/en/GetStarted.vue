@@ -45,7 +45,7 @@ export default {
    </p>
    <div class="center">
      <vue-core-image-upload
-          class="postImg"
+          class="btn btn-primary postImg"
           :crop="false"
           @imageuploaded="imageuploaded"
           @imageuploading="imageuploading"
