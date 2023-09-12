@@ -96,6 +96,6 @@ export default {
   },
   credentials: {
     type: [String, Boolean],
-    default: true,
+    default: false,
   }
 }
